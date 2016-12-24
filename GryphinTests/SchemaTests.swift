@@ -19,11 +19,13 @@ class SchemaTests: XCTestCase {
         let data   = try! Data(contentsOf: url)
         let json   = try! JSONSerialization.jsonObject(with: data, options: []) as! JSON
         
-        let jsonData   = json["data"]         as! JSON
-        let jsonSchema = jsonData["__schema"] as! JSON
-        let jsonTypes  = jsonSchema["types"]  as! [JSON]
+        let jsonData       = json["data"]             as! JSON
+        let jsonSchema     = jsonData["__schema"]     as! JSON
+        let jsonTypes      = jsonSchema["types"]      as! [JSON]
+        let jsonDirectives = jsonSchema["directives"] as! [JSON]
         
-        let objects = Schema.Object.collectionWith(requiredJson: jsonTypes)
+        let objects    = Schema.Object.collectionWith(requiredJson: jsonTypes)
+        let directives = Schema.Directive.collectionWith(requiredJson: jsonDirectives)
         
         print("")
     }

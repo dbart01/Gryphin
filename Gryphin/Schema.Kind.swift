@@ -33,5 +33,11 @@ extension Schema {
                 fatalError("Failed to parse `Kind` string. Invalid input: '\(string)'.")
             }
         }
+        
+        static func collectionWith(strings: [String]) -> [Kind] {
+            return strings.map {
+                Kind(string: $0)
+            }
+        }
     }
 }
