@@ -1,6 +1,6 @@
 //
 //  QueryTests.swift
-//  HubCenter
+//  Gryphin
 //
 //  Created by Dima Bart on 2016-12-21.
 //  Copyright © 2016 Dima Bart. All rights reserved.

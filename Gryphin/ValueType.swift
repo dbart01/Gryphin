@@ -1,6 +1,6 @@
 //
 //  ValueType.swift
-//  HubCenter
+//  Gryphin
 //
 //  Created by Dima Bart on 2016-12-08.
 //  Copyright © 2016 Dima Bart. All rights reserved.
