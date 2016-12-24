@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 typealias JSON = [String : Any]
 
 protocol JsonCreatable {
@@ -23,13 +22,22 @@ extension JsonCreatable {
      ** the JSON object is nil.
      */
     init?(json: JSON?) {
-        guard let json = json else { return nil }
+        guard let json = json else {
+            return nil
+        }
         self.init(json: json)
     }
     
-    static func collectionWith(json: [JSON]) -> [Self] {
+    static func collectionWith(requiredJson json: [JSON]) -> [Self] {
         return json.map {
             Self(json: $0)
         }
+    }
+    
+    static func collectionWith(optionalJson json: [JSON]?) -> [Self]? {
+        guard let json = json else {
+            return nil
+        }
+        return self.collectionWith(requiredJson: json)
     }
 }

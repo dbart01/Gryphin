@@ -17,7 +17,13 @@ class SchemaTests: XCTestCase {
         let bundle = Bundle(for: self.classForCoder)
         let url    = bundle.url(forResource: "schema", withExtension: "json")!
         let data   = try! Data(contentsOf: url)
-        let json   = try! JSONSerialization.jsonObject(with: data, options: [])
+        let json   = try! JSONSerialization.jsonObject(with: data, options: []) as! JSON
+        
+        let jsonData   = json["data"]         as! JSON
+        let jsonSchema = jsonData["__schema"] as! JSON
+        let jsonTypes  = jsonSchema["types"]  as! [JSON]
+        
+        let objects = Schema.Object.collectionWith(requiredJson: jsonTypes)
         
         print("")
     }

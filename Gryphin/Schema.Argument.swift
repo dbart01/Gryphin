@@ -12,7 +12,7 @@ extension Schema {
     final class Argument: JsonCreatable {
         
         let name:         String
-        let description:  String
+        let description:  String?
         let ofType:       ObjectType
         let defaultValue: String?
         
@@ -20,10 +20,10 @@ extension Schema {
         //  MARK: - Init -
         //
         init(json: JSON) {
-            self.name         = json["name"]                    as! String
-            self.description  = json["description"]             as! String
-            self.ofType       = ObjectType(json: json["ofType"] as! JSON)
-            self.defaultValue = json["defaultValue"]            as? String
+            self.name         = json["name"]                  as! String
+            self.description  = json["description"]           as? String
+            self.ofType       = ObjectType(json: json["type"] as! JSON)
+            self.defaultValue = json["defaultValue"]          as? String
         }
     }
 }

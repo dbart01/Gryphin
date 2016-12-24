@@ -13,7 +13,8 @@ extension Schema {
         
         let kind:        Kind
         let name:        String
-        let description: String
+        let description: String?
+        let fields:      [Field]?
         
         // ----------------------------------
         //  MARK: - Init -
@@ -21,7 +22,9 @@ extension Schema {
         init(json: JSON) {
             self.kind        = Kind(string: json["kind"] as! String)
             self.name        = json["name"]              as! String
-            self.description = json["description"]       as! String
+            self.description = json["description"]       as? String
+            
+            self.fields      = Field.collectionWith(optionalJson: json["fields"] as? [JSON])
         }
     }
 }
