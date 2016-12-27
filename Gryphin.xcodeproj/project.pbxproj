@@ -39,6 +39,7 @@
 		9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */; };
 		9A9A6A651E12CAA4008754A4 /* Gen.Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */; };
 		9A9A6A671E12CAC1008754A4 /* Gen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Gen.swift */; };
+		9A9A6A6B1E12D2F6008754A4 /* Gen.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Gen.Line.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Directive.swift; sourceTree = "<group>"; };
 		9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Document.swift; sourceTree = "<group>"; };
 		9A9A6A661E12CAC1008754A4 /* Gen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.swift; sourceTree = "<group>"; };
+		9A9A6A6A1E12D2F6008754A4 /* Gen.Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				9A9A6A3B1E0EC9F8008754A4 /* Gen.Visibility.swift */,
 				9A9A6A3A1E0EC9F8008754A4 /* Gen.Container.swift */,
 				9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */,
+				9A9A6A6A1E12D2F6008754A4 /* Gen.Line.swift */,
 				9A9A6A3C1E0EC9F8008754A4 /* Gen.Class.swift */,
 				9A9A6A3D1E0EC9F8008754A4 /* Gen.Method.swift */,
 			);
@@ -313,6 +316,7 @@
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
 				9A9A6A651E12CAA4008754A4 /* Gen.Document.swift in Sources */,
+				9A9A6A6B1E12D2F6008754A4 /* Gen.Line.swift in Sources */,
 				9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */,
 				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,
 				9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */,

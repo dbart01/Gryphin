@@ -15,13 +15,16 @@ extension Gen {
         let name:       String
         let superclass: String?
         
+        fileprivate(set) var comments: [Line]
+        
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, superclass: String? = nil) {
+        init(visibility: Visibility = .internal, name: String, superclass: String? = nil, comments: [Line]? = nil) {
             self.visibility = visibility
             self.name       = name
             self.superclass = superclass
+            self.comments   = comments ?? []
         }
         
         // ----------------------------------
@@ -32,6 +35,11 @@ extension Gen {
             
             let superclass = self.superclass != nil ? ": \(self.superclass!)" : ""
             
+            let comments = self.comments.map {
+                "\(self.indent)/// \($0.content)\n"
+            }.joined(separator: "")
+            
+            string += comments
             string += "\(self.indent)\(self.visibility.rawValue) final class \(self.name)\(superclass) {\n\n"
             string += super.stringRepresentation
             string += "\(self.indent)}\n"
