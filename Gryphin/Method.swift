@@ -16,7 +16,8 @@ final class Method: Container {
     let parameters:  [Parameter]?
     let annotations: [Annotation]?
     
-    fileprivate(set) var body: [Line]
+    fileprivate(set) var comments: [Line]
+    fileprivate(set) var body:     [Line]
     
     enum Name {
         case `init`(InitializerType)
@@ -96,13 +97,14 @@ final class Method: Container {
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(visibility: Visibility = .internal, name: Name, returnType: String? = nil, parameters: [Method.Parameter]? = nil, annotations: [Annotation]? = nil, body: [Line]? = nil) {
+    init(visibility: Visibility = .internal, name: Name, returnType: String? = nil, parameters: [Method.Parameter]? = nil, annotations: [Annotation]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
         self.visibility  = visibility
         self.name        = name
         self.returnType  = returnType
         self.parameters  = parameters
         self.annotations = annotations
-        self.body        = body ?? []
+        self.body        = body     ?? []
+        self.comments    = comments ?? []
         
         super.init()
     }
@@ -112,6 +114,13 @@ final class Method: Container {
     //
     override var stringRepresentation: String {
         var string = ""
+        
+        /* ----------------------------------------
+         ** Construct the documentation comments
+         */
+        let comments = self.comments.map {
+            "\(self.indent)/// \($0.content)\n"
+        }.joined(separator: "")
         
         /* ---------------------------------
          ** Construct the method parameters
@@ -140,6 +149,7 @@ final class Method: Container {
             "\(bodyIndent)\($0.content)\n"
         }.joined(separator: "")
         
+        string += comments
         string += annotations
         string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType){\n"
         string += body

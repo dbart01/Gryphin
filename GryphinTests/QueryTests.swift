@@ -48,6 +48,8 @@ class QueryTests: XCTestCase {
                 "buildOn(viewer)",
                 "",
                 "return self"
+            ], comments: [
+                "The viewer for the thing that does stuff",
             ]),
             
             Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
@@ -59,6 +61,8 @@ class QueryTests: XCTestCase {
                 "buildOn(viewer)",
                 "",
                 "return self"
+            ], comments: [
+                "The viewer for the thing that does stuff",
             ]),
         ])
         
