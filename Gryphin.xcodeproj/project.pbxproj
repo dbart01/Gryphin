@@ -18,11 +18,10 @@
 		9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */; };
 		9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */; };
 		9A9A6A3F1E0EC9F8008754A4 /* Generatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Generatable.swift */; };
-		9A9A6A401E0EC9F8008754A4 /* SwiftGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A391E0EC9F8008754A4 /* SwiftGenerator.swift */; };
-		9A9A6A411E0EC9F8008754A4 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Container.swift */; };
-		9A9A6A421E0EC9F8008754A4 /* Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Visibility.swift */; };
-		9A9A6A431E0EC9F8008754A4 /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Class.swift */; };
-		9A9A6A441E0EC9F8008754A4 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Method.swift */; };
+		9A9A6A411E0EC9F8008754A4 /* Gen.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Gen.Container.swift */; };
+		9A9A6A421E0EC9F8008754A4 /* Gen.Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Gen.Visibility.swift */; };
+		9A9A6A431E0EC9F8008754A4 /* Gen.Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Gen.Class.swift */; };
+		9A9A6A441E0EC9F8008754A4 /* Gen.Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Gen.Method.swift */; };
 		9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A461E0ECA33008754A4 /* ValueType.swift */; };
 		9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A471E0ECA33008754A4 /* ReferenceType.swift */; };
 		9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A481E0ECA33008754A4 /* ContainerType.swift */; };
@@ -38,6 +37,8 @@
 		9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */; };
 		9A9A6A611E0ECA55008754A4 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5B1E0ECA55008754A4 /* schema.json */; };
 		9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */; };
+		9A9A6A651E12CAA4008754A4 /* Gen.Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */; };
+		9A9A6A671E12CAC1008754A4 /* Gen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Gen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,11 +66,10 @@
 		9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Argument.swift; sourceTree = "<group>"; };
 		9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRepresentable.swift; sourceTree = "<group>"; };
 		9A9A6A381E0EC9F8008754A4 /* Generatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generatable.swift; sourceTree = "<group>"; };
-		9A9A6A391E0EC9F8008754A4 /* SwiftGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftGenerator.swift; sourceTree = "<group>"; };
-		9A9A6A3A1E0EC9F8008754A4 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
-		9A9A6A3B1E0EC9F8008754A4 /* Visibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visibility.swift; sourceTree = "<group>"; };
-		9A9A6A3C1E0EC9F8008754A4 /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
-		9A9A6A3D1E0EC9F8008754A4 /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		9A9A6A3A1E0EC9F8008754A4 /* Gen.Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Container.swift; sourceTree = "<group>"; };
+		9A9A6A3B1E0EC9F8008754A4 /* Gen.Visibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Visibility.swift; sourceTree = "<group>"; };
+		9A9A6A3C1E0EC9F8008754A4 /* Gen.Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Class.swift; sourceTree = "<group>"; };
+		9A9A6A3D1E0EC9F8008754A4 /* Gen.Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Method.swift; sourceTree = "<group>"; };
 		9A9A6A461E0ECA33008754A4 /* ValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueType.swift; sourceTree = "<group>"; };
 		9A9A6A471E0ECA33008754A4 /* ReferenceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceType.swift; sourceTree = "<group>"; };
 		9A9A6A481E0ECA33008754A4 /* ContainerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerType.swift; sourceTree = "<group>"; };
@@ -85,6 +85,8 @@
 		9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaTests.swift; sourceTree = "<group>"; };
 		9A9A6A5B1E0ECA55008754A4 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Directive.swift; sourceTree = "<group>"; };
+		9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.Document.swift; sourceTree = "<group>"; };
+		9A9A6A661E12CAC1008754A4 /* Gen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,11 +172,12 @@
 			children = (
 				9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */,
 				9A9A6A381E0EC9F8008754A4 /* Generatable.swift */,
-				9A9A6A391E0EC9F8008754A4 /* SwiftGenerator.swift */,
-				9A9A6A3A1E0EC9F8008754A4 /* Container.swift */,
-				9A9A6A3B1E0EC9F8008754A4 /* Visibility.swift */,
-				9A9A6A3C1E0EC9F8008754A4 /* Class.swift */,
-				9A9A6A3D1E0EC9F8008754A4 /* Method.swift */,
+				9A9A6A661E12CAC1008754A4 /* Gen.swift */,
+				9A9A6A3B1E0EC9F8008754A4 /* Gen.Visibility.swift */,
+				9A9A6A3A1E0EC9F8008754A4 /* Gen.Container.swift */,
+				9A9A6A641E12CAA4008754A4 /* Gen.Document.swift */,
+				9A9A6A3C1E0EC9F8008754A4 /* Gen.Class.swift */,
+				9A9A6A3D1E0EC9F8008754A4 /* Gen.Method.swift */,
 			);
 			name = "Code Generation";
 			sourceTree = "<group>";
@@ -307,9 +310,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */,
-				9A9A6A401E0EC9F8008754A4 /* SwiftGenerator.swift in Sources */,
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
+				9A9A6A651E12CAA4008754A4 /* Gen.Document.swift in Sources */,
 				9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */,
 				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,
 				9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */,
@@ -317,15 +320,16 @@
 				9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */,
 				9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */,
 				9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */,
-				9A9A6A421E0EC9F8008754A4 /* Visibility.swift in Sources */,
+				9A9A6A421E0EC9F8008754A4 /* Gen.Visibility.swift in Sources */,
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
-				9A9A6A431E0EC9F8008754A4 /* Class.swift in Sources */,
+				9A9A6A671E12CAC1008754A4 /* Gen.swift in Sources */,
+				9A9A6A431E0EC9F8008754A4 /* Gen.Class.swift in Sources */,
 				9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */,
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
-				9A9A6A411E0EC9F8008754A4 /* Container.swift in Sources */,
+				9A9A6A411E0EC9F8008754A4 /* Gen.Container.swift in Sources */,
 				9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */,
-				9A9A6A441E0EC9F8008754A4 /* Method.swift in Sources */,
+				9A9A6A441E0EC9F8008754A4 /* Gen.Method.swift in Sources */,
 				9A9A6A3F1E0EC9F8008754A4 /* Generatable.swift in Sources */,
 				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,

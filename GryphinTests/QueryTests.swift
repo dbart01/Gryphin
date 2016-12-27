@@ -28,19 +28,19 @@ class QueryTests: XCTestCase {
 //            }
 //        }
         
-        let someClass = Class(name: "Query", superclass: "Field")
+        let someClass = Gen.Class(name: "Query", superclass: "Field")
         someClass.add(children: [
             
-            Method(visibility: .public, name: .init(.required), parameters: [
-                Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+            Gen.Method(visibility: .public, name: .init(.required), parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
             ], body: [
                 "super.init(name: \"query\")",
                 "",
                 "buildOn(self)",
             ]),
             
-            Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
             ], annotations: [.discardableResult], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -52,8 +52,8 @@ class QueryTests: XCTestCase {
                 "The viewer for the thing that does stuff",
             ]),
             
-            Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
             ], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -66,7 +66,50 @@ class QueryTests: XCTestCase {
             ]),
         ])
         
-        print(someClass.stringRepresentation)
+        let otherClass = Gen.Class(name: "Query", superclass: "Field")
+        otherClass.add(children: [
+            
+            Gen.Method(visibility: .public, name: .init(.required), parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+                ], body: [
+                    "super.init(name: \"query\")",
+                    "",
+                    "buildOn(self)",
+                    ]),
+            
+            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                ], annotations: [.discardableResult], body: [
+                    "let viewer = User(name: \"viewer\")",
+                    "self.add(child: viewer)",
+                    "",
+                    "buildOn(viewer)",
+                    "",
+                    "return self"
+                ], comments: [
+                    "The viewer for the thing that does stuff",
+                    ]),
+            
+            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                ], body: [
+                    "let viewer = User(name: \"viewer\")",
+                    "self.add(child: viewer)",
+                    "",
+                    "buildOn(viewer)",
+                    "",
+                    "return self"
+                ], comments: [
+                    "The viewer for the thing that does stuff",
+                    ]),
+            ])
+        
+        let document = Gen.Document(classes: [
+            someClass,
+            otherClass,
+        ])
+        
+        print(document.stringRepresentation)
         print("")
     }
 }

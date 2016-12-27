@@ -24,8 +24,19 @@ class SchemaTests: XCTestCase {
         let jsonTypes      = jsonSchema["types"]      as! [JSON]
         let jsonDirectives = jsonSchema["directives"] as! [JSON]
         
-        let objects    = Schema.Object.collectionWith(requiredJson: jsonTypes)
-        let directives = Schema.Directive.collectionWith(requiredJson: jsonDirectives)
+//        let objects    = Schema.Object.collectionWith(requiredJson: jsonTypes)
+//        let directives = Schema.Directive.collectionWith(requiredJson: jsonDirectives)
+        
+        var objects: [String: Schema.Object] = [:]
+        for jsonObject in jsonTypes {
+            
+            let object = Schema.Object(json: jsonObject)
+            
+            if objects[object.name] != nil {
+                fatalError("Object exists.")
+            }
+            objects[object.name] = object
+        }
         
         print("")
     }
