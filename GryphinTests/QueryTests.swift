@@ -28,19 +28,19 @@ class QueryTests: XCTestCase {
 //            }
 //        }
         
-        let someClass = Gen.Class(name: "Query", superclass: "Field")
+        let someClass = Swift.Class(name: "Query", superclass: "Field")
         someClass.add(children: [
             
-            Gen.Method(visibility: .public, name: .init(.required), parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+            Swift.Method(visibility: .public, name: .init(.required), parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
             ], body: [
                 "super.init(name: \"query\")",
                 "",
                 "buildOn(self)",
             ]),
             
-            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
             ], annotations: [.discardableResult], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -52,8 +52,8 @@ class QueryTests: XCTestCase {
                 "The viewer for the thing that does stuff",
             ]),
             
-            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
             ], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -66,19 +66,19 @@ class QueryTests: XCTestCase {
             ]),
         ])
         
-        let otherClass = Gen.Class(name: "Query", superclass: "Field")
+        let otherClass = Swift.Class(name: "Query", superclass: "Field")
         otherClass.add(children: [
             
-            Gen.Method(visibility: .public, name: .init(.required), parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+            Swift.Method(visibility: .public, name: .init(.required), parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
                 ], body: [
                     "super.init(name: \"query\")",
                     "",
                     "buildOn(self)",
                     ]),
             
-            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
                 ], annotations: [.discardableResult], body: [
                     "let viewer = User(name: \"viewer\")",
                     "self.add(child: viewer)",
@@ -90,8 +90,8 @@ class QueryTests: XCTestCase {
                     "The viewer for the thing that does stuff",
                     ]),
             
-            Gen.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Gen.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+            Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
+                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
                 ], body: [
                     "let viewer = User(name: \"viewer\")",
                     "self.add(child: viewer)",
@@ -104,7 +104,7 @@ class QueryTests: XCTestCase {
                     ]),
             ])
         
-        let document = Gen.Document(classes: [
+        let document = Swift.Document(classes: [
             someClass,
             otherClass,
         ])

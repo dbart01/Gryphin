@@ -1,5 +1,5 @@
 //
-//  Gen.Class.swift
+//  Swift.Class.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     final class Class: Container {
         
         let visibility: Visibility

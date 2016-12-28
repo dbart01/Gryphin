@@ -1,5 +1,5 @@
 //
-//  Gen.swift
+//  Swift.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-27.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-struct Gen {}
+struct Swift {}

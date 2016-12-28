@@ -1,5 +1,5 @@
 //
-//  Gen.Container.swift
+//  Swift.Container.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     class Container: Generatable {
         
         var parent:    Generatable?

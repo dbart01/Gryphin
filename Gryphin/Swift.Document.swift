@@ -1,5 +1,5 @@
 //
-//  Gen.Document.swift
+//  Swift.Document.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-27.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     final class Document: Container {
         
         // ----------------------------------

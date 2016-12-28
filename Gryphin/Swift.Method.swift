@@ -1,5 +1,5 @@
 //
-//  Gen.Method.swift
+//  Swift.Method.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     final class Method: Container {
         
         let visibility:  Visibility
@@ -133,6 +133,6 @@ extension Gen {
     }
 }
 
-func +=(lhs: Gen.Method, rhs: Gen.Line) {
+func +=(lhs: Swift.Method, rhs: Swift.Line) {
     lhs.body.append(rhs)
 }

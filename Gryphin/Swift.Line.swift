@@ -1,5 +1,5 @@
 //
-//  Gen.Line.swift
+//  Swift.Line.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-27.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     struct Line: ExpressibleByStringLiteral, CustomStringConvertible {
         
         typealias StringLiteralType                  = String

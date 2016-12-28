@@ -1,5 +1,5 @@
 //
-//  Gen.Visibility.swift
+//  Swift.Visibility.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Gen {
+extension Swift {
     enum Visibility: String {
         case `private`
         case `fileprivate`
