@@ -9,16 +9,27 @@
 import Foundation
 
 extension Gen {
-    struct Line: ExpressibleByStringLiteral {
+    struct Line: ExpressibleByStringLiteral, CustomStringConvertible {
         
-        typealias StringLiteralType = String
+        typealias StringLiteralType                  = String
         typealias ExtendedGraphemeClusterLiteralType = String
-        typealias UnicodeScalarLiteralType = String
+        typealias UnicodeScalarLiteralType           = String
         
-        let content: String
+        private let content: String
         
         // ----------------------------------
         //  MARK: - Init -
+        //
+        init?(content: String?) {
+            guard let content = content else {
+                return nil
+            }
+            
+            self.init(content: content)
+        }
+        
+        // ----------------------------------
+        //  MARK: - ExpressibleByStringLiteral -
         //
         init(content: String) {
             self.content = content
@@ -35,5 +46,25 @@ extension Gen {
         init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
             self.content = value
         }
+        
+        // ----------------------------------
+        //  MARK: - CustomStringConvertible -
+        //
+        var description: String {
+            return self.content
+        }
+    }
+}
+
+extension Array where Element: CustomStringConvertible {
+    
+    func commentStringIndentedBy(_ indent: String) -> String {
+        guard !self.isEmpty else {
+            return ""
+        }
+        
+        return self.map {
+            "\(indent)/// \($0)\n"
+        }.joined(separator: "")
     }
 }

@@ -34,10 +34,7 @@ extension Gen {
             var string = ""
             
             let superclass = self.superclass != nil ? ": \(self.superclass!)" : ""
-            
-            let comments = self.comments.map {
-                "\(self.indent)/// \($0.content)\n"
-            }.joined(separator: "")
+            let comments   = self.comments.commentStringIndentedBy(self.indent)
             
             string += comments
             string += "\(self.indent)\(self.visibility.rawValue) final class \(self.name)\(superclass) {\n\n"

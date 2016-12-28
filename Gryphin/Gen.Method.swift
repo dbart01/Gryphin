@@ -92,7 +92,7 @@ extension Gen {
              ** Construct the documentation comments
              */
             let comments = self.comments.map {
-                "\(self.indent)/// \($0.content)\n"
+                "\(self.indent)/// \($0)\n"
             }.joined(separator: "")
             
             /* ---------------------------------
@@ -119,7 +119,7 @@ extension Gen {
              */
             let bodyIndent = self.indentFor(distanceToRoot: self.distanceToRoot + 1)
             let body       = self.body.map {
-                "\(bodyIndent)\($0.content)\n"
+                "\(bodyIndent)\($0)\n"
             }.joined(separator: "")
             
             string += comments
