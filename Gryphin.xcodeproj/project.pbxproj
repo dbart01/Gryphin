@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A9A6A171E0EC9C6008754A4 /* Gryphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */; };
 		9A9A6A1E1E0EC9C6008754A4 /* Gryphin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A6A101E0EC9C6008754A4 /* Gryphin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gryphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A6A101E0EC9C6008754A4 /* Gryphin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gryphin.h; sourceTree = "<group>"; };
 		9A9A6A111E0EC9C6008754A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				9A9A6A291E0EC9E2008754A4 /* Schema.Kind.swift */,
 				9A9A6A2A1E0EC9E2008754A4 /* Schema.ObjectType.swift */,
 				9A9A6A2B1E0EC9E2008754A4 /* Schema.Object.swift */,
+				9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */,
 				9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */,
 				9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */,
 				9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */,
@@ -332,6 +335,7 @@
 				9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */,
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
 				9A9A6A411E0EC9F8008754A4 /* Swift.Container.swift in Sources */,
+				9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */,
 				9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */,
 				9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */,
 				9A9A6A3F1E0EC9F8008754A4 /* Generatable.swift in Sources */,
