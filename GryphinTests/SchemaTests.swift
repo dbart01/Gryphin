@@ -16,27 +16,13 @@ class SchemaTests: XCTestCase {
     func testSchema() {
         let bundle = Bundle(for: self.classForCoder)
         let url    = bundle.url(forResource: "schema", withExtension: "json")!
-        let data   = try! Data(contentsOf: url)
-        let json   = try! JSONSerialization.jsonObject(with: data, options: []) as! JSON
         
-        let jsonData       = json["data"]             as! JSON
-        let jsonSchema     = jsonData["__schema"]     as! JSON
-        let jsonTypes      = jsonSchema["types"]      as! [JSON]
-        let jsonDirectives = jsonSchema["directives"] as! [JSON]
+        let generator = try! Swift.Generator(withSchemaAt: url)
+        let document  = generator.generate()
+        let string    = document.stringRepresentation
         
-//        let objects    = Schema.Object.collectionWith(requiredJson: jsonTypes)
-//        let directives = Schema.Directive.collectionWith(requiredJson: jsonDirectives)
-        
-        var objects: [String: Schema.Object] = [:]
-        for jsonObject in jsonTypes {
-            
-            let object = Schema.Object(json: jsonObject)
-            
-            if objects[object.name] != nil {
-                fatalError("Object exists.")
-            }
-            objects[object.name] = object
-        }
+        let path = URL(fileURLWithPath: "/Users/dbart/Desktop/API.swift")
+        try! string.write(to: path, atomically: true, encoding: .utf8)
         
         print("")
     }

@@ -20,11 +20,17 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, inheritances: [String]? = nil, comments: [Line]? = nil) {
+        init(visibility: Visibility = .internal, name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
             self.visibility   = visibility
             self.name         = name
             self.inheritances = inheritances
             self.comments     = comments ?? []
+            
+            super.init()
+            
+            if let methods = methods, !methods.isEmpty {
+                self.add(children: methods)
+            }
         }
         
         // ----------------------------------

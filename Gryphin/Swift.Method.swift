@@ -112,7 +112,10 @@ extension Swift {
             /* ---------------------------------
              ** Construct the return type
              */
-            let returnType = self.returnType != nil ? "-> \(self.returnType!) " : ""
+            var returnType = ""
+            if let type = self.returnType, !type.isEmpty {
+                returnType = "-> \(type) "
+            }
             
             /* ---------------------------------
              ** Construct the method body

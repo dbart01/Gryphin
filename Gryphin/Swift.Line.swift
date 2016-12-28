@@ -28,6 +28,19 @@ extension Swift {
             self.init(content: content)
         }
         
+        static func linesWith(requiredContent content: String) -> [Line] {
+            return content.components(separatedBy: "\n").map {
+                Line(content: $0)
+            }
+        }
+        
+        static func linesWith(optionalContent content: String?) -> [Line]? {
+            guard let content = content else {
+                return nil
+            }
+            return self.linesWith(requiredContent: content)
+        }
+        
         // ----------------------------------
         //  MARK: - ExpressibleByStringLiteral -
         //
