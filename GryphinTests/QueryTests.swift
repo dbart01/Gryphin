@@ -28,7 +28,7 @@ class QueryTests: XCTestCase {
 //            }
 //        }
         
-        let someClass = Swift.Class(name: "Query", superclass: "Field")
+        let someClass = Swift.Class(name: "Query", inheritances: ["Field"])
         someClass.add(children: [
             
             Swift.Method(visibility: .public, name: .init(.required), parameters: [
@@ -66,7 +66,7 @@ class QueryTests: XCTestCase {
             ]),
         ])
         
-        let otherClass = Swift.Class(name: "Query", superclass: "Field")
+        let otherClass = Swift.Class(name: "Query", inheritances: ["Field"])
         otherClass.add(children: [
             
             Swift.Method(visibility: .public, name: .init(.required), parameters: [

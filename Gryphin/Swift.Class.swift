@@ -11,20 +11,20 @@ import Foundation
 extension Swift {
     final class Class: Container {
         
-        let visibility: Visibility
-        let name:       String
-        let superclass: String?
+        let visibility:   Visibility
+        let name:         String
+        let inheritances: [String]?
         
         fileprivate(set) var comments: [Line]
         
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, superclass: String? = nil, comments: [Line]? = nil) {
-            self.visibility = visibility
-            self.name       = name
-            self.superclass = superclass
-            self.comments   = comments ?? []
+        init(visibility: Visibility = .internal, name: String, inheritances: [String]? = nil, comments: [Line]? = nil) {
+            self.visibility   = visibility
+            self.name         = name
+            self.inheritances = inheritances
+            self.comments     = comments ?? []
         }
         
         // ----------------------------------
@@ -33,11 +33,15 @@ extension Swift {
         override var stringRepresentation: String {
             var string = ""
             
-            let superclass = self.superclass != nil ? ": \(self.superclass!)" : ""
+            var inheritanceString = ""
+            if let inheritances = self.inheritances, !inheritances.isEmpty {
+                let interfaces    = inheritances.joined(separator: ", ")
+                inheritanceString = ": \(interfaces)"
+            }
             let comments   = self.comments.commentStringIndentedBy(self.indent)
             
             string += comments
-            string += "\(self.indent)\(self.visibility.rawValue) final class \(self.name)\(superclass) {\n\n"
+            string += "\(self.indent)\(self.visibility.rawValue) final class \(self.name)\(inheritanceString) {\n\n"
             string += super.stringRepresentation
             string += "\(self.indent)}\n"
             
