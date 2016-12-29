@@ -9,9 +9,22 @@
 import Foundation
 
 extension Swift {
-    final class Class: Container {
+    class Class: Container {
+        
+        enum Kind {
+            case `class`
+            case `struct`
+            
+            var string: String {
+                switch self {
+                case .class:  return "final class"
+                case .struct: return "struct"
+                }
+            }
+        }
         
         let visibility:   Visibility
+        let kind:         Kind
         let name:         String
         let inheritances: [String]?
         
@@ -20,8 +33,9 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
+        init(visibility: Visibility = .internal, kind: Kind = .class, name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
             self.visibility   = visibility
+            self.kind         = kind
             self.name         = name
             self.inheritances = inheritances
             self.comments     = comments ?? []
@@ -44,10 +58,11 @@ extension Swift {
                 let interfaces    = inheritances.joined(separator: ", ")
                 inheritanceString = ": \(interfaces)"
             }
-            let comments   = self.comments.commentStringIndentedBy(self.indent)
+            let comments = self.comments.commentStringIndentedBy(self.indent)
+            let kind     = self.kind.string
             
             string += comments
-            string += "\(self.indent)\(self.visibility.rawValue) final class \(self.name)\(inheritanceString) {\n\n"
+            string += "\(self.indent)\(self.visibility.rawValue) \(kind) \(self.name)\(inheritanceString) {\n\n"
             string += super.stringRepresentation
             string += "\(self.indent)}\n"
             

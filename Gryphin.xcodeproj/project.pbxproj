@@ -39,7 +39,7 @@
 		9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */; };
 		9A9A6A611E0ECA55008754A4 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5B1E0ECA55008754A4 /* schema.json */; };
 		9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */; };
-		9A9A6A651E12CAA4008754A4 /* Swift.Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A641E12CAA4008754A4 /* Swift.Document.swift */; };
+		9A9A6A651E12CAA4008754A4 /* Swift.Namespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A641E12CAA4008754A4 /* Swift.Namespace.swift */; };
 		9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
 		9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
 /* End PBXBuildFile section */
@@ -91,7 +91,7 @@
 		9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaTests.swift; sourceTree = "<group>"; };
 		9A9A6A5B1E0ECA55008754A4 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Directive.swift; sourceTree = "<group>"; };
-		9A9A6A641E12CAA4008754A4 /* Swift.Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Document.swift; sourceTree = "<group>"; };
+		9A9A6A641E12CAA4008754A4 /* Swift.Namespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Namespace.swift; sourceTree = "<group>"; };
 		9A9A6A661E12CAC1008754A4 /* Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.swift; sourceTree = "<group>"; };
 		9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,9 +184,9 @@
 				9A9A6A661E12CAC1008754A4 /* Swift.swift */,
 				9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */,
 				9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */,
-				9A9A6A641E12CAA4008754A4 /* Swift.Document.swift */,
 				9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */,
 				9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */,
+				9A9A6A641E12CAA4008754A4 /* Swift.Namespace.swift */,
 				9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */,
 				9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */,
 			);
@@ -323,7 +323,7 @@
 				9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */,
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
-				9A9A6A651E12CAA4008754A4 /* Swift.Document.swift in Sources */,
+				9A9A6A651E12CAA4008754A4 /* Swift.Namespace.swift in Sources */,
 				9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */,
 				9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */,
 				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,

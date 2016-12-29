@@ -104,12 +104,12 @@ class QueryTests: XCTestCase {
                     ]),
             ])
         
-        let document = Swift.Document(classes: [
+        let namespace = Swift.Namespace(items: [
             someClass,
             otherClass,
         ])
         
-        print(document.stringRepresentation)
+        print(namespace.stringRepresentation)
         print("")
     }
 }

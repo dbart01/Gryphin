@@ -36,14 +36,14 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Generation -
         //
-        func generate() -> Document {
+        func generate() -> Namespace {
             
             let schemaData     = self.schemaJSON["data"]  as! JSON
             let jsonSchema     = schemaData["__schema"]   as! JSON
             let jsonTypes      = jsonSchema["types"]      as! [JSON]
             let jsonDirectives = jsonSchema["directives"] as! [JSON]
             
-            let document = Document(classes: [])
+            let document = Namespace(items: [])
             
             /* -----------------------------
              ** Parse the schema types first
@@ -87,15 +87,32 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Type Generation -
         //
-        private func generate(object: Schema.Object, in document: Document) {
-            let inheritances = object.interfaces?.map { $0.name! }
-            let swiftClass   = Class(
+        private func generate(object: Schema.Object, in namespace: Namespace) {
+            
+            /* ----------------------------------------
+             ** Build all interfaces and superclasses
+             ** that this object will inherit from. It
+             ** will always inherit from `Field` to
+             ** facilitate the generation of queries.
+             */
+            var inheritances = object.interfaces?.map { $0.name! }
+            inheritances?.insert("Field", at: 0)
+
+            /* -----------------------------------------
+             ** Initialize the class that will represent
+             ** this object.
+             */
+            let swiftClass = Class(
                 visibility:   .public,
                 name:         object.name,
                 inheritances: inheritances,
                 comments:     Line.linesWith(requiredContent: object.description ?? "")
             )
             
+            /* ----------------------------------------
+             ** Build the fields which will be methods
+             ** of this class.
+             */
             if let fields = object.fields {
                 for field in fields {
                     
@@ -141,7 +158,7 @@ extension Swift {
                 }
             }
             
-            document.add(child: swiftClass)
+            namespace.add(child: swiftClass)
         }
     }
 }
