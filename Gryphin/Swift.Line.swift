@@ -29,6 +29,10 @@ extension Swift {
         }
         
         static func linesWith(requiredContent content: String) -> [Line] {
+            guard !content.isEmpty else {
+                return []
+            }
+            
             return content.components(separatedBy: "\n").map {
                 Line(content: $0)
             }
