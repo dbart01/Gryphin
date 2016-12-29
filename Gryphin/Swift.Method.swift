@@ -127,9 +127,20 @@ extension Swift {
             
             string += comments
             string += annotations
-            string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType){\n"
-            string += body
-            string += "\(self.indent)}\n"
+            string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType)"
+            
+            /* ----------------------------------------
+             ** Only append body and opening / closing
+             ** braces if body is non-empty. Otherwise
+             ** we'll treat this like a declaration.
+             */
+            if !self.body.isEmpty {
+                string += "{\n"
+                string += body
+                string += "\(self.indent)}\n"
+            } else {
+                string += "\n"
+            }
             
             return string
         }
