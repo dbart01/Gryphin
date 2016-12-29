@@ -43,7 +43,7 @@ extension Swift {
             let jsonTypes      = jsonSchema["types"]      as! [JSON]
             let jsonDirectives = jsonSchema["directives"] as! [JSON]
             
-            let document = Namespace(items: [])
+            let namespace = Namespace(items: [])
             
             /* -----------------------------
              ** Parse the schema types first
@@ -55,9 +55,12 @@ extension Swift {
             for type in types {
                 
                 switch type.kind {
-                case .object: fallthrough
+                case .object:
+                    self.generate(object: type, in: namespace)
+                    
                 case .interface:
-                    self.generate(object: type, in: document)
+                    self.generate(interface: type, in: namespace)
+                    
                 case .enum:
                     break
                 case .inputObject:
@@ -80,12 +83,16 @@ extension Swift {
                 Schema.Directive(json: $0)
             }
             
-            return document
+            return namespace
         }
         
         // ----------------------------------
         //  MARK: - Type Generation -
         //
+        private func generate(interface: Schema.Object, in namespace: Namespace) {
+            self.generate(object: interface, in: namespace)
+        }
+        
         private func generate(object: Schema.Object, in namespace: Namespace) {
             
             precondition(object.kind == .object || object.kind == .interface)
