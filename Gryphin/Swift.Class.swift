@@ -12,13 +12,27 @@ extension Swift {
     class Class: Container {
         
         enum Kind {
-            case `class`
+            
+            enum Attribute: String {
+                case `final`
+            }
+            
+            case `class`(Attribute?)
             case `struct`
+            case `protocol`
             
             var string: String {
                 switch self {
-                case .class:  return "final class"
-                case .struct: return "struct"
+                case .class(let attribute):
+                    
+                    var attributeString = ""
+                    if let a = attribute {
+                        attributeString = "\(a) "
+                    }
+                    return "\(attributeString)class"
+                    
+                case .struct:   return "struct"
+                case .protocol: return "protocol"
                 }
             }
         }
@@ -33,7 +47,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, kind: Kind = .class, name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
+        init(visibility: Visibility = .internal, kind: Kind = .class(.final), name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
             self.visibility   = visibility
             self.kind         = kind
             self.name         = name
