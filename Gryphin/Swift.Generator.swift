@@ -55,11 +55,10 @@ extension Swift {
             for type in types {
                 
                 switch type.kind {
-                case .object:
+                case .object: fallthrough
+                case .interface:
                     self.generate(object: type, in: document)
                 case .enum:
-                    break
-                case .interface:
                     break
                 case .inputObject:
                     break
@@ -89,14 +88,35 @@ extension Swift {
         //
         private func generate(object: Schema.Object, in namespace: Namespace) {
             
+            precondition(object.kind == .object || object.kind == .interface)
+            
             /* ----------------------------------------
              ** Build all interfaces and superclasses
              ** that this object will inherit from. It
              ** will always inherit from `Field` to
              ** facilitate the generation of queries.
              */
-            var inheritances = object.interfaces?.map { $0.name! }
-            inheritances?.insert("Field", at: 0)
+            var inheritances: [String] = []
+            if let interfaces = object.interfaces, !interfaces.isEmpty {
+                inheritances.insert("Field", at: 0)
+                inheritances.append(contentsOf: interfaces.map {
+                    $0.name!
+                })
+            }
+            
+            /* ----------------------------------------
+             ** Dtermine if we're generating a class or
+             ** a protocol (i.e. Interface).
+             */
+            let classKind: Class.Kind
+            switch object.kind {
+            case .object:
+                classKind = .class(.final)
+                
+            case .interface: fallthrough
+            default:
+                classKind = .protocol
+            }
 
             /* -----------------------------------------
              ** Initialize the class that will represent
@@ -104,6 +124,7 @@ extension Swift {
              */
             let swiftClass = Class(
                 visibility:   .public,
+                kind:         classKind,
                 name:         object.name,
                 inheritances: inheritances,
                 comments:     Line.linesWith(requiredContent: object.description ?? "")
@@ -159,6 +180,19 @@ extension Swift {
             }
             
             namespace.add(child: swiftClass)
+            
+            /* -------------------------------------------
+             ** If the object is an interface, we'll have
+             ** conform all possible types to the interface 
+             ** via an extension on that object.
+             */
+            if let possibleTypes = object.possibleTypes, !possibleTypes.isEmpty {
+                for possibleType in possibleTypes {
+                    
+                    let swiftExtension = Class(visibility: .public, kind: .extension, name: possibleType.name!, inheritances: [object.name])
+                    namespace.add(child: swiftExtension)
+                }
+            }
         }
     }
 }

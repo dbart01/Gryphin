@@ -20,6 +20,7 @@ extension Swift {
             case `class`(Attribute?)
             case `struct`
             case `protocol`
+            case `extension`
             
             var string: String {
                 switch self {
@@ -31,8 +32,9 @@ extension Swift {
                     }
                     return "\(attributeString)class"
                     
-                case .struct:   return "struct"
-                case .protocol: return "protocol"
+                case .struct:    return "struct"
+                case .protocol:  return "protocol"
+                case .extension: return "extension"
                 }
             }
         }
@@ -76,9 +78,14 @@ extension Swift {
             let kind     = self.kind.string
             
             string += comments
-            string += "\(self.indent)\(self.visibility.rawValue) \(kind) \(self.name)\(inheritanceString) {\n\n"
-            string += super.stringRepresentation
-            string += "\(self.indent)}\n"
+            string += "\(self.indent)\(self.visibility.rawValue) \(kind) \(self.name)\(inheritanceString) {"
+            
+            let classBody = super.stringRepresentation
+            if !classBody.isEmpty {
+                string += "\n\(classBody)"
+                string += "\(self.indent)"
+            }
+            string += "}\n"
             
             return string
         }
