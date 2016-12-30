@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
 		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Enum.Case.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
 		9A98A3331E141DC300B2AD52 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = ../../../../../../Desktop/API.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				9A98A3401E15F3F800B2AD52 /* Swift.Annotation.swift */,
 				9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */,
 				9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */,
+				9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */,
 				9A9A6A641E12CAA4008754A4 /* Swift.Namespace.swift */,
 				9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */,
 				9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */,
@@ -359,6 +362,7 @@
 				9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */,
 				9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */,
 				9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */,
+				9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */,
 				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
 				9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */,

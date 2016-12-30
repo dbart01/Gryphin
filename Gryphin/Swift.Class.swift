@@ -21,6 +21,7 @@ extension Swift {
             case `struct`
             case `protocol`
             case `extension`
+            case `enum`
             
             var string: String {
                 switch self {
@@ -35,6 +36,7 @@ extension Swift {
                 case .struct:    return "struct"
                 case .protocol:  return "protocol"
                 case .extension: return "extension"
+                case .enum:      return "enum"
                 }
             }
         }
@@ -49,7 +51,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, kind: Kind = .class(.final), name: String, inheritances: [String]? = nil, comments: [Line]? = nil, methods: [Method]? = nil) {
+        init(visibility: Visibility = .internal, kind: Kind = .class(.final), name: String, inheritances: [String]? = nil, comments: [Line]? = nil, containables: [Containable]? = nil) {
             self.visibility   = visibility
             self.kind         = kind
             self.name         = name
@@ -58,8 +60,8 @@ extension Swift {
             
             super.init()
             
-            if let methods = methods, !methods.isEmpty {
-                self.add(children: methods)
+            if let containables = containables, !containables.isEmpty {
+                self.add(children: containables)
             }
         }
         

@@ -89,7 +89,8 @@ extension Swift {
                     self.generate(interface: type, in: namespace)
                     
                 case .enum:
-                    break
+                    self.generate(enum: type, in: namespace)
+                    
                 case .inputObject:
                     break
                 case .scalar:
@@ -117,6 +118,26 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Type Generation -
         //
+        private func generate(enum object: Schema.Object, in namespace: Namespace) {
+            precondition(object.kind == .enum)
+            
+            let enumClass = Class(
+                visibility: .public,
+                kind:       .enum,
+                name:       object.name,
+                comments:   object.commentLines()
+            )
+            
+            for value in object.enumValues! {
+                enumClass.add(child: Enum.Case(
+                    name:     value.name,
+                    comments: value.commentLines()
+                ))
+            }
+            
+            namespace.add(child: enumClass)
+        }
+        
         private func generate(scalar: Schema.Object, in namespace: Namespace) {
             precondition(scalar.kind == .scalar)
             
@@ -382,6 +403,13 @@ extension Schema.ObjectType {
         case .nonNull:
             return childType
         }
+    }
+}
+
+extension Schema.EnumValue {
+    
+    func commentLines() -> [Swift.Line] {
+        return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
     }
 }
 
