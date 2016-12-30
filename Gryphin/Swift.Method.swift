@@ -105,13 +105,6 @@ extension Swift {
         var stringRepresentation: String {
             var string = ""
             
-            /* ----------------------------------------
-             ** Construct the documentation comments
-             */
-            let comments = self.comments.map {
-                "\(self.indent)/// \($0)\n"
-            }.joined(separator: "")
-            
             /* ---------------------------------
              ** Construct the method parameters
              */
@@ -142,7 +135,7 @@ extension Swift {
                 "\(bodyIndent)\($0)\n"
             }.joined(separator: "")
             
-            string += comments
+            string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
             string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType)"
             

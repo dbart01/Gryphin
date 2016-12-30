@@ -9,18 +9,24 @@
 import Foundation
 
 extension Swift {
-    struct Line: ExpressibleByStringLiteral, CustomStringConvertible {
+    final class Line: Containable, ExpressibleByStringLiteral {
         
         typealias StringLiteralType                  = String
         typealias ExtendedGraphemeClusterLiteralType = String
         typealias UnicodeScalarLiteralType           = String
+        
+        var parent: Containing?
         
         private let content: String
         
         // ----------------------------------
         //  MARK: - Init -
         //
-        init?(content: String?) {
+        init(content: String) {
+            self.content = content
+        }
+        
+        convenience init?(content: String?) {
             guard let content = content else {
                 return nil
             }
@@ -48,10 +54,6 @@ extension Swift {
         // ----------------------------------
         //  MARK: - ExpressibleByStringLiteral -
         //
-        init(content: String) {
-            self.content = content
-        }
-        
         init(stringLiteral value: StringLiteralType) {
             self.content = value
         }
@@ -65,15 +67,15 @@ extension Swift {
         }
         
         // ----------------------------------
-        //  MARK: - CustomStringConvertible -
+        //  MARK: - String Representable -
         //
-        var description: String {
-            return self.content
+        var stringRepresentation: String {
+            return "\(self.indent)\(self.content)"
         }
     }
 }
 
-extension Array where Element: CustomStringConvertible {
+extension Array where Element: Containable {
     
     func commentStringIndentedBy(_ indent: String) -> String {
         guard !self.isEmpty else {
@@ -81,7 +83,7 @@ extension Array where Element: CustomStringConvertible {
         }
         
         return self.map {
-            "\(indent)/// \($0)\n"
+            "\(indent)/// \($0.stringRepresentation)\n"
         }.joined(separator: "")
     }
 }
