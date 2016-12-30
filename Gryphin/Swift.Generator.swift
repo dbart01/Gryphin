@@ -404,7 +404,8 @@ extension Schema.Field {
     
     func parameters() -> [Swift.Method.Parameter] {
         return self.arguments.map {
-            Swift.Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString())
+            let defaultValue: Swift.Method.Parameter.Default? = $0.type.kind != .nonNull ? .nil : nil
+            return Swift.Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString(), default: defaultValue)
         }
     }
 }

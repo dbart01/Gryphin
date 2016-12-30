@@ -47,25 +47,41 @@ extension Swift {
         
         struct Parameter: StringRepresentable {
             
-            let unnamed: Bool
-            let name:    String
-            let type:    String
+            enum Default: StringRepresentable {
+                case `nil`
+                case value(String)
+                
+                var stringRepresentation: String {
+                    switch self {
+                    case .nil:               return "nil"
+                    case .value(let string): return string
+                    }
+                }
+            }
+            
+            let unnamed:   Bool
+            let name:      String
+            let type:      String
+            let `default`: Default?
             
             // ----------------------------------
             //  MARK: - Init -
             //
-            init(unnamed: Bool = false, name: String, type: String) {
+            init(unnamed: Bool = false, name: String, type: String, default: Default? = nil) {
                 self.unnamed = unnamed
                 self.name    = name
                 self.type    = type
+                self.default = `default`
             }
             
             // ----------------------------------
             //  MARK: - String Representation -
             //
             var stringRepresentation: String {
-                let unnamed = self.unnamed ? "_ " : ""
-                return "\(unnamed)\(self.name): \(self.type)"
+                let unnamed    = self.unnamed ? "_ " : ""
+                let assignment = self.default != nil ? " = \(self.default!.stringRepresentation)" : ""
+                
+                return "\(unnamed)\(self.name): \(self.type)\(assignment)"
             }
         }
         
