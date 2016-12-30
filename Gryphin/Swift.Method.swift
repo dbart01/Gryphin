@@ -46,22 +46,26 @@ extension Swift {
         }
         
         struct Parameter: StringRepresentable {
-            let name:  String
-            let type:  String
+            
+            let unnamed: Bool
+            let name:    String
+            let type:    String
             
             // ----------------------------------
             //  MARK: - Init -
             //
-            init(name: String, type: String) {
-                self.name  = name
-                self.type  = type
+            init(unnamed: Bool = false, name: String, type: String) {
+                self.unnamed = unnamed
+                self.name    = name
+                self.type    = type
             }
             
             // ----------------------------------
             //  MARK: - String Representation -
             //
             var stringRepresentation: String {
-                return "\(self.name): \(self.type)"
+                let unnamed = self.unnamed ? "_ " : ""
+                return "\(unnamed)\(self.name): \(self.type)"
             }
         }
         

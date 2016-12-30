@@ -82,7 +82,7 @@ extension Swift {
             
             let classBody = super.stringRepresentation
             if !classBody.isEmpty {
-                string += "\n\(classBody)"
+                string += "\n\n\(classBody)"
                 string += "\(self.indent)"
             }
             string += "}\n"

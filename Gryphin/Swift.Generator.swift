@@ -209,7 +209,7 @@ extension Swift {
                      ** Build the parameters based on arguments
                      ** accepted by this field.
                      */
-                    let parameters = field.arguments.map {
+                    var parameters = field.arguments.map {
                         Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString())
                     }
                     
@@ -232,10 +232,23 @@ extension Swift {
                         ))
                         
                     } else {
+                        
+                        /* ----------------------------------------
+                         ** If the object isn't a leaf, we'll need
+                         ** a `buildOn` closure so the caller can
+                         ** append additional fields to it.
+                         */
+                        let buildType = field.type.recursiveTypeString()
+                        parameters.append(Method.Parameter(
+                            unnamed: true,
+                            name:    "buildOn",
+                            type:    "(\(buildType)) -> Void"
+                        ))
+                        
                         swiftClass.add(child: Method(
                             visibility:  .public,
                             name:        .func(field.name),
-                            returnType:  object.name, //field.type.recursiveTypeString(),
+                            returnType:  object.name,
                             parameters:  parameters,
                             annotations: [.discardableResult],
                             body: [
