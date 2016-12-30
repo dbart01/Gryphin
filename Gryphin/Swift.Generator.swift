@@ -135,40 +135,60 @@ extension Swift {
         }
         
         private func generate(interface: Schema.Object, in namespace: Namespace) {
-            self.generate(object: interface, in: namespace)
+            
+            precondition(interface.kind == .interface)
+            
+            /* -----------------------------------------
+             ** Initialize the class that will represent
+             ** this object.
+             */
+            let swiftClass = Class(
+                visibility:   .public,
+                kind:         .protocol,
+                name:         interface.name,
+                inheritances: interface.inheritances(),
+                comments:     interface.commentLines()
+            )
+            
+            /* ----------------------------------------
+             ** Build the fields which will be methods
+             ** of this class.
+             */
+            if let fields = interface.fields {
+                self.generate(fields: fields, inObjectNamed: interface.name, appendingTo: swiftClass, isInterface: true)
+            }
+            
+            namespace.add(child: swiftClass)
+            
+            /* -------------------------------------------
+             ** If the object is an interface, we'll have
+             ** conform all possible types to the interface
+             ** via an extension on that object.
+             */
+            if let possibleTypes = interface.possibleTypes, !possibleTypes.isEmpty {
+                for possibleType in possibleTypes {
+                    
+                    precondition(possibleType.name != nil)
+                    
+                    let swiftExtension = Class(
+                        visibility:   .public,
+                        kind:         .extension,
+                        name:         possibleType.name!,
+                        inheritances: [interface.name]
+                    )
+                    
+                    if let fields = interface.fields {
+                        self.generate(fields: fields, inObjectNamed: possibleType.name!, appendingTo: swiftExtension, isInterface: false)
+                    }
+                    
+                    namespace.add(child: swiftExtension)
+                }
+            }
         }
         
         private func generate(object: Schema.Object, in namespace: Namespace) {
             
-            precondition(object.kind == .object || object.kind == .interface)
-            
-            /* ----------------------------------------
-             ** Build all interfaces and superclasses
-             ** that this object will inherit from. It
-             ** will always inherit from `Field` to
-             ** facilitate the generation of queries.
-             */
-            var inheritances: [String] = []
-            if let interfaces = object.interfaces, !interfaces.isEmpty {
-                inheritances.insert("Field", at: 0)
-                inheritances.append(contentsOf: interfaces.map {
-                    $0.name!
-                })
-            }
-            
-            /* ----------------------------------------
-             ** Dtermine if we're generating a class or
-             ** a protocol (i.e. Interface).
-             */
-            let classKind: Class.Kind
-            switch object.kind {
-            case .object:
-                classKind = .class(.final)
-                
-            case .interface: fallthrough
-            default:
-                classKind = .protocol
-            }
+            precondition(object.kind == .object)
 
             /* -----------------------------------------
              ** Initialize the class that will represent
@@ -176,109 +196,138 @@ extension Swift {
              */
             let swiftClass = Class(
                 visibility:   .public,
-                kind:         classKind,
+                kind:         .class(.final),
                 name:         object.name,
-                inheritances: inheritances,
-                comments:     Line.linesWith(requiredContent: object.description ?? "")
+                inheritances: object.inheritances(),
+                comments:     object.commentLines()
             )
             
-            /* ----------------------------------------
-             ** Build the fields which will be methods
-             ** of this class.
-             */
             if let fields = object.fields {
-                for field in fields {
-                    
-                    /* -------------------------------------
-                     ** Build the documentation comments for
-                     ** this field, including the parameters
-                     */
-                    var comments: [Line] = []
-                    comments.append(contentsOf: Line.linesWith(requiredContent: field.description ?? "No documentation available for `\(field.name)`"))
-                    
-                    if !field.arguments.isEmpty {
-                        comments.append("")
-                        for arg in field.arguments {
-                            let description = arg.description ?? "No documentation"
-                            comments.append(Line(content: ":\(arg.name): \(description)"))
-                        }
-                    }
-                    comments.append("")
-                    
-                    /* ----------------------------------------
-                     ** Build the parameters based on arguments
-                     ** accepted by this field.
-                     */
-                    var parameters = field.arguments.map {
-                        Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString())
-                    }
-                    
-                    /* -------------------------------------------
-                     ** The type of method we construct depends on
-                     ** whether or not the field is a scalar (leaf)
-                     ** of an object type. Object types will have
-                     ** a `buildOn:` closure, scalars will not.
-                     */
-                    if field.type.hasScalar {
-                        swiftClass.add(child: Property(
-                            visibility:  .public,
-                            name:        field.name,
-                            returnType:  object.name,
-                            annotations: [.discardableResult],
-                            body:        [
-                                "let container: [String] = []"
-                            ],
-                            comments: comments
-                        ))
-                        
-                    } else {
-                        
-                        /* ----------------------------------------
-                         ** If the object isn't a leaf, we'll need
-                         ** a `buildOn` closure so the caller can
-                         ** append additional fields to it.
-                         */
-                        let buildType = field.type.recursiveTypeString()
-                        parameters.append(Method.Parameter(
-                            unnamed: true,
-                            name:    "buildOn",
-                            type:    "(\(buildType)) -> Void"
-                        ))
-                        
-                        swiftClass.add(child: Method(
-                            visibility:  .public,
-                            name:        .func(field.name),
-                            returnType:  object.name,
-                            parameters:  parameters,
-                            annotations: [.discardableResult],
-                            body: [
-                                "let container: [String] = []"
-                            ],
-                            comments: comments
-                        ))
-                    }
-                }
+                self.generate(fields: fields, inObjectNamed: object.name, appendingTo: swiftClass, isInterface: false)
             }
             
             namespace.add(child: swiftClass)
+        }
+        
+        // ----------------------------------
+        //  MARK: - Field Generation -
+        //
+        private func generate(fields: [Schema.Field], inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
-            /* -------------------------------------------
-             ** If the object is an interface, we'll have
-             ** conform all possible types to the interface 
-             ** via an extension on that object.
-             */
-            if let possibleTypes = object.possibleTypes, !possibleTypes.isEmpty {
-                for possibleType in possibleTypes {
-                    
-                    let swiftExtension = Class(visibility: .public, kind: .extension, name: possibleType.name!, inheritances: [object.name])
-                    namespace.add(child: swiftExtension)
+            for field in fields {
+                
+                /* -------------------------------------------
+                 ** If the field doesn't have arguments, it'll
+                 ** be represented by a property, not a method.
+                 */
+                if field.arguments.isEmpty {
+                    self.generate(propertyFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
+                } else {
+                    self.generate(methodFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
                 }
             }
+        }
+        
+        private func generate(propertyFor field: Schema.Field, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+            
+            precondition(field.arguments.isEmpty)
+            
+            var body: [Line] = []
+            if !isInterface {
+                body = [
+                    "return self"
+                ]
+            }
+            
+            containerType.add(child: Property(
+                visibility:  .public,
+                name:        field.name,
+                returnType:  isInterface ? "Self" : name,
+                annotations: [.discardableResult],
+                body:        body,
+                comments:    field.commentLines()
+            ))
+        }
+        
+        private func generate(methodFor field: Schema.Field, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+            
+            precondition(!field.arguments.isEmpty)
+            
+            /* ----------------------------------------
+             ** Build the parameters based on arguments
+             ** accepted by this field.
+             */
+            var parameters = field.parameters()
+            
+            /* ----------------------------------------
+             ** If the object isn't a leaf, we'll need
+             ** a `buildOn` closure so the caller can
+             ** append additional fields to it.
+             */
+            let buildType = field.type.recursiveTypeString()
+            
+            /* ----------------------------------------
+             ** We append the `buildOn` closure only if
+             ** the field type isn't a scalar type. We
+             ** can't nest fields in scalar types.
+             */
+            if !field.type.hasScalar {
+                parameters.append(Method.Parameter(
+                    unnamed: true,
+                    name:    "buildOn",
+                    type:    "(\(buildType)) -> Void"
+                ))
+            }
+            
+            var body: [Line] = []
+            if !isInterface {
+                body = [
+                    "return self"
+                ]
+            }
+            
+            containerType.add(child: Method(
+                visibility:  .public,
+                name:        .func(field.name),
+                returnType:  isInterface ? "Self" : name,
+                parameters:  parameters,
+                annotations: [.discardableResult],
+                body:        body,
+                comments:    field.commentLines()
+            ))
         }
     }
 }
 
-extension Schema.ObjectType {
+// ----------------------------------
+//  MARK: - Schema Type Extensions -
+//
+private extension Schema.Object {
+    
+    func commentLines() -> [Swift.Line] {
+        return Swift.Line.linesWith(requiredContent: self.description ?? "")
+    }
+    
+    func inheritances() -> [String] {
+        
+        /* ----------------------------------------
+         ** Build all interfaces and superclasses
+         ** that this object will inherit from. It
+         ** will always inherit from `Field` to
+         ** facilitate the generation of queries.
+         */
+        var inheritances: [String] = []
+        if let interfaces = self.interfaces, !interfaces.isEmpty {
+            inheritances.insert("Field", at: 0)
+            inheritances.append(contentsOf: interfaces.map {
+                $0.name!
+            })
+        }
+        return inheritances
+    }
+}
+
+private extension Schema.ObjectType {
     
     func recursiveTypeString() -> String {
         let childType = self.ofType?.recursiveTypeString() ?? ""
@@ -295,6 +344,30 @@ extension Schema.ObjectType {
             return "[\(childType)]"
         case .nonNull:
             return "\(childType)!"
+        }
+    }
+}
+
+private extension Schema.Field {
+    
+    func commentLines() -> [Swift.Line] {
+        var comments: [Swift.Line] = []
+        comments.append(contentsOf: Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`"))
+        
+        if !self.arguments.isEmpty {
+            comments.append("")
+            for arg in self.arguments {
+                let description = arg.description ?? "No documentation"
+                comments.append(Swift.Line(content: ":\(arg.name): \(description)"))
+            }
+        }
+        comments.append("")
+        return comments
+    }
+    
+    func parameters() -> [Swift.Method.Parameter] {
+        return self.arguments.map {
+            Swift.Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString())
         }
     }
 }
