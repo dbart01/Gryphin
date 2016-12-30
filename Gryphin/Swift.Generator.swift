@@ -70,6 +70,17 @@ extension Swift {
             
             for type in types {
                 
+                /* ---------------------------------
+                 ** Ignore the GraphQL private types
+                 */
+                guard !type.name.hasPrefix("__") else {
+                    continue
+                }
+                
+                /* -----------------------------------------
+                 ** Generate the appropriate source for each
+                 ** type declared in the schema.
+                 */
                 switch type.kind {
                 case .object:
                     self.generate(object: type, in: namespace)
