@@ -213,21 +213,37 @@ extension Swift {
                         Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString())
                     }
                     
-                    /* ------------------------------------------
-                     ** Build the Method that will return a typed
-                     ** value for this field.
+                    /* -------------------------------------------
+                     ** The type of method we construct depends on
+                     ** whether or not the field is a scalar (leaf)
+                     ** of an object type. Object types will have
+                     ** a `buildOn:` closure, scalars will not.
                      */
-                    swiftClass.add(child: Method(
-                        visibility:  .public,
-                        name:        .func(field.name),
-                        returnType:  field.type.recursiveTypeString(),
-                        parameters:  parameters,
-                        annotations: [.discardableResult],
-                        body: [
-                            
-                        ],
-                        comments: comments
-                    ))
+                    if field.type.hasScalar {
+                        swiftClass.add(child: Property(
+                            visibility:  .public,
+                            name:        field.name,
+                            returnType:  object.name,
+                            annotations: [.discardableResult],
+                            body:        [
+                                "let container: [String] = []"
+                            ],
+                            comments: comments
+                        ))
+                        
+                    } else {
+                        swiftClass.add(child: Method(
+                            visibility:  .public,
+                            name:        .func(field.name),
+                            returnType:  object.name, //field.type.recursiveTypeString(),
+                            parameters:  parameters,
+                            annotations: [.discardableResult],
+                            body: [
+                                "let container: [String] = []"
+                            ],
+                            comments: comments
+                        ))
+                    }
                 }
             }
             

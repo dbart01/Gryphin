@@ -9,7 +9,9 @@
 import Foundation
 
 extension Swift {
-    final class Method: Container {
+    final class Method: Containable {
+        
+        var parent: Containing?
         
         let visibility:  Visibility
         let name:        Name
@@ -43,10 +45,6 @@ extension Swift {
             }
         }
         
-        enum Annotation: String {
-            case discardableResult = "@discardableResult"
-        }
-        
         struct Parameter: StringRepresentable {
             let name:  String
             let type:  String
@@ -71,6 +69,7 @@ extension Swift {
         //  MARK: - Init -
         //
         init(visibility: Visibility = .internal, name: Name, returnType: String? = nil, parameters: [Method.Parameter]? = nil, annotations: [Annotation]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
+            
             self.visibility  = visibility
             self.name        = name
             self.returnType  = returnType
@@ -78,14 +77,12 @@ extension Swift {
             self.annotations = annotations
             self.body        = body     ?? []
             self.comments    = comments ?? []
-            
-            super.init()
         }
         
         // ----------------------------------
         //  MARK: - String Representation -
         //
-        override var stringRepresentation: String {
+        var stringRepresentation: String {
             var string = ""
             
             /* ----------------------------------------

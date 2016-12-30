@@ -15,6 +15,13 @@ extension Schema {
         let name:   String?
         let ofType: ObjectType?
         
+        var hasScalar: Bool {
+            if let type = self.ofType {
+                return type.hasScalar
+            }
+            return self.kind == .scalar
+        }
+        
         // ----------------------------------
         //  MARK: - Init -
         //
