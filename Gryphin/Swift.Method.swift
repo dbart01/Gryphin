@@ -9,9 +9,7 @@
 import Foundation
 
 extension Swift {
-    final class Method: Containable {
-        
-        var parent: Containing?
+    final class Method: Container {
         
         let visibility:  Visibility
         let name:        Name
@@ -20,7 +18,6 @@ extension Swift {
         let annotations: [Annotation]?
         
         fileprivate(set) var comments: [Line]
-        fileprivate(set) var body:     [Line]
         
         enum Name {
             case `init`(InitializerType)
@@ -95,14 +92,19 @@ extension Swift {
             self.returnType  = returnType
             self.parameters  = parameters
             self.annotations = annotations
-            self.body        = body     ?? []
             self.comments    = comments ?? []
+            
+            super.init()
+            
+            if let body = body {
+                self.add(children: body)
+            }
         }
         
         // ----------------------------------
         //  MARK: - String Representation -
         //
-        var stringRepresentation: String {
+        override var stringRepresentation: String {
             var string = ""
             
             /* ---------------------------------
@@ -127,14 +129,6 @@ extension Swift {
                 returnType = "-> \(type) "
             }
             
-            /* ---------------------------------
-             ** Construct the method body
-             */
-            let bodyIndent = self.indentFor(distanceToRoot: self.distanceToRoot + 1)
-            let body       = self.body.map {
-                "\(bodyIndent)\($0)\n"
-            }.joined(separator: "")
-            
             string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
             string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType)"
@@ -144,9 +138,9 @@ extension Swift {
              ** braces if body is non-empty. Otherwise
              ** we'll treat this like a declaration.
              */
-            if !self.body.isEmpty {
+            if !self.children.isEmpty {
                 string += "{\n"
-                string += body
+                string += "\(super.stringRepresentation)\n"
                 string += "\(self.indent)}\n"
             } else {
                 string += "\n"
@@ -158,5 +152,5 @@ extension Swift {
 }
 
 func +=(lhs: Swift.Method, rhs: Swift.Line) {
-    lhs.body.append(rhs)
+    lhs.add(child: rhs)
 }

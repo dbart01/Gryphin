@@ -17,7 +17,7 @@ extension Swift {
         
         var parent: Containing?
         
-        private let content: String
+        let content: String
         
         // ----------------------------------
         //  MARK: - Init -
