@@ -1,5 +1,5 @@
 //
-//  Generatable.swift
+//  Containing.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2016-12-23.
@@ -8,23 +8,21 @@
 
 import Foundation
 
-protocol Generatable: class, StringRepresentable {
-    
-    var parent:    Generatable? { get set }
-    var children: [Generatable] { get set }
+protocol Containing: Containable {
+    var children: [Containable] { get set }
 }
 
-extension Generatable {
+extension Containing {
     
     // ----------------------------------
     //  MARK: - Children -
     //
-    func add(child: Generatable) {
+    func add(child: Containable) {
         child.parent = self
         self.children.append(child)
     }
     
-    func add(children: [Generatable]) {
+    func add(children: [Containable]) {
         children.forEach {
             $0.parent = self
         }
@@ -32,7 +30,7 @@ extension Generatable {
     }
 }
 
-extension Array where Element: Generatable {
+extension Array where Element: Containing {
     
     var stringRepresentation: String {
         return self

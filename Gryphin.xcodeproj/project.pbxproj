@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
+		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
+		9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33A1E159E5100B2AD52 /* Containable.swift */; };
+		9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */; };
 		9A9A6A171E0EC9C6008754A4 /* Gryphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */; };
 		9A9A6A1E1E0EC9C6008754A4 /* Gryphin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A6A101E0EC9C6008754A4 /* Gryphin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
@@ -19,8 +22,7 @@
 		9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */; };
 		9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */; };
 		9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */; };
-		9A9A6A3F1E0EC9F8008754A4 /* Generatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Generatable.swift */; };
-		9A9A6A411E0EC9F8008754A4 /* Swift.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */; };
+		9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Containing.swift */; };
 		9A9A6A421E0EC9F8008754A4 /* Swift.Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */; };
 		9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */; };
 		9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */; };
@@ -58,6 +60,8 @@
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
 		9A98A3331E141DC300B2AD52 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = ../../../../../../Desktop/API.swift; sourceTree = "<group>"; };
+		9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Alias.swift; sourceTree = "<group>"; };
+		9A98A33A1E159E5100B2AD52 /* Containable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Containable.swift; sourceTree = "<group>"; };
 		9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gryphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A6A101E0EC9C6008754A4 /* Gryphin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gryphin.h; sourceTree = "<group>"; };
 		9A9A6A111E0EC9C6008754A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,7 +75,7 @@
 		9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Field.swift; sourceTree = "<group>"; };
 		9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Argument.swift; sourceTree = "<group>"; };
 		9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRepresentable.swift; sourceTree = "<group>"; };
-		9A9A6A381E0EC9F8008754A4 /* Generatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generatable.swift; sourceTree = "<group>"; };
+		9A9A6A381E0EC9F8008754A4 /* Containing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Containing.swift; sourceTree = "<group>"; };
 		9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Container.swift; sourceTree = "<group>"; };
 		9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Visibility.swift; sourceTree = "<group>"; };
 		9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Class.swift; sourceTree = "<group>"; };
@@ -180,7 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */,
-				9A9A6A381E0EC9F8008754A4 /* Generatable.swift */,
+				9A98A33A1E159E5100B2AD52 /* Containable.swift */,
+				9A9A6A381E0EC9F8008754A4 /* Containing.swift */,
 				9A9A6A661E12CAC1008754A4 /* Swift.swift */,
 				9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */,
 				9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */,
@@ -188,6 +193,7 @@
 				9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */,
 				9A9A6A641E12CAA4008754A4 /* Swift.Namespace.swift */,
 				9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */,
+				9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */,
 				9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */,
 			);
 			name = "Code Generation";
@@ -336,14 +342,16 @@
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
 				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
+				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,
 				9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */,
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
-				9A9A6A411E0EC9F8008754A4 /* Swift.Container.swift in Sources */,
+				9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */,
 				9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */,
 				9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */,
+				9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */,
 				9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */,
-				9A9A6A3F1E0EC9F8008754A4 /* Generatable.swift in Sources */,
+				9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */,
 				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
 				9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */,

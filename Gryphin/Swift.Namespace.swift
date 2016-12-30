@@ -14,7 +14,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(items: [Generatable]) {
+        init(items: [Containing]) {
             super.init(visibility: .public, kind: .struct, name: "API", comments: [
                 "Automatically generated API schema using Gryphin. Do not modify."
             ])

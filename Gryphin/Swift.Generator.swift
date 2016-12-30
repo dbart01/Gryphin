@@ -18,6 +18,22 @@ extension Swift {
         let schemaURL:  URL
         let schemaJSON: JSON
         
+        private let standardScalars: Set<String> = [
+            "Int",
+            "Boolean",
+            "Float",
+            "String",
+            
+            // "ID",
+            
+            /* -----------------------
+             ** We don't include ID
+             ** as the standard scalar
+             ** because we still need a
+             ** type definition for it.
+             */
+        ]
+        
         // ----------------------------------
         //  MARK: - Init -
         //
@@ -65,13 +81,14 @@ extension Swift {
                     break
                 case .inputObject:
                     break
+                case .scalar:
+                    self.generate(scalar: type, in: namespace)
+                    
+                case .union:
+                    break
                 case .list:
                     break
                 case .nonNull:
-                    break
-                case .scalar:
-                    break
-                case .union:
                     break
                 }
             }
@@ -89,6 +106,23 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Type Generation -
         //
+        private func generate(scalar: Schema.Object, in namespace: Namespace) {
+            precondition(scalar.kind == .scalar)
+            
+            /* ----------------------------------------
+             ** Ensure that we're not creating a type
+             ** alias for a standard type (redundant).
+             */
+            guard !self.standardScalars.contains(scalar.name) else {
+                return
+            }
+            
+            namespace.add(child: Alias(
+                name:    scalar.name,
+                forType: "String"
+            ))
+        }
+        
         private func generate(interface: Schema.Object, in namespace: Namespace) {
             self.generate(object: interface, in: namespace)
         }
