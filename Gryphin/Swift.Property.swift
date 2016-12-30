@@ -14,20 +14,18 @@ extension Swift {
         let visibility:  Visibility
         let name:        String
         let returnType:  String
-        let annotations: [Annotation]?
         
         fileprivate(set) var comments: [Line]
         
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, returnType: String, annotations: [Annotation]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
+        init(visibility: Visibility = .internal, name: String, returnType: String, body: [Line]? = nil, comments: [Line]? = nil) {
             
-            self.visibility  = visibility
-            self.name        = name
-            self.returnType  = returnType
-            self.annotations = annotations
-            self.comments    = comments ?? []
+            self.visibility = visibility
+            self.name       = name
+            self.returnType = returnType
+            self.comments   = comments ?? []
             
             super.init()
             
@@ -42,16 +40,8 @@ extension Swift {
         override var stringRepresentation: String {
             var string = ""
             
-            /* ---------------------------------
-             ** Construct the method annotations
-             */
-            let annotations = self.annotations?.map {
-                "\(self.indent)\($0.rawValue)\n"
-            }.joined(separator: "") ?? ""
-            
             string += self.comments.commentStringIndentedBy(self.indent)
-            string += annotations
-            string += "\(self.indent)\(self.visibility) var \(self.name): \(self.returnType) "
+            string += "\(self.indent)\(self.visibility.rawValue) var \(self.name): \(self.returnType) "
             
             /* ----------------------------------------
              ** Only append body and opening / closing

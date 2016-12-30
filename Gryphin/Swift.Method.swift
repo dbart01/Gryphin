@@ -131,7 +131,7 @@ extension Swift {
             
             string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
-            string += "\(self.indent)\(self.visibility) \(self.name.string)(\(parameters)) \(returnType)"
+            string += "\(self.indent)\(self.visibility.rawValue) \(self.name.string)(\(parameters)) \(returnType)"
             
             /* ----------------------------------------
              ** Only append body and opening / closing

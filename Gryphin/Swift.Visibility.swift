@@ -15,5 +15,6 @@ extension Swift {
         case `internal`
         case `public`
         case `open`
+        case none = ""
     }
 }

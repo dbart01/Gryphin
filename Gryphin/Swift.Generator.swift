@@ -261,12 +261,11 @@ extension Swift {
             }
             
             containerType.add(child: Property(
-                visibility:  .public,
-                name:        field.name,
-                returnType:  isInterface ? "Self" : name,
-                annotations: [.discardableResult],
-                body:        body,
-                comments:    field.commentLines()
+                visibility: isInterface ? .none : .public,
+                name:       field.name,
+                returnType: isInterface ? "Self" : name,
+                body:       body,
+                comments:   field.commentLines()
             ))
         }
         
@@ -308,7 +307,7 @@ extension Swift {
             }
             
             containerType.add(child: Method(
-                visibility:  .public,
+                visibility:  isInterface ? .none : .public,
                 name:        .func(field.name),
                 returnType:  isInterface ? "Self" : name,
                 parameters:  parameters,
