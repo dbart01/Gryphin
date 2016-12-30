@@ -264,7 +264,7 @@ extension Swift {
              ** a `buildOn` closure so the caller can
              ** append additional fields to it.
              */
-            let buildType = field.type.recursiveTypeString()
+            let buildType = field.type.recursiveTypeStringIgnoringNullability()
             
             /* ----------------------------------------
              ** We append the `buildOn` closure only if
@@ -302,7 +302,7 @@ extension Swift {
 // ----------------------------------
 //  MARK: - Schema Type Extensions -
 //
-private extension Schema.Object {
+extension Schema.Object {
     
     func commentLines() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "")
@@ -327,10 +327,10 @@ private extension Schema.Object {
     }
 }
 
-private extension Schema.ObjectType {
+extension Schema.ObjectType {
     
-    func recursiveTypeString() -> String {
-        let childType = self.ofType?.recursiveTypeString() ?? ""
+    func recursiveTypeStringIgnoringNullability() -> String {
+        let childType = self.ofType?.recursiveTypeStringIgnoringNullability() ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -340,15 +340,52 @@ private extension Schema.ObjectType {
         case .interface:  fallthrough
         case .inputObject:
             return self.name!
+            
         case .list:
             return "[\(childType)]"
+            
         case .nonNull:
-            return "\(childType)!"
+            return childType
+        }
+    }
+    
+    func recursiveTypeString() -> String {
+        return self.recursiveTypeString(nonNull: false)
+    }
+    
+    private func recursiveTypeString(nonNull: Bool) -> String {
+        let isNonNull = self.kind == .nonNull
+        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull) ?? ""
+        
+        switch self.kind {
+        case .enum:       fallthrough
+        case .union:      fallthrough
+        case .scalar:     fallthrough
+        case .object:     fallthrough
+        case .interface:  fallthrough
+        case .inputObject:
+            
+            if nonNull {
+                return "\(self.name!)!"
+            } else {
+                return "\(self.name!)?"
+            }
+            
+        case .list:
+            
+            if nonNull {
+                return "[\(childType)]!"
+            } else {
+                return "[\(childType)]?"
+            }
+            
+        case .nonNull:
+            return childType
         }
     }
 }
 
-private extension Schema.Field {
+extension Schema.Field {
     
     func commentLines() -> [Swift.Line] {
         var comments: [Swift.Line] = []
