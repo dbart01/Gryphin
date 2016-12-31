@@ -52,14 +52,14 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Generation -
         //
-        func generate() -> Namespace {
+        func generate() -> Container {
             
             let schemaData     = self.schemaJSON["data"]  as! JSON
             let jsonSchema     = schemaData["__schema"]   as! JSON
             let jsonTypes      = jsonSchema["types"]      as! [JSON]
             let jsonDirectives = jsonSchema["directives"] as! [JSON]
             
-            let namespace = Namespace(items: [])
+            let container = Container()
             
             /* -----------------------------
              ** Parse the schema types first
@@ -83,18 +83,18 @@ extension Swift {
                  */
                 switch type.kind {
                 case .object:
-                    self.generate(object: type, in: namespace)
+                    self.generate(object: type, in: container)
                     
                 case .interface:
-                    self.generate(interface: type, in: namespace)
+                    self.generate(interface: type, in: container)
                     
                 case .enum:
-                    self.generate(enum: type, in: namespace)
+                    self.generate(enum: type, in: container)
                     
                 case .inputObject:
                     break
                 case .scalar:
-                    self.generate(scalar: type, in: namespace)
+                    self.generate(scalar: type, in: container)
                     
                 case .union:
                     break
@@ -112,17 +112,17 @@ extension Swift {
                 Schema.Directive(json: $0)
             }
             
-            return namespace
+            return container
         }
         
         // ----------------------------------
         //  MARK: - Type Generation -
         //
-        private func generate(enum object: Schema.Object, in namespace: Namespace) {
+        private func generate(enum object: Schema.Object, in container: Container) {
             precondition(object.kind == .enum)
             
             let enumClass = Class(
-                visibility: .public,
+                visibility: .none,
                 kind:       .enum,
                 name:       object.name,
                 comments:   object.commentLines()
@@ -135,10 +135,10 @@ extension Swift {
                 ))
             }
             
-            namespace.add(child: enumClass)
+            container.add(child: enumClass)
         }
         
-        private func generate(scalar: Schema.Object, in namespace: Namespace) {
+        private func generate(scalar: Schema.Object, in container: Container) {
             precondition(scalar.kind == .scalar)
             
             /* ----------------------------------------
@@ -149,13 +149,13 @@ extension Swift {
                 return
             }
             
-            namespace.add(child: Alias(
+            container.add(child: Alias(
                 name:    scalar.name,
                 forType: "String"
             ))
         }
         
-        private func generate(interface: Schema.Object, in namespace: Namespace) {
+        private func generate(interface: Schema.Object, in container: Container) {
             
             precondition(interface.kind == .interface)
             
@@ -164,7 +164,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .public,
+                visibility:   .none,
                 kind:         .protocol,
                 name:         interface.name,
                 inheritances: interface.inheritances(),
@@ -179,7 +179,7 @@ extension Swift {
                 self.generate(fields: fields, inObjectNamed: interface.name, appendingTo: swiftClass, isInterface: true)
             }
             
-            namespace.add(child: swiftClass)
+            container.add(child: swiftClass)
             
             /* -------------------------------------------
              ** If the object is an interface, we'll have
@@ -192,7 +192,7 @@ extension Swift {
                     precondition(possibleType.name != nil)
                     
                     let swiftExtension = Class(
-                        visibility:   .public,
+                        visibility:   .none,
                         kind:         .extension,
                         name:         possibleType.name!,
                         inheritances: [interface.name]
@@ -202,12 +202,12 @@ extension Swift {
                         self.generate(fields: fields, inObjectNamed: possibleType.name!, appendingTo: swiftExtension, isInterface: false)
                     }
                     
-                    namespace.add(child: swiftExtension)
+                    container.add(child: swiftExtension)
                 }
             }
         }
         
-        private func generate(object: Schema.Object, in namespace: Namespace) {
+        private func generate(object: Schema.Object, in container: Container) {
             
             precondition(object.kind == .object)
 
@@ -216,7 +216,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .public,
+                visibility:   .none,
                 kind:         .class(.final),
                 name:         object.name,
                 inheritances: object.inheritances(),
@@ -227,7 +227,7 @@ extension Swift {
                 self.generate(fields: fields, inObjectNamed: object.name, appendingTo: swiftClass, isInterface: false)
             }
             
-            namespace.add(child: swiftClass)
+            container.add(child: swiftClass)
         }
         
         // ----------------------------------
@@ -261,7 +261,7 @@ extension Swift {
             }
             
             containerType.add(child: Property(
-                visibility: isInterface ? .none : .public,
+                visibility: .none,
                 name:       field.name,
                 returnType: isInterface ? "Self" : name,
                 body:       body,
@@ -307,7 +307,7 @@ extension Swift {
             }
             
             containerType.add(child: Method(
-                visibility:  isInterface ? .none : .public,
+                visibility:  .none,
                 name:        .func(field.name),
                 returnType:  isInterface ? "Self" : name,
                 parameters:  parameters,
