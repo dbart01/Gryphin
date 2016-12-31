@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ReferenceType: class, ValueType {
-    var name:   String         { get }
-    var parent: ContainerType? { get set }
+    var _name:   String         { get }
+    var _parent: ContainerType? { get set }
 }
 
 func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
@@ -20,33 +20,33 @@ func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
 #if DEBUG
 extension ReferenceType {
     
-    var newline: String {
+    var _newline: String {
         return "\n"
     }
     
-    var space: String {
+    var _space: String {
         return " "
     }
     
-    var indent: String {
-        return [String](repeating: " ", count: self.distanceToRoot * 4).joined(separator: "")
+    var _indent: String {
+        return [String](repeating: " ", count: self._distanceToRoot * 4).joined(separator: "")
     }
     
-    var distanceToRoot: Int {
+    var _distanceToRoot: Int {
         var distance = 0
-        var parent   = self.parent
+        var parent   = self._parent
         
         while parent != nil {
             distance += 1
-            parent = parent?.parent
+            parent = parent?._parent
         }
         return distance
     }
 }
 #else
 extension ReferenceType {
-    let newline = ""
-    let space   = ""
-    let indent  = ""
+    let _newline = ""
+    let _space   = ""
+    let _indent  = ""
 }
 #endif

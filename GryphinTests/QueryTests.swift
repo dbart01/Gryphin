@@ -125,7 +125,7 @@ final class Query: Field {
     @discardableResult
     func viewer(_ buildOn: (User) -> Void) -> Query {
         let viewer = User(name: "viewer")
-        self.add(child: viewer)
+        self._add(child: viewer)
         
         buildOn(viewer)
         
@@ -140,7 +140,7 @@ final class User: Field {
         let repo = Repository(name: "repositories", parameters: [
             Parameter(name: "first", value: first),
         ])
-        self.add(child: repo)
+        self._add(child: repo)
         
         buildOn(repo)
         
@@ -152,13 +152,13 @@ final class Repository: Field {
     
     @discardableResult
     func id() -> Repository {
-        self.add(child: Field(name: "id"))
+        self._add(child: Field(name: "id"))
         return self
     }
     
     @discardableResult
     func name() -> Repository {
-        self.add(child: Field(name: "name"))
+        self._add(child: Field(name: "name"))
         return self
     }
 }

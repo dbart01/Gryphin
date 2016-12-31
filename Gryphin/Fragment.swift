@@ -10,23 +10,23 @@ import Foundation
 
 final class Fragment: ContainerType {
     
-    var name:          String
-    var typeCondition: String?
-    var parameters:    [Parameter]
+    var _name:          String
+    var _typeCondition: String?
+    var _parameters:    [Parameter]
     
-    var parent:        ContainerType?
-    var children:     [ReferenceType] = []
+    var _parent:        ContainerType?
+    var _children:     [ReferenceType] = []
     
     // ----------------------------------
     //  MARK: - Init -
     //
     init(name: String, typeCondition: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
-        self.name          = name
-        self.parameters    = parameters
-        self.typeCondition = typeCondition
+        self._name          = name
+        self._parameters    = parameters
+        self._typeCondition = typeCondition
         
         if let children = children {
-            self.add(children: children)
+            self._add(children: children)
         }
     }
 }
@@ -35,23 +35,26 @@ final class Fragment: ContainerType {
 //  MARK: - ValueType -
 //
 extension Fragment {
-    var stringRepresentation: String {
-        var representation = "\(self.newline)\(self.indent)fragment \(self.name)"
+    var _stringRepresentation: String {
+        var representation = "\(self._newline)\(self._indent)fragment \(self._name)"
         
-        if let typeCondition = self.typeCondition {
+        if let typeCondition = self._typeCondition {
             representation += " on \(typeCondition) "
         }
         
-        if !self.parameters.isEmpty {
-            let keyValues      = self.parameters.map { "\($0.name): \($0.value.stringRepresentation)" }
+        if !self._parameters.isEmpty {
+            let keyValues      = self._parameters.map { "\($0._name): \($0._value._stringRepresentation)" }
             let keyValueString = keyValues.joined(separator: " ")
             representation    += "(\(keyValueString))"
         }
         
-        if !self.children.isEmpty {
-            let children       = self.children.map { $0.stringRepresentation }
+        if !self._children.isEmpty {
+            let children       = self._children.map { $0._stringRepresentation }
             let joinedChildren = children.joined(separator: " ")
-            representation    += "\(self.space){\(joinedChildren)\(self.newline)\(self.indent)}"
+            
+            representation += "\(self._space){"
+            representation += joinedChildren
+            representation += "\(self._newline)\(self._indent)}"
         }
         
         return representation

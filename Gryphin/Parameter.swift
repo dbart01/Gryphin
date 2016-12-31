@@ -10,8 +10,16 @@ import Foundation
 
 struct Parameter {
     
-    var name:  String
-    var value: ValueType
+    var _name:  String
+    var _value: ValueType
+    
+    // ----------------------------------
+    //  MARK: - Init -
+    //
+    init(name: String, value: ValueType) {
+        self._name  = name
+        self._value = value
+    }
 }
 
 // ----------------------------------
@@ -20,5 +28,5 @@ struct Parameter {
 extension Parameter: Equatable {}
 
 func ==(lhs: Parameter, rhs: Parameter) -> Bool {
-    return lhs.name == rhs.name && lhs.value.stringRepresentation == rhs.value.stringRepresentation
+    return lhs._name == rhs._name && lhs._value._stringRepresentation == rhs._value._stringRepresentation
 }

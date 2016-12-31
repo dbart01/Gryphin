@@ -10,15 +10,15 @@ import Foundation
 
 final class FragmentReference: ReferenceType {
     
-    var name:   String
-    var parent: ContainerType?
+    var _name:   String
+    var _parent: ContainerType?
     
     // ----------------------------------
     //  MARK: - Init -
     //
     init(name: String, parent: ContainerType?) {
-        self.name   = name
-        self.parent = parent
+        self._name   = name
+        self._parent = parent
     }
 }
 
@@ -29,8 +29,11 @@ extension Fragment {
         
     typealias ReferencingType = FragmentReference
     
-    var reference: ReferencingType {
-        return FragmentReference(name: self.name, parent: self.parent)
+    var _reference: ReferencingType {
+        return FragmentReference(
+            name:   self._name,
+            parent: self._parent
+        )
     }
 }
 
@@ -38,7 +41,7 @@ extension Fragment {
 //  MARK: - ValueType -
 //
 extension FragmentReference {
-    var stringRepresentation: String {
-        return "...\(name)"
+    var _stringRepresentation: String {
+        return "...\(self._name)"
     }
 }

@@ -11,5 +11,5 @@ import Foundation
 protocol Referencing {
     associatedtype ReferencingType
     
-    var reference: ReferencingType { get }
+    var _reference: ReferencingType { get }
 }

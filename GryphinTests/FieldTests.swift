@@ -17,17 +17,17 @@ class FieldTests: XCTestCase {
     func testBasicField() {
         let node = Field(name: "query")
         
-        XCTAssertEqual(node.name, "query")
-        XCTAssertEqual(node.alias, nil)
-        XCTAssertEqual(node.parameters.count, 0)
-        XCTAssertEqual(node.children.count,   0)
+        XCTAssertEqual(node._name, "query")
+        XCTAssertEqual(node._alias, nil)
+        XCTAssertEqual(node._parameters.count, 0)
+        XCTAssertEqual(node._children.count,   0)
     }
     
     func testFieldWithAlias() {
         let node = Field(name: "issues", alias: "someIssue")
         
-        XCTAssertEqual(node.name, "issues")
-        XCTAssertEqual(node.alias, "someIssue")
+        XCTAssertEqual(node._name, "issues")
+        XCTAssertEqual(node._alias, "someIssue")
     }
     
     func testFieldWithParameters() {
@@ -36,8 +36,8 @@ class FieldTests: XCTestCase {
             parameter,
         ])
         
-        XCTAssertEqual(node.name, "issues")
-        XCTAssertEqual(node.parameters[0], parameter)
+        XCTAssertEqual(node._name, "issues")
+        XCTAssertEqual(node._parameters[0], parameter)
     }
     
     func testFieldWithChildren() {
@@ -46,8 +46,8 @@ class FieldTests: XCTestCase {
             child,
         ])
         
-        XCTAssertEqual(node.name, "issues")
-        let firstChild = node.children[0] as! Field
+        XCTAssertEqual(node._name, "issues")
+        let firstChild = node._children[0] as! Field
         XCTAssertTrue(firstChild == child)
     }
     
@@ -55,18 +55,18 @@ class FieldTests: XCTestCase {
         let child  = Field(name: "edges")
         let parent = Field(name: "issues", children: [child])
         
-        XCTAssertNotNil(child.parent)
-        XCTAssertTrue(parent == child.parent as! Field)
+        XCTAssertNotNil(child._parent)
+        XCTAssertTrue(parent == child._parent as! Field)
     }
     
     func testParentWhenAddingChild() {
         let child  = Field(name: "edges")
         let parent = Field(name: "issues")
         
-        parent.add(child: child)
+        parent._add(child: child)
         
-        XCTAssertNotNil(child.parent)
-        XCTAssertTrue(parent == child.parent as! Field)
+        XCTAssertNotNil(child._parent)
+        XCTAssertTrue(parent == child._parent as! Field)
     }
     
     // ----------------------------------
@@ -87,7 +87,7 @@ class FieldTests: XCTestCase {
             ])
         ])
         
-        let query = root.stringRepresentation
+        let query = root._stringRepresentation
         XCTAssertEqual(query, "query{issues(first: 30){edges{node{id title}}}}")
     }
     
@@ -107,7 +107,7 @@ class FieldTests: XCTestCase {
             ])
         ])
         
-        let query = root.stringRepresentation
+        let query = root._stringRepresentation
         XCTAssertEqual(query, "query{issues{edges{node{id title image(size: 1024)}}}}")
     }
     
@@ -128,7 +128,7 @@ class FieldTests: XCTestCase {
             ])
         ])
         
-        let query = root.stringRepresentation
+        let query = root._stringRepresentation
         XCTAssertEqual(query, "query{issues{edges{node{smallImage: image(size: 125) largeImage: image(size: 1024)}}}}")
     }
 }

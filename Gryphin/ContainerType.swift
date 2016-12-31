@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ContainerType: class, ReferenceType {
-    var children:   [ReferenceType]  { get set }
-    var parameters: [Parameter] { get }
+    var _children:   [ReferenceType]  { get set }
+    var _parameters: [Parameter]      { get }
 }
 
 extension ContainerType {
@@ -18,16 +18,16 @@ extension ContainerType {
     // ----------------------------------
     //  MARK: - Children -
     //
-    func add(child: ReferenceType) {
-        child.parent = self
-        self.children.append(child)
+    func _add(child: ReferenceType) {
+        child._parent = self
+        self._children.append(child)
     }
     
-    func add(children: [ReferenceType]) {
+    func _add(children: [ReferenceType]) {
         children.forEach {
-            $0.parent = self
+            $0._parent = self
         }
-        self.children.append(contentsOf: children)
+        self._children.append(contentsOf: children)
     }
 }
 

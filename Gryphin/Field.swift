@@ -10,23 +10,23 @@ import Foundation
 
 class Field: ContainerType {
     
-    var name:       String
-    var alias:      String?
-    var parameters: [Parameter]
+    var _name:       String
+    var _alias:      String?
+    var _parameters: [Parameter]
     
-    var parent:     ContainerType?
-    var children:  [ReferenceType] = []
+    var _parent:     ContainerType?
+    var _children:  [ReferenceType] = []
     
     // ----------------------------------
     //  MARK: - Init -
     //
     init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
-        self.name       = name
-        self.alias      = alias
-        self.parameters = parameters
+        self._name       = name
+        self._alias      = alias
+        self._parameters = parameters
         
         if let children = children {
-            self.add(children: children)
+            self._add(children: children)
         }
     }
 }
@@ -35,25 +35,25 @@ class Field: ContainerType {
 //  MARK: - ValueType -
 //
 extension Field {
-    var stringRepresentation: String {
+    var _stringRepresentation: String {
         var representation: String
         
-        if let alias = self.alias {
-            representation = "\(self.newline)\(self.indent)\(alias): \(self.name)"
+        if let alias = self._alias {
+            representation = "\(self._newline)\(self._indent)\(alias): \(self._name)"
         } else {
-            representation = "\(self.newline)\(self.indent)\(self.name)"
+            representation = "\(self._newline)\(self._indent)\(self._name)"
         }
         
-        if !self.parameters.isEmpty {
-            let keyValues      = self.parameters.map { "\($0.name): \($0.value.stringRepresentation)" }
+        if !self._parameters.isEmpty {
+            let keyValues      = self._parameters.map { "\($0._name): \($0._value._stringRepresentation)" }
             let keyValueString = keyValues.joined(separator: " ")
             representation    += "(\(keyValueString))"
         }
         
-        if !self.children.isEmpty {
-            let children       = self.children.map { $0.stringRepresentation }
+        if !self._children.isEmpty {
+            let children       = self._children.map { $0._stringRepresentation }
             let joinedChildren = children.joined(separator: " ")
-            representation    += "\(self.space){\(joinedChildren)\(self.newline)\(self.indent)}"
+            representation    += "\(self._space){\(joinedChildren)\(self._newline)\(self._indent)}"
         }
         
         return representation

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ValueType {
-    var stringRepresentation: String { get }
+    var _stringRepresentation: String { get }
 }
 
 // ----------------------------------
@@ -17,37 +17,37 @@ protocol ValueType {
 //
 extension ValueType {
     var hashValue: Int {
-        return self.stringRepresentation.hashValue
+        return self._stringRepresentation.hashValue
     }
 }
 
 func ==(lhs: ValueType, rhs: ValueType) -> Bool {
-    return lhs.stringRepresentation == rhs.stringRepresentation
+    return lhs._stringRepresentation == rhs._stringRepresentation
 }
 
 // ----------------------------------
 //  MARK: - Foundation -
 //
 extension String: ValueType {
-    var stringRepresentation: String {
+    var _stringRepresentation: String {
         return "\"\(self)\""
     }
 }
 
 extension Int: ValueType {
-    var stringRepresentation: String {
+    var _stringRepresentation: String {
         return "\(self)"
     }
 }
 
 extension Float: ValueType {
-    var stringRepresentation: String {
+    var _stringRepresentation: String {
         return "\(self)"
     }
 }
 
 extension Double: ValueType {
-    var stringRepresentation: String {
+    var _stringRepresentation: String {
         return "\(self)"
     }
 }

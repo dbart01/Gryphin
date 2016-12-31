@@ -17,15 +17,15 @@ class FragmentTests: XCTestCase {
     func testBasicFragment() {
         let frag = Fragment(name: "allFields", typeCondition: "User")
         
-        XCTAssertEqual(frag.name, "allFields")
-        XCTAssertEqual(frag.typeCondition, "User")
+        XCTAssertEqual(frag._name, "allFields")
+        XCTAssertEqual(frag._typeCondition, "User")
     }
     
     func testWithParameters() {
         let parameter = Parameter(name: "if", value: "$admin")
         let frag      = Fragment(name: "someFields", parameters: [parameter])
         
-        XCTAssertEqual(frag.parameters[0], parameter)
+        XCTAssertEqual(frag._parameters[0], parameter)
     }
     
     // ----------------------------------
@@ -46,7 +46,7 @@ class FragmentTests: XCTestCase {
             ])
         ]
         let fragment = Fragment(name: name, typeCondition: type, parameters: parameters, children: nodes)
-        let query    = fragment.stringRepresentation
+        let query    = fragment._stringRepresentation
         
         let expected = "" ~
         "fragment AllTheFields on User ($if: \"admin\") {" ~
