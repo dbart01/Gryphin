@@ -40,8 +40,10 @@ extension Swift {
         override var stringRepresentation: String {
             var string = ""
             
+            let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
+            
             string += self.comments.commentStringIndentedBy(self.indent)
-            string += "\(self.indent)\(self.visibility.rawValue) var \(self.name): \(self.returnType) "
+            string += "\(self.indent)\(visibility)var \(self.name): \(self.returnType) "
             
             /* ----------------------------------------
              ** Only append body and opening / closing

@@ -79,8 +79,10 @@ extension Swift {
             let comments = self.comments.commentStringIndentedBy(self.indent)
             let kind     = self.kind.string
             
+            let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
+            
             string += comments
-            string += "\(self.indent)\(self.visibility.rawValue) \(kind) \(self.name)\(inheritanceString) {"
+            string += "\(self.indent)\(visibility)\(kind) \(self.name)\(inheritanceString) {"
             
             let classBody = super.stringRepresentation
             if !classBody.isEmpty {

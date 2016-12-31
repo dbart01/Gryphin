@@ -129,9 +129,11 @@ extension Swift {
                 returnType = "-> \(type) "
             }
             
+            let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
+            
             string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
-            string += "\(self.indent)\(self.visibility.rawValue) \(self.name.string)(\(parameters)) \(returnType)"
+            string += "\(self.indent)\(visibility)\(self.name.string)(\(parameters)) \(returnType)"
             
             /* ----------------------------------------
              ** Only append body and opening / closing
