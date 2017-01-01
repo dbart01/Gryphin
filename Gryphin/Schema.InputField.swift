@@ -1,20 +1,20 @@
 //
-//  Schema.Argument.swift
+//  Schema.InputField.swift
 //  Gryphin
 //
-//  Created by Dima Bart on 2016-12-24.
-//  Copyright © 2016 Dima Bart. All rights reserved.
+//  Created by Dima Bart on 2017-01-01.
+//  Copyright © 2017 Dima Bart. All rights reserved.
 //
 
 import Foundation
 
 extension Schema {
-    final class Argument: JsonCreatable, DescribedType {
+    final class InputField: JsonCreatable, DescribedType {
         
         let name:         String
         let description:  String?
-        let type:         ObjectType
         let defaultValue: String?
+        let type:         ObjectType
         
         // ----------------------------------
         //  MARK: - Init -
@@ -22,8 +22,8 @@ extension Schema {
         init(json: JSON) {
             self.name         = json["name"]                  as! String
             self.description  = json["description"]           as? String
-            self.type         = ObjectType(json: json["type"] as! JSON)
             self.defaultValue = json["defaultValue"]          as? String
+            self.type         = ObjectType(json: json["type"] as! JSON)
         }
     }
 }

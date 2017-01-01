@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
+		9A7F3C9D1E196F91000D4455 /* NamedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* NamedType.swift */; };
+		9A7F3C9F1E196FBA000D4455 /* DescribedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* DescribedType.swift */; };
+		9A7F3CA01E1970EC000D4455 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3331E141DC300B2AD52 /* API.swift */; };
 		9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
@@ -60,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.InputField.swift; sourceTree = "<group>"; };
+		9A7F3C9C1E196F91000D4455 /* NamedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedType.swift; sourceTree = "<group>"; };
+		9A7F3C9E1E196FBA000D4455 /* DescribedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescribedType.swift; sourceTree = "<group>"; };
 		9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Enum.Case.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
@@ -174,12 +181,15 @@
 			isa = PBXGroup;
 			children = (
 				9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */,
+				9A7F3C9C1E196F91000D4455 /* NamedType.swift */,
+				9A7F3C9E1E196FBA000D4455 /* DescribedType.swift */,
 				9A9A6A281E0EC9E2008754A4 /* Schema.swift */,
 				9A9A6A291E0EC9E2008754A4 /* Schema.Kind.swift */,
 				9A9A6A2A1E0EC9E2008754A4 /* Schema.ObjectType.swift */,
 				9A9A6A2B1E0EC9E2008754A4 /* Schema.Object.swift */,
 				9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */,
 				9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */,
+				9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */,
 				9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */,
 				9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */,
 			);
@@ -339,6 +349,8 @@
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
 				9A9A6A651E12CAA4008754A4 /* Swift.Namespace.swift in Sources */,
+				9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */,
+				9A7F3C9D1E196F91000D4455 /* NamedType.swift in Sources */,
 				9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */,
 				9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */,
 				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,
@@ -347,6 +359,7 @@
 				9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */,
 				9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */,
 				9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */,
+				9A7F3C9F1E196FBA000D4455 /* DescribedType.swift in Sources */,
 				9A9A6A421E0EC9F8008754A4 /* Swift.Visibility.swift in Sources */,
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
@@ -366,6 +379,7 @@
 				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
 				9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */,
+				9A7F3CA01E1970EC000D4455 /* API.swift in Sources */,
 				9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

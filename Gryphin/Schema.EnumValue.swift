@@ -9,7 +9,7 @@
 import Foundation
 
 extension Schema {
-    final class EnumValue: JsonCreatable {
+    final class EnumValue: JsonCreatable, DescribedType {
         
         let name:              String
         let description:       String?

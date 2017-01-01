@@ -92,7 +92,8 @@ extension Swift {
                     self.generate(enum: type, in: container)
                     
                 case .inputObject:
-                    break
+                    self.generate(inputObject: type, in: container)
+                    
                 case .scalar:
                     self.generate(scalar: type, in: container)
                     
@@ -225,6 +226,31 @@ extension Swift {
             container.add(child: swiftClass)
         }
         
+        private func generate(inputObject: Schema.Object, in container: Container) {
+            
+            precondition(inputObject.kind == .inputObject)
+            
+            /* -----------------------------------------
+             ** Initialize the class that will represent
+             ** this object.
+             */
+            let swiftClass = Class(
+                visibility:   .none,
+                kind:         .class(.final),
+                name:         inputObject.name,
+                inheritances: inputObject.inheritances(),
+                comments:     inputObject.commentLines()
+            )
+            
+            if let fields = inputObject.inputFields {
+                for field in fields {
+                    self.generate(propertyFor: field, inObjectNamed: inputObject.name, appendingTo: swiftClass, isInterface: false)
+                }
+            }
+            
+            container.add(child: swiftClass)
+        }
+        
         // ----------------------------------
         //  MARK: - Field Generation -
         //
@@ -244,9 +270,7 @@ extension Swift {
             }
         }
         
-        private func generate(propertyFor field: Schema.Field, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
-            
-            precondition(field.arguments.isEmpty)
+        private func generate(propertyFor field: DescribedType, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
             let body: [Line]
             if isInterface {
@@ -422,7 +446,7 @@ extension Schema.ObjectType {
     }
 }
 
-extension Schema.EnumValue {
+extension DescribedType {
     
     func commentLines() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")

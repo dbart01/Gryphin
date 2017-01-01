@@ -9,13 +9,13 @@
 import Foundation
 
 extension Schema {
-    final class Object: JsonCreatable {
+    final class Object: JsonCreatable, DescribedType {
         
         let kind:          Kind
         let name:          String
         let description:   String?
         let fields:        [Field]?
-//        let inputFields:   [Field]?
+        let inputFields:   [InputField]?
         let interfaces:    [ObjectType]?
         let enumValues:    [EnumValue]?
         let possibleTypes: [ObjectType]?
@@ -29,6 +29,7 @@ extension Schema {
             self.description   = json["description"]       as? String
             
             self.fields        = Field.collectionWith(optionalJson:      json["fields"]        as? [JSON])
+            self.inputFields   = InputField.collectionWith(optionalJson: json["inputFields"]   as? [JSON])
             self.interfaces    = ObjectType.collectionWith(optionalJson: json["interfaces"]    as? [JSON])
             self.enumValues    = EnumValue.collectionWith(optionalJson:  json["enumValues"]    as? [JSON])
             self.possibleTypes = ObjectType.collectionWith(optionalJson: json["possibleTypes"] as? [JSON])

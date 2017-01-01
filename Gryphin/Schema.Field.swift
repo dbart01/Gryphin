@@ -9,7 +9,7 @@
 import Foundation
 
 extension Schema {
-    final class Field: JsonCreatable {
+    final class Field: JsonCreatable, DescribedType {
         
         let name:              String
         let description:       String?

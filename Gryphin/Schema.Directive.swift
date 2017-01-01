@@ -9,7 +9,7 @@
 import Foundation
 
 extension Schema {
-    final class Directive: JsonCreatable {
+    final class Directive: JsonCreatable, DescribedType {
         
         enum Location {
             case query
