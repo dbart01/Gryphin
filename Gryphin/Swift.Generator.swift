@@ -276,7 +276,7 @@ extension Swift {
              ** Build the parameters based on arguments
              ** accepted by this field.
              */
-            var parameters = field.parameters()
+            var parameters = field.parameters(isInterface: isInterface)
             
             /* ----------------------------------------
              ** If the object isn't a leaf, we'll need
@@ -428,9 +428,13 @@ extension Schema.Field {
         return comments
     }
     
-    func parameters() -> [Swift.Method.Parameter] {
+    func parameters(isInterface: Bool) -> [Swift.Method.Parameter] {
         return self.arguments.map {
-            let defaultValue: Swift.Method.Parameter.Default? = $0.type.kind != .nonNull ? .nil : nil
+            
+            var defaultValue: Swift.Method.Parameter.Default?
+            if $0.type.kind != .nonNull && !isInterface {
+                defaultValue = .nil
+            }
             return Swift.Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString(), default: defaultValue)
         }
     }

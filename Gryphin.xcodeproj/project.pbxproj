@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A7F3C971E1965FB000D4455 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3331E141DC300B2AD52 /* API.swift */; };
 		9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
@@ -358,7 +357,6 @@
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
 				9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */,
 				9A98A33F1E15F2A700B2AD52 /* Swift.Property.swift in Sources */,
-				9A7F3C971E1965FB000D4455 /* API.swift in Sources */,
 				9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */,
 				9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */,
 				9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */,
