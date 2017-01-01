@@ -159,6 +159,26 @@ extension Swift {
             
             precondition(interface.kind == .interface)
             
+            var commentLines = interface.commentLines()
+
+            /* ------------------------------------------
+             ** Append comments about what possible types
+             ** implement this interface.
+             */
+            if let possibleTypes = interface.possibleTypes, !possibleTypes.isEmpty {
+                
+                commentLines.append("")
+                commentLines.append("Implementing types:")
+                
+                for possibleType in possibleTypes {
+                    
+                    precondition(possibleType.name != nil)
+                    commentLines.append(Line(content: " \u{2022} `\(possibleType.name!)`"))
+                }
+                
+                commentLines.append("")
+            }
+            
             /* -----------------------------------------
              ** Initialize the class that will represent
              ** this object.
@@ -168,7 +188,7 @@ extension Swift {
                 kind:         .protocol,
                 name:         interface.name,
                 inheritances: interface.inheritances(),
-                comments:     interface.commentLines()
+                comments:     commentLines
             )
             
             /* ----------------------------------------
@@ -180,25 +200,6 @@ extension Swift {
             }
             
             container.add(child: swiftClass)
-            
-            /* -------------------------------------------
-             ** If the object is an interface, we'll have
-             ** conform all possible types to the interface
-             ** via an extension on that object.
-             */
-            if let possibleTypes = interface.possibleTypes, !possibleTypes.isEmpty {
-                for possibleType in possibleTypes {
-                    
-                    precondition(possibleType.name != nil)
-                    
-                    container.add(child: Class(
-                        visibility:   .none,
-                        kind:         .extension,
-                        name:         possibleType.name!,
-                        inheritances: [interface.name]
-                    ))
-                }
-            }
         }
         
         private func generate(object: Schema.Object, in container: Container) {
@@ -247,8 +248,12 @@ extension Swift {
             
             precondition(field.arguments.isEmpty)
             
-            var body: [Line] = []
-            if !isInterface {
+            let body: [Line]
+            if isInterface {
+                body = [
+                    "get"
+                ]
+            } else {
                 body = [
                     "return self"
                 ]
