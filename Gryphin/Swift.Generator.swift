@@ -348,6 +348,24 @@ extension Schema.Object {
 
 extension Schema.ObjectType {
     
+    private static var typeMap: [String : String] = [
+        "String"  : "String",
+        "Boolean" : "Bool",
+        "Int"     : "Int",
+        "Float"   : "Float",
+    ]
+    
+    var mappedName: String? {
+        guard let name = self.name else {
+            return nil
+        }
+        
+        if let mappedType = Schema.ObjectType.typeMap[name] {
+            return mappedType
+        }
+        return name
+    }
+    
     func recursiveTypeStringIgnoringNullability() -> String {
         let childType = self.ofType?.recursiveTypeStringIgnoringNullability() ?? ""
         
@@ -358,7 +376,7 @@ extension Schema.ObjectType {
         case .object:     fallthrough
         case .interface:  fallthrough
         case .inputObject:
-            return self.name!
+            return self.mappedName!
             
         case .list:
             return "[\(childType)]"
@@ -385,9 +403,9 @@ extension Schema.ObjectType {
         case .inputObject:
             
             if nonNull {
-                return "\(self.name!)!"
+                return "\(self.mappedName!)!"
             } else {
-                return "\(self.name!)?"
+                return "\(self.mappedName!)?"
             }
             
         case .list:
