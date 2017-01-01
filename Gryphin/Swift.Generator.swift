@@ -191,18 +191,12 @@ extension Swift {
                     
                     precondition(possibleType.name != nil)
                     
-                    let swiftExtension = Class(
+                    container.add(child: Class(
                         visibility:   .none,
                         kind:         .extension,
                         name:         possibleType.name!,
                         inheritances: [interface.name]
-                    )
-                    
-                    if let fields = interface.fields {
-                        self.generate(fields: fields, inObjectNamed: possibleType.name!, appendingTo: swiftExtension, isInterface: false)
-                    }
-                    
-                    container.add(child: swiftExtension)
+                    ))
                 }
             }
         }
