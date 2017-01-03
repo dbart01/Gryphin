@@ -528,9 +528,10 @@ extension Schema.Field {
         
         if !self.arguments.isEmpty {
             comments.append("")
+            comments.append("- parameters:")
             for arg in self.arguments {
                 let description = arg.description ?? "No documentation"
-                comments.append(Swift.Line(content: ":\(arg.name): \(description)"))
+                comments.append(Swift.Line(content: "    - \(arg.name): \(description)"))
             }
         }
         comments.append("")
