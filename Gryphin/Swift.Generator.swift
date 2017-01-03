@@ -393,15 +393,13 @@ extension Schema.Object {
         if let possibleTypes = self.possibleTypes, !possibleTypes.isEmpty {
             
             commentLines.append("")
-            commentLines.append("Implementing types:")
+            commentLines.append("## Implementing types:")
             
             for possibleType in possibleTypes {
                 
                 precondition(possibleType.name != nil)
-                commentLines.append(Swift.Line(content: " \u{2022} `\(possibleType.name!)`"))
+                commentLines.append(Swift.Line(content: " - `\(possibleType.name!)`"))
             }
-            
-            commentLines.append("")
         }
         
         return commentLines
@@ -533,8 +531,8 @@ extension Schema.Field {
                 let description = arg.description ?? "No documentation"
                 comments.append(Swift.Line(content: "    - \(arg.name): \(description)"))
             }
+            comments.append("")
         }
-        comments.append("")
         return comments
     }
     
