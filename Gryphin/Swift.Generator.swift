@@ -98,7 +98,8 @@ extension Swift {
                     self.generate(scalar: type, in: container)
                     
                 case .union:
-                    break
+                    self.generate(union: type, in: container)
+                    
                 case .list:
                     break
                 case .nonNull:
@@ -126,7 +127,7 @@ extension Swift {
                 visibility: .none,
                 kind:       .enum,
                 name:       object.name,
-                comments:   object.commentLines()
+                comments:   object.descriptionComments()
             )
             
             for value in object.enumValues! {
@@ -160,26 +161,6 @@ extension Swift {
             
             precondition(interface.kind == .interface)
             
-            var commentLines = interface.commentLines()
-
-            /* ------------------------------------------
-             ** Append comments about what possible types
-             ** implement this interface.
-             */
-            if let possibleTypes = interface.possibleTypes, !possibleTypes.isEmpty {
-                
-                commentLines.append("")
-                commentLines.append("Implementing types:")
-                
-                for possibleType in possibleTypes {
-                    
-                    precondition(possibleType.name != nil)
-                    commentLines.append(Line(content: " \u{2022} `\(possibleType.name!)`"))
-                }
-                
-                commentLines.append("")
-            }
-            
             /* -----------------------------------------
              ** Initialize the class that will represent
              ** this object.
@@ -189,18 +170,50 @@ extension Swift {
                 kind:         .protocol,
                 name:         interface.name,
                 inheritances: interface.inheritances(),
-                comments:     commentLines
+                comments:     interface.descriptionComments()
             )
             
             /* ----------------------------------------
              ** Build the fields which will be methods
-             ** of this class.
+             ** of this class. If it's a `UNION` type,
+             ** the fields will be nil.
              */
             if let fields = interface.fields {
                 self.generate(fields: fields, inObjectNamed: interface.name, appendingTo: swiftClass, isInterface: true)
             }
             
             container.add(child: swiftClass)
+        }
+        
+        private func generate(union: Schema.Object, in container: Container) {
+            
+            precondition(union.kind == .union)
+            
+            /* -----------------------------------------
+             ** Initialize the class that will represent
+             ** this object.
+             */
+            let swiftClass = Class(
+                visibility:   .none,
+                kind:         .protocol,
+                name:         union.name,
+                inheritances: union.inheritances(),
+                comments:     union.descriptionComments()
+            )
+            
+            container.add(child: swiftClass)
+            
+            if let possibleTypes = union.possibleTypes {
+                possibleTypes.forEach {
+                    
+                    container.add(child: Class(
+                        visibility:   .none,
+                        kind:         .extension,
+                        name:         $0.name!,
+                        inheritances: [union.name]
+                    ))
+                }
+            }
         }
         
         private func generate(object: Schema.Object, in container: Container) {
@@ -216,7 +229,7 @@ extension Swift {
                 kind:         .class(.final),
                 name:         object.name,
                 inheritances: object.inheritances(),
-                comments:     object.commentLines()
+                comments:     object.descriptionComments()
             )
             
             if let fields = object.fields {
@@ -239,7 +252,7 @@ extension Swift {
                 kind:         .class(.final),
                 name:         inputObject.name,
                 inheritances: inputObject.inheritances(),
-                comments:     inputObject.commentLines()
+                comments:     inputObject.descriptionComments()
             )
             
             if let fields = inputObject.inputFields {
@@ -259,10 +272,13 @@ extension Swift {
             for field in fields {
                 
                 /* -------------------------------------------
-                 ** If the field doesn't have arguments, it'll
-                 ** be represented by a property, not a method.
+                 ** If the field is a scalar value and takes
+                 ** no arguments (no need for a method), there's 
+                 ** a gurantee that it cannot accept subfields
+                 ** and will represented by a property rather
+                 ** than a method with a `buildOn` parameter.
                  */
-                if field.arguments.isEmpty {
+                if field.type.hasScalar && field.arguments.isEmpty {
                     self.generate(propertyFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
                 } else {
                     self.generate(methodFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
@@ -294,7 +310,7 @@ extension Swift {
         
         private func generate(methodFor field: Schema.Field, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
-            precondition(!field.arguments.isEmpty)
+            precondition(!field.arguments.isEmpty || !field.type.hasScalar)
             
             /* ----------------------------------------
              ** Build the parameters based on arguments
@@ -303,22 +319,41 @@ extension Swift {
             var parameters = field.parameters(isInterface: isInterface)
             
             /* ----------------------------------------
-             ** If the object isn't a leaf, we'll need
-             ** a `buildOn` closure so the caller can
-             ** append additional fields to it.
-             */
-            let buildType = field.type.recursiveTypeStringIgnoringNullability()
-            
-            /* ----------------------------------------
              ** We append the `buildOn` closure only if
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
             if !field.type.hasScalar {
+                
+                let type: Swift.Method.Parameter.ValueType
+                if field.type.needsGenericConstraint {
+                    
+                    /* ------------------------------------------
+                     ** The generic delaration has a few nuances.
+                     ** We must first check how deeply nested the
+                     ** the type is (how many arrays are holding
+                     ** it). Then, the constraint must not include
+                     ** the array contaiment but simply be the type
+                     ** of the leaf-most type. The parameter type
+                     ** should then include the number of arrays
+                     ** that contain the scalar type.
+                     */
+                    let constraint = Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [field.type.leafName!], typeUsing: { type in
+                        return "(\(type)) -> Void"
+                    })
+                    
+                    type = .constrained(constraint)
+                    
+                } else {
+                    type = .normal(
+                        "(\(field.type.leafName!)) -> Void"
+                    )
+                }
+                
                 parameters.append(Method.Parameter(
                     unnamed: true,
                     name:    "buildOn",
-                    type:    "(\(buildType)) -> Void"
+                    type:    type
                 ))
             }
             
@@ -347,8 +382,29 @@ extension Swift {
 //
 extension Schema.Object {
     
-    func commentLines() -> [Swift.Line] {
-        return Swift.Line.linesWith(requiredContent: self.description ?? "")
+    func descriptionComments() -> [Swift.Line] {
+        var commentLines = Swift.Line.linesWith(requiredContent: self.description ?? "")
+        
+        /* ----------------------------------------
+         ** If this is an interface, we'll append
+         ** additional comments about what possible 
+         ** types implement this interface.
+         */
+        if let possibleTypes = self.possibleTypes, !possibleTypes.isEmpty {
+            
+            commentLines.append("")
+            commentLines.append("Implementing types:")
+            
+            for possibleType in possibleTypes {
+                
+                precondition(possibleType.name != nil)
+                commentLines.append(Swift.Line(content: " \u{2022} `\(possibleType.name!)`"))
+            }
+            
+            commentLines.append("")
+        }
+        
+        return commentLines
     }
     
     func inheritances() -> [String] {
@@ -390,24 +446,9 @@ extension Schema.ObjectType {
         return name
     }
     
-    func recursiveTypeStringIgnoringNullability() -> String {
-        let childType = self.ofType?.recursiveTypeStringIgnoringNullability() ?? ""
-        
-        switch self.kind {
-        case .enum:       fallthrough
-        case .union:      fallthrough
-        case .scalar:     fallthrough
-        case .object:     fallthrough
-        case .interface:  fallthrough
-        case .inputObject:
-            return self.mappedName!
-            
-        case .list:
-            return "[\(childType)]"
-            
-        case .nonNull:
-            return childType
-        }
+    var needsGenericConstraint: Bool {
+        let leafKind = self.leafKind
+        return leafKind == .interface || leafKind == .union
     }
     
     func recursiveTypeString() -> String {
@@ -427,7 +468,7 @@ extension Schema.ObjectType {
         case .inputObject:
             
             if nonNull {
-                return "\(self.mappedName!)!"
+                return "\(self.mappedName!)"
             } else {
                 return "\(self.mappedName!)?"
             }
@@ -435,7 +476,7 @@ extension Schema.ObjectType {
         case .list:
             
             if nonNull {
-                return "[\(childType)]!"
+                return "[\(childType)]"
             } else {
                 return "[\(childType)]?"
             }
@@ -450,6 +491,32 @@ extension DescribedType {
     
     func commentLines() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
+    }
+}
+
+extension Schema.Argument {
+    
+    func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
+        
+        var defaultValue: Swift.Method.Parameter.Default?
+        if self.type.kind != .nonNull && useDefaultValues {
+            defaultValue = .nil
+        }
+        
+        let typeString = self.type.recursiveTypeString()
+        
+        let type: Swift.Method.Parameter.ValueType
+        if self.type.needsGenericConstraint {
+            type = .constrained(Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [typeString]))
+        } else {
+            type = .normal(typeString)
+        }
+        
+        return Swift.Method.Parameter(
+            name:    self.name,
+            type:    type,
+            default: defaultValue
+        )
     }
 }
 
@@ -472,12 +539,7 @@ extension Schema.Field {
     
     func parameters(isInterface: Bool) -> [Swift.Method.Parameter] {
         return self.arguments.map {
-            
-            var defaultValue: Swift.Method.Parameter.Default?
-            if $0.type.kind != .nonNull && !isInterface {
-                defaultValue = .nil
-            }
-            return Swift.Method.Parameter(name: $0.name, type: $0.type.recursiveTypeString(), default: defaultValue)
+            $0.methodParameter(useDefaultValues: !isInterface)
         }
     }
 }

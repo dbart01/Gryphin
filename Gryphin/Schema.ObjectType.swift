@@ -22,6 +22,22 @@ extension Schema {
             return self.kind == .scalar
         }
         
+        var leafName: String? {
+            if let childType = self.ofType {
+                return childType.leafName
+            } else {
+                return self.name
+            }
+        }
+        
+        var leafKind: Schema.Kind {
+            if let childKind = self.ofType?.leafKind {
+                return childKind
+            } else {
+                return self.kind
+            }
+        }
+        
         // ----------------------------------
         //  MARK: - Init -
         //

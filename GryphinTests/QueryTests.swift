@@ -32,7 +32,7 @@ class QueryTests: XCTestCase {
         someClass.add(children: [
             
             Swift.Method(visibility: .public, name: .init(.required), parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(Query) -> Void"))
             ], body: [
                 "super.init(name: \"query\")",
                 "",
@@ -40,7 +40,7 @@ class QueryTests: XCTestCase {
             ]),
             
             Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(User) -> Void")),
             ], annotations: [.discardableResult], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -53,7 +53,7 @@ class QueryTests: XCTestCase {
             ]),
             
             Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(User) -> Void")),
             ], body: [
                 "let viewer = User(name: \"viewer\")",
                 "self.add(child: viewer)",
@@ -70,7 +70,7 @@ class QueryTests: XCTestCase {
         otherClass.add(children: [
             
             Swift.Method(visibility: .public, name: .init(.required), parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(Query) -> Void")
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(Query) -> Void"))
                 ], body: [
                     "super.init(name: \"query\")",
                     "",
@@ -78,7 +78,7 @@ class QueryTests: XCTestCase {
                     ]),
             
             Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(User) -> Void")),
                 ], annotations: [.discardableResult], body: [
                     "let viewer = User(name: \"viewer\")",
                     "self.add(child: viewer)",
@@ -91,7 +91,7 @@ class QueryTests: XCTestCase {
                     ]),
             
             Swift.Method(visibility: .public, name: .func("viewer"), returnType: "Query", parameters: [
-                Swift.Method.Parameter(name: "_ buildOn", type: "(User) -> Void"),
+                Swift.Method.Parameter(name: "_ buildOn", type: .normal("(User) -> Void")),
                 ], body: [
                     "let viewer = User(name: \"viewer\")",
                     "self.add(child: viewer)",
@@ -114,52 +114,52 @@ class QueryTests: XCTestCase {
     }
 }
 
-final class Query: Field {
-    
-    required init(_ buildOn: (Query) -> Void) {
-        super.init(name: "query")
-        
-        buildOn(self)
-    }
-    
-    @discardableResult
-    func viewer(_ buildOn: (User) -> Void) -> Query {
-        let viewer = User(name: "viewer")
-        self._add(child: viewer)
-        
-        buildOn(viewer)
-        
-        return self
-    }
-}
-
-final class User: Field {
-    
-    @discardableResult
-    func repositories(first: Int = 25, buildOn: (Repository) -> Void) -> User {
-        let repo = Repository(name: "repositories", parameters: [
-            Parameter(name: "first", value: first),
-        ])
-        self._add(child: repo)
-        
-        buildOn(repo)
-        
-        return self
-    }
-}
-
-final class Repository: Field {
-    
-    @discardableResult
-    func id() -> Repository {
-        self._add(child: Field(name: "id"))
-        return self
-    }
-    
-    @discardableResult
-    func name() -> Repository {
-        self._add(child: Field(name: "name"))
-        return self
-    }
-}
+//final class Query: Field {
+//    
+//    required init(_ buildOn: (Query) -> Void) {
+//        super.init(name: "query")
+//        
+//        buildOn(self)
+//    }
+//    
+//    @discardableResult
+//    func viewer(_ buildOn: (User) -> Void) -> Query {
+//        let viewer = User(name: "viewer")
+//        self._add(child: viewer)
+//        
+//        buildOn(viewer)
+//        
+//        return self
+//    }
+//}
+//
+//final class User: Field {
+//    
+//    @discardableResult
+//    func repositories(first: Int = 25, buildOn: (Repository) -> Void) -> User {
+//        let repo = Repository(name: "repositories", parameters: [
+//            Parameter(name: "first", value: first),
+//        ])
+//        self._add(child: repo)
+//        
+//        buildOn(repo)
+//        
+//        return self
+//    }
+//}
+//
+//final class Repository: Field {
+//    
+//    @discardableResult
+//    func id() -> Repository {
+//        self._add(child: Field(name: "id"))
+//        return self
+//    }
+//    
+//    @discardableResult
+//    func name() -> Repository {
+//        self._add(child: Field(name: "name"))
+//        return self
+//    }
+//}
 
