@@ -133,7 +133,7 @@ extension Swift {
             for value in object.enumValues! {
                 enumClass.add(child: Enum.Case(
                     name:     value.name,
-                    comments: value.commentLines()
+                    comments: value.descriptionComments()
                 ))
             }
             
@@ -304,7 +304,7 @@ extension Swift {
                 name:       field.name,
                 returnType: isInterface ? "Self" : name,
                 body:       body,
-                comments:   field.commentLines()
+                comments:   field.descriptionComments()
             ))
         }
         
@@ -371,7 +371,7 @@ extension Swift {
                 parameters:  parameters,
                 annotations: [.discardableResult],
                 body:        body,
-                comments:    field.commentLines()
+                comments:    field.parameterDocComments()
             ))
         }
     }
@@ -489,7 +489,7 @@ extension Schema.ObjectType {
 
 extension DescribedType {
     
-    func commentLines() -> [Swift.Line] {
+    func descriptionComments() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
     }
 }
@@ -522,7 +522,7 @@ extension Schema.Argument {
 
 extension Schema.Field {
     
-    func commentLines() -> [Swift.Line] {
+    func parameterDocComments() -> [Swift.Line] {
         var comments: [Swift.Line] = []
         comments.append(contentsOf: Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`"))
         
