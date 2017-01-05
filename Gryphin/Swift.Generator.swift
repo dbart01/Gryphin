@@ -167,23 +167,23 @@ extension Swift {
             
             precondition(interface.kind == .interface)
             
-            /* -----------------------------------------
-             ** Initialize the class that will represent
-             ** this object.
+            /* -------------------------------------------
+             ** Initialize the abstract protocol. It will
+             ** also have a concrete class of similar name
              */
-            let swiftClass = Class(
+            let swiftInterface = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         interface.name,
+                name:         interface.primitiveName,
                 inheritances: interface.inheritances(),
                 comments:     interface.descriptionComments()
             )
             
             if let fields = interface.fields {
-                self.generate(fields: fields, ofType: interface.name, appendingTo: swiftClass, isInterface: true)
+                self.generate(fields: fields, ofType: "Self", appendingTo: swiftInterface, isInterface: true)
             }
             
-            container.add(child: swiftClass)
+            container.add(child: swiftInterface)
             
             /* ----------------------------------------
              ** Iterate over all possibleTypes and check 
@@ -235,6 +235,27 @@ extension Swift {
                     }
                 }
             }
+            
+            /* ---------------------------------------------
+             ** Initialize a concrete class for the protocol
+             ** since we cannot execute builder methods on
+             ** an abstract protocol type.
+             */
+            let swiftClass = Class(
+                visibility:   .none,
+                kind:         .class(.final),
+                name:         interface.name,
+                inheritances: [interface.primitiveName],
+                comments:     [
+                    Swift.Line(content: "Concrete type aut-generated for `\(interface.primitiveName)` protocol")
+                ]
+            )
+            
+            if let fields = interface.fields {
+                self.generate(fields: fields, ofType: swiftClass.name, appendingTo: swiftClass, isInterface: false)
+            }
+            
+            container.add(child: swiftClass)
         }
         
         private func generate(union: Schema.Object, in container: Container) {
@@ -378,29 +399,29 @@ extension Swift {
             if !field.type.hasScalar {
                 
                 let parameterType: Swift.Method.Parameter.ValueType
-                if field.type.needsGenericConstraint {
-                    
-                    /* ------------------------------------------
-                     ** The generic delaration has a few nuances.
-                     ** We must first check how deeply nested the
-                     ** the type is (how many arrays are holding
-                     ** it). Then, the constraint must not include
-                     ** the array contaiment but simply be the type
-                     ** of the leaf-most type. The parameter type
-                     ** should then include the number of arrays
-                     ** that contain the scalar type.
-                     */
-                    let constraint = Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [field.type.leafName!], typeUsing: { type in
-                        return "(\(type)) -> Void"
-                    })
-                    
-                    parameterType = .constrained(constraint)
-                    
-                } else {
+//                if field.type.needsGenericConstraint {
+//                    
+//                    /* ------------------------------------------
+//                     ** The generic delaration has a few nuances.
+//                     ** We must first check how deeply nested the
+//                     ** the type is (how many arrays are holding
+//                     ** it). Then, the constraint must not include
+//                     ** the array contaiment but simply be the type
+//                     ** of the leaf-most type. The parameter type
+//                     ** should then include the number of arrays
+//                     ** that contain the scalar type.
+//                     */
+//                    let constraint = Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [field.type.leafName!], typeUsing: { type in
+//                        return "(\(type)) -> Void"
+//                    })
+//                    
+//                    parameterType = .constrained(constraint)
+//                    
+//                } else {
                     parameterType = .normal(
                         "(\(field.type.leafName!)) -> Void"
                     )
-                }
+//                }
                 
                 parameters.append(Method.Parameter(
                     unnamed: true,

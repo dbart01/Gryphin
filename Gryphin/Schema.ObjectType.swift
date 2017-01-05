@@ -26,7 +26,7 @@ extension Schema {
             if let childType = self.ofType {
                 return childType.leafName
             } else {
-                return self.name
+                return Object.concreteNameFor(name: self.name, with: self.kind)
             }
         }
         
