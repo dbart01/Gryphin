@@ -64,11 +64,17 @@ extension Swift {
             /* -----------------------------
              ** Parse the schema types first
              */
-            let types = jsonTypes.map {
+            var types = jsonTypes.map {
                 Schema.Object(json: $0)
             }
             
+            types.sort { lhs, rhs in
+                lhs.kind.rawValue < rhs.kind.rawValue
+            }
+            
+            var generatedTypes: [String : Schema.Object] = [:]
             for type in types {
+                generatedTypes[type.name] = type
                 
                 /* ---------------------------------
                  ** Ignore the GraphQL private types
@@ -86,7 +92,7 @@ extension Swift {
                     self.generate(object: type, in: container)
                     
                 case .interface:
-                    self.generate(interface: type, in: container)
+                    self.generate(interface: type, generatedTypes: generatedTypes, in: container)
                     
                 case .enum:
                     self.generate(enum: type, in: container)
@@ -157,7 +163,7 @@ extension Swift {
             ))
         }
         
-        private func generate(interface: Schema.Object, in container: Container) {
+        private func generate(interface: Schema.Object, generatedTypes: [String : Schema.Object], in container: Container) {
             
             precondition(interface.kind == .interface)
             
@@ -173,16 +179,62 @@ extension Swift {
                 comments:     interface.descriptionComments()
             )
             
-            /* ----------------------------------------
-             ** Build the fields which will be methods
-             ** of this class. If it's a `UNION` type,
-             ** the fields will be nil.
-             */
             if let fields = interface.fields {
                 self.generate(fields: fields, inObjectNamed: interface.name, appendingTo: swiftClass, isInterface: true)
             }
             
             container.add(child: swiftClass)
+            
+            /* ----------------------------------------
+             ** Iterate over all possibleTypes and check 
+             ** if any implemented interface properties 
+             ** have arguments in the object implementation. 
+             ** If so, we'll add a default implementation 
+             ** with no arguments.
+             */
+            if let possibleTypes = interface.possibleTypes,
+                let fields = interface.fields {
+                
+                /* -----------------------------------------
+                 ** Create a set of field names contained in
+                 ** this interface so we can query against it.
+                 */
+                let fieldNameDictionary = fields.keyedUsing { $0.name }
+                
+                for possibleType in possibleTypes where possibleType.leafName != nil {
+                    if let object = generatedTypes[possibleType.leafName!] {
+                        
+                        /* ---------------------------------------
+                         ** Filter out only the fields that have
+                         ** arguments and correspond to the fields
+                         ** declared in the interface.
+                         */
+                        let objectFields = object.fields!.filter {
+                            if let interfaceField = fieldNameDictionary[$0.name] {
+                                return interfaceField.arguments.count != $0.arguments.count
+                            }
+                            return false
+                        }
+                        
+                        if !objectFields.isEmpty {
+                            let swiftExtension = Class(
+                                visibility: .none,
+                                kind:       .extension,
+                                name:       possibleType.name!,
+                                comments:   [
+                                    Swift.Line(content: "Auto-generated property for compatibility with `\(interface.name)`")
+                                ]
+                            )
+                            
+                            for objectField in objectFields {
+                                self.generate(propertyFor: objectField, inObjectNamed: swiftExtension.name, appendingTo: swiftExtension, isInterface: false)
+                            }
+                            
+                            container.add(child: swiftExtension)
+                        }
+                    }
+                }
+            }
         }
         
         private func generate(union: Schema.Object, in container: Container) {
@@ -374,6 +426,20 @@ extension Swift {
                 comments:    field.parameterDocComments()
             ))
         }
+    }
+}
+
+// ----------------------------------
+//  MARK: - Extensions -
+//
+extension Array {
+    
+    func keyedUsing(block: (Element) -> String) -> [String : Element] {
+        var dictionary: [String : Element] = [:]
+        self.forEach {
+            dictionary[block($0)] = $0
+        }
+        return dictionary
     }
 }
 

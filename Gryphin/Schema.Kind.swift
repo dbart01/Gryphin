@@ -9,13 +9,13 @@
 import Foundation
 
 extension Schema {
-    enum Kind {
+    enum Kind: Int {
         case scalar
+        case `enum`
         case object
+        case inputObject
         case interface
         case union
-        case `enum`
-        case inputObject
         case list
         case nonNull
         
