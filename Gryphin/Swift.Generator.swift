@@ -180,7 +180,7 @@ extension Swift {
             )
             
             if let fields = interface.fields {
-                self.generate(fields: fields, inObjectNamed: interface.name, appendingTo: swiftClass, isInterface: true)
+                self.generate(fields: fields, ofType: interface.name, appendingTo: swiftClass, isInterface: true)
             }
             
             container.add(child: swiftClass)
@@ -227,7 +227,7 @@ extension Swift {
                             )
                             
                             for objectField in objectFields {
-                                self.generate(propertyFor: objectField, inObjectNamed: swiftExtension.name, appendingTo: swiftExtension, isInterface: false)
+                                self.generate(propertyFor: objectField, ofType: swiftExtension.name, appendingTo: swiftExtension, isInterface: false)
                             }
                             
                             container.add(child: swiftExtension)
@@ -285,7 +285,7 @@ extension Swift {
             )
             
             if let fields = object.fields {
-                self.generate(fields: fields, inObjectNamed: object.name, appendingTo: swiftClass, isInterface: false)
+                self.generate(fields: fields, ofType: object.name, appendingTo: swiftClass, isInterface: false)
             }
             
             container.add(child: swiftClass)
@@ -309,7 +309,7 @@ extension Swift {
             
             if let fields = inputObject.inputFields {
                 for field in fields {
-                    self.generate(propertyFor: field, inObjectNamed: inputObject.name, appendingTo: swiftClass, isInterface: false)
+                    self.generate(propertyFor: field, ofType: inputObject.name, appendingTo: swiftClass, isInterface: false)
                 }
             }
             
@@ -319,7 +319,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Field Generation -
         //
-        private func generate(fields: [Schema.Field], inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate(fields: [Schema.Field], ofType name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
             for field in fields {
                 
@@ -331,14 +331,14 @@ extension Swift {
                  ** than a method with a `buildOn` parameter.
                  */
                 if field.type.hasScalar && field.arguments.isEmpty {
-                    self.generate(propertyFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
+                    self.generate(propertyFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface)
                 } else {
-                    self.generate(methodFor: field, inObjectNamed: name, appendingTo: containerType, isInterface: isInterface)
+                    self.generate(methodFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface)
                 }
             }
         }
         
-        private func generate(propertyFor field: DescribedType, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate(propertyFor field: DescribedType, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
             let body: [Line]
             if isInterface {
@@ -354,13 +354,13 @@ extension Swift {
             containerType.add(child: Property(
                 visibility: .none,
                 name:       field.name,
-                returnType: isInterface ? "Self" : name,
+                returnType: isInterface ? "Self" : type,
                 body:       body,
                 comments:   field.descriptionComments()
             ))
         }
         
-        private func generate(methodFor field: Schema.Field, inObjectNamed name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate(methodFor field: Schema.Field, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
             
             precondition(!field.arguments.isEmpty || !field.type.hasScalar)
             
@@ -377,7 +377,7 @@ extension Swift {
              */
             if !field.type.hasScalar {
                 
-                let type: Swift.Method.Parameter.ValueType
+                let parameterType: Swift.Method.Parameter.ValueType
                 if field.type.needsGenericConstraint {
                     
                     /* ------------------------------------------
@@ -394,10 +394,10 @@ extension Swift {
                         return "(\(type)) -> Void"
                     })
                     
-                    type = .constrained(constraint)
+                    parameterType = .constrained(constraint)
                     
                 } else {
-                    type = .normal(
+                    parameterType = .normal(
                         "(\(field.type.leafName!)) -> Void"
                     )
                 }
@@ -405,7 +405,7 @@ extension Swift {
                 parameters.append(Method.Parameter(
                     unnamed: true,
                     name:    "buildOn",
-                    type:    type
+                    type:    parameterType
                 ))
             }
             
@@ -419,7 +419,7 @@ extension Swift {
             containerType.add(child: Method(
                 visibility:  .none,
                 name:        .func(field.name),
-                returnType:  isInterface ? "Self" : name,
+                returnType:  isInterface ? "Self" : type,
                 parameters:  parameters,
                 annotations: [.discardableResult],
                 body:        body,
