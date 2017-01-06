@@ -17,6 +17,8 @@ class Field: ContainerType {
     var _parent:     ContainerType?
     var _children:  [ReferenceType] = []
     
+    private var enquedAlias: String?
+    
     // ----------------------------------
     //  MARK: - Init -
     //
@@ -27,6 +29,35 @@ class Field: ContainerType {
         
         if let children = children {
             self._add(children: children)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Alias -
+    //
+    func alias(_ alias: String) -> Self {
+        self.enquedAlias = alias
+        return self
+    }
+    
+    private func insertAlias(children: [ReferenceType]) {
+        if let field = children.first as? Field {
+            field._alias = self.enquedAlias
+        }
+        self.enquedAlias = nil
+    }
+    
+    // ----------------------------------
+    //  MARK: - Children -
+    //
+    func _add(children: [ReferenceType]) {
+        if !children.isEmpty {
+            self.insertAlias(children: children)
+            
+            children.forEach {
+                $0._parent = self
+            }
+            self._children.append(contentsOf: children)
         }
     }
 }
