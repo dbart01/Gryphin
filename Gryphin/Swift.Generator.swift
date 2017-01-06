@@ -93,6 +93,7 @@ extension Swift {
                     
                 case .interface:
                     self.generate(interface: type, generatedTypes: generatedTypes, in: container)
+                    self.generate(concreteInterface: type, in: container)
                     
                 case .enum:
                     self.generate(enum: type, in: container)
@@ -235,6 +236,11 @@ extension Swift {
                     }
                 }
             }
+        }
+        
+        private func generate(concreteInterface: Schema.Object, in container: Container) {
+            
+            precondition(concreteInterface.kind == .interface)
             
             /* ---------------------------------------------
              ** Initialize a concrete class for the protocol
@@ -244,15 +250,41 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         interface.name,
-                inheritances: [interface.primitiveName],
+                name:         concreteInterface.name,
+                inheritances: [concreteInterface.primitiveName],
                 comments:     [
-                    Swift.Line(content: "Concrete type aut-generated for `\(interface.primitiveName)` protocol")
+                    Swift.Line(content: "Concrete type aut-generated for `\(concreteInterface.primitiveName)` protocol")
                 ]
             )
             
-            if let fields = interface.fields {
+            if let fields = concreteInterface.fields {
                 self.generate(fields: fields, ofType: swiftClass.name, appendingTo: swiftClass, isInterface: false)
+            }
+            
+            if let possibleTypes = concreteInterface.possibleTypes {
+                for possibleType in possibleTypes where possibleType.leafName != nil {
+                    
+                    let type      = possibleType.leafName!
+                    let closure   = self.closureNameWith(type: type)
+                    let parameter = Method.Parameter(
+                        unnamed: true,
+                        name:    type,
+                        type:    .normal(closure.type)
+                    )
+                    
+                    let method = Method(
+                        visibility: .none,
+                        name:        .func("fragmentOn\(type)"),
+                        returnType:  swiftClass.name,
+                        parameters:  [parameter],
+                        body:        self.buildableInlineFragmentContent(),
+                        comments:    [
+                            Line(content: "Use an inline fragment to query specific fields of `\(type)`")
+                        ]
+                    )
+                    
+                    swiftClass.add(child: method)
+                }
             }
             
             container.add(child: swiftClass)
@@ -354,7 +386,7 @@ extension Swift {
                 if field.type.hasScalar && field.arguments.isEmpty {
                     self.generate(propertyFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface)
                 } else {
-                    self.generate(methodFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface)
+                    self.generate(methodFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface, buildable: !field.type.hasScalar)
                 }
             }
         }
@@ -363,13 +395,9 @@ extension Swift {
             
             let body: [Line]
             if isInterface {
-                body = [
-                    "get"
-                ]
+                body = ["get"]
             } else {
-                body = [
-                    "return self"
-                ]
+                body = self.buildableContent()
             }
             
             containerType.add(child: Property(
@@ -381,7 +409,7 @@ extension Swift {
             ))
         }
         
-        private func generate(methodFor field: Schema.Field, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate(methodFor field: Schema.Field, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool, buildable: Bool) {
             
             precondition(!field.arguments.isEmpty || !field.type.hasScalar)
             
@@ -396,45 +424,18 @@ extension Swift {
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
-            if !field.type.hasScalar {
-                
-                let parameterType: Swift.Method.Parameter.ValueType
-//                if field.type.needsGenericConstraint {
-//                    
-//                    /* ------------------------------------------
-//                     ** The generic delaration has a few nuances.
-//                     ** We must first check how deeply nested the
-//                     ** the type is (how many arrays are holding
-//                     ** it). Then, the constraint must not include
-//                     ** the array contaiment but simply be the type
-//                     ** of the leaf-most type. The parameter type
-//                     ** should then include the number of arrays
-//                     ** that contain the scalar type.
-//                     */
-//                    let constraint = Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [field.type.leafName!], typeUsing: { type in
-//                        return "(\(type)) -> Void"
-//                    })
-//                    
-//                    parameterType = .constrained(constraint)
-//                    
-//                } else {
-                    parameterType = .normal(
-                        "(\(field.type.leafName!)) -> Void"
-                    )
-//                }
-                
+            let closure = self.closureNameWith(type: field.type.leafName!)
+            if buildable {
                 parameters.append(Method.Parameter(
                     unnamed: true,
-                    name:    "buildOn",
-                    type:    parameterType
+                    name:    closure.name,
+                    type:    .normal(closure.type)
                 ))
             }
             
             var body: [Line] = []
             if !isInterface {
-                body = [
-                    "return self"
-                ]
+                body = self.buildableContent()
             }
             
             containerType.add(child: Method(
@@ -446,6 +447,28 @@ extension Swift {
                 body:        body,
                 comments:    field.parameterDocComments()
             ))
+        }
+        
+        // ----------------------------------
+        //  MARK: - Content -
+        //
+        private func closureNameWith(type: String) -> (name: String, type: String) {
+            return (
+                name: "buildOn",
+                type: "(\(type)) -> Void"
+            )
+        }
+        
+        private func buildableContent() -> [Line] {
+            return [
+                "return self"
+            ]
+        }
+        
+        private func buildableInlineFragmentContent() -> [Line] {
+            return [
+                "return self"
+            ]
         }
     }
 }
