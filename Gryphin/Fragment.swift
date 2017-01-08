@@ -43,7 +43,7 @@ extension Fragment {
         }
         
         if !self._parameters.isEmpty {
-            let keyValues      = self._parameters.map { "\($0._name): \($0._value._stringRepresentation)" }
+            let keyValues      = self._parameters.map { $0._stringRepresentation }
             let keyValueString = keyValues.joined(separator: " ")
             representation    += "(\(keyValueString))"
         }
