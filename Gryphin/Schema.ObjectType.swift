@@ -19,7 +19,7 @@ extension Schema {
             if let type = self.ofType {
                 return type.hasScalar
             }
-            return self.kind == .scalar
+            return self.kind == .scalar || self.kind == .enum
         }
         
         var leafName: String? {
@@ -36,6 +36,10 @@ extension Schema {
             } else {
                 return self.kind
             }
+        }
+        
+        var isTopLevelNullable: Bool {
+            return self.kind != .nonNull
         }
         
         // ----------------------------------

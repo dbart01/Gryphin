@@ -1,5 +1,5 @@
 //
-//  DescribedType.swift
+//  Describeable.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2017-01-01.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol DescribedType: NamedType {
+protocol Describeable: Nameable {
     var description: String? { get }
 }

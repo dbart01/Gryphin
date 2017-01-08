@@ -51,3 +51,15 @@ extension Double: ValueType {
         return "\(self)"
     }
 }
+
+extension Bool: ValueType {
+    var _stringRepresentation: String {
+        return self ? "true" : "false"
+    }
+}
+
+extension RawRepresentable where RawValue == String {
+    var _stringRepresentation: String {
+        return "\(self.rawValue)"
+    }
+}

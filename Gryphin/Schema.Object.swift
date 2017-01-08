@@ -9,7 +9,7 @@
 import Foundation
 
 extension Schema {
-    final class Object: JsonCreatable, DescribedType {
+    final class Object: JsonCreatable, Describeable {
         
         let kind:          Kind
         let name:          String
@@ -43,7 +43,7 @@ extension Schema {
                 return nil
             }
             
-            guard kind == .interface else {// || kind == .union else {
+            guard kind == .interface || kind == .union else {
                 return name
             }
             return "Concrete\(name)"

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Parameter {
+struct Parameter: ValueType {
     
     var _name:  String
     var _value: ValueType
@@ -19,6 +19,25 @@ struct Parameter {
     init(name: String, value: ValueType) {
         self._name  = name
         self._value = value
+    }
+    
+    init(name: String, value: [ValueType]) {
+        self.init(name: name, value: value.map { $0._stringRepresentation }.joined(separator: ", "))
+    }
+    
+    init<T>(name: String, value: T) where T: RawRepresentable, T.RawValue == String {
+        self.init(name: name, value: value.rawValue)
+    }
+    
+    init<T>(name: String, value: [T]) where T: RawRepresentable, T.RawValue == String {
+        self.init(name: name, value: value.map { $0.rawValue }.joined(separator: ", "))
+    }
+    
+    // ----------------------------------
+    //  MARK: - ValueType -
+    //
+    var _stringRepresentation: String {
+        return "\(self._name): \(self._value)"
     }
 }
 

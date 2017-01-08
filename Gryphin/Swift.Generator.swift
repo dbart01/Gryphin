@@ -106,6 +106,7 @@ extension Swift {
                     
                 case .union:
                     self.generate(union: type, in: container)
+                    self.generate(concreteInterface: type, in: container)
                     
                 case .list:
                     break
@@ -131,10 +132,11 @@ extension Swift {
             precondition(object.kind == .enum)
             
             let enumClass = Class(
-                visibility: .none,
-                kind:       .enum,
-                name:       object.name,
-                comments:   object.descriptionComments()
+                visibility:   .none,
+                kind:         .enum,
+                name:         object.name,
+                inheritances: ["String"],
+                comments:     object.descriptionComments()
             )
             
             for value in object.enumValues! {
@@ -176,7 +178,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .protocol,
                 name:         interface.primitiveName,
-                inheritances: interface.inheritances(),
+                inheritances: interface.inheritances(isInterface: true),
                 comments:     interface.descriptionComments()
             )
             
@@ -240,7 +242,7 @@ extension Swift {
         
         private func generate(concreteInterface: Schema.Object, in container: Container) {
             
-            precondition(concreteInterface.kind == .interface)
+            precondition(concreteInterface.kind == .interface || concreteInterface.kind == .union)
             
             /* ---------------------------------------------
              ** Initialize a concrete class for the protocol
@@ -251,9 +253,9 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         concreteInterface.name,
-                inheritances: [concreteInterface.primitiveName],
+                inheritances: ["Field", concreteInterface.primitiveName],
                 comments:     [
-                    Swift.Line(content: "Concrete type aut-generated for `\(concreteInterface.primitiveName)` protocol")
+                    Swift.Line(content: "Concrete type aut-generated for `\(concreteInterface.primitiveName)`")
                 ]
             )
             
@@ -301,8 +303,8 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         union.name,
-                inheritances: union.inheritances(),
+                name:         union.primitiveName,
+                inheritances: union.inheritances(isInterface: true),
                 comments:     union.descriptionComments()
             )
             
@@ -315,7 +317,7 @@ extension Swift {
                         visibility:   .none,
                         kind:         .extension,
                         name:         $0.name!,
-                        inheritances: [union.name]
+                        inheritances: [union.primitiveName]
                     ))
                 }
             }
@@ -333,7 +335,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         object.name,
-                inheritances: object.inheritances(),
+                inheritances: object.inheritances(isInterface: false),
                 comments:     object.descriptionComments()
             )
             
@@ -356,7 +358,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         inputObject.name,
-                inheritances: inputObject.inheritances(),
+                inheritances: inputObject.inheritances(isInterface: false),
                 comments:     inputObject.descriptionComments()
             )
             
@@ -391,13 +393,13 @@ extension Swift {
             }
         }
         
-        private func generate(propertyFor field: DescribedType, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate<T>(propertyFor field: T, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) where T: Typeable, T: Describeable {
             
             let body: [Line]
             if isInterface {
                 body = ["get"]
             } else {
-                body = self.buildableContent()
+                body = self.subfieldBodyWith(name: field.name, type: field.type.leafName!, buildable: false, isObject: !field.type.hasScalar)
             }
             
             containerType.add(child: Property(
@@ -424,7 +426,9 @@ extension Swift {
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
-            let closure = self.closureNameWith(type: field.type.leafName!)
+            let fieldType = field.type.leafName!
+            let closure   = self.closureNameWith(type: fieldType)
+            
             if buildable {
                 parameters.append(Method.Parameter(
                     unnamed: true,
@@ -435,7 +439,7 @@ extension Swift {
             
             var body: [Line] = []
             if !isInterface {
-                body = self.buildableContent()
+                body = self.subfieldBodyWith(name: field.name, type: fieldType, buildable: buildable, isObject: !field.type.hasScalar, arguments: field.arguments)
             }
             
             containerType.add(child: Method(
@@ -452,6 +456,10 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Content -
         //
+        private func baseClassName() -> String {
+            return "Field"
+        }
+        
         private func closureNameWith(type: String) -> (name: String, type: String) {
             return (
                 name: "buildOn",
@@ -459,10 +467,77 @@ extension Swift {
             )
         }
         
-        private func buildableContent() -> [Line] {
-            return [
-                "return self"
-            ]
+        private func subfieldBodyWith(name: String, type: String, buildable: Bool, isObject: Bool, arguments: [Schema.Argument]? = nil) -> [Line] {
+            var lines: [Line] = []
+            
+            let closure = self.closureNameWith(type: "")
+            
+            /* ----------------------------------------
+             ** If this field accepts arguments, we'll
+             ** need to add logic for appending only
+             ** non-nil parameters (those that are set).
+             */
+            var paramVariable = "[]"
+            if let arguments = arguments, !arguments.isEmpty {
+                
+                lines += "var parameters: [Parameter] = []"
+                lines += ""
+                
+                paramVariable = "parameters"
+                
+                /* -----------------------------
+                 ** Append non-null values first
+                 */
+                let nonNullArguments = arguments.filter { !$0.type.isTopLevelNullable }
+                if !nonNullArguments.isEmpty {
+                    
+                    for argument in nonNullArguments {
+                        if argument.name != closure.name {
+                            lines += Line(content: "parameters.append(Parameter(name: \"\(argument.name)\", value: \(argument.name)))")
+                        }
+                    }
+                    lines += ""
+                }
+                
+                /* -----------------------------
+                 ** Append nullable values after
+                 */
+                let nullableArguments = arguments.filter { $0.type.isTopLevelNullable }
+                if !nullableArguments.isEmpty {
+                    
+                    for argument in nullableArguments {
+                        if argument.name != closure.name {
+                            lines += Line(content: "if let arg = \(argument.name) { parameters.append(Parameter(name: \"\(argument.name)\", value: arg)) }")
+                        }
+                    }
+                    lines += ""
+                }
+            }
+            
+            /* ----------------------------------------
+             ** Ensure that we aren't creating field
+             ** subclass instances of scalar types but
+             ** only object types.
+             */
+            let objectType: String
+            if isObject {
+                objectType = type
+            } else {
+                objectType = self.baseClassName()
+            }
+            
+            lines += Line(content: "let field = \(objectType)(name: \"\(name)\", parameters: \(paramVariable))")
+            lines += Line(content: "self._add(child: field)")
+            lines += Line(content: "")
+            
+            if buildable {
+                lines += Line(content: "buildOn(field)")
+                lines += Line(content: "")
+            }
+            
+            lines += Line(content: "return self")
+            
+            return lines
         }
         
         private func buildableInlineFragmentContent() -> [Line] {
@@ -485,6 +560,10 @@ extension Array {
         }
         return dictionary
     }
+}
+
+func +=<T>(lhs: inout [T], rhs: T) {
+    lhs.append(rhs)
 }
 
 // ----------------------------------
@@ -515,7 +594,7 @@ extension Schema.Object {
         return commentLines
     }
     
-    func inheritances() -> [String] {
+    func inheritances(isInterface: Bool) -> [String] {
         
         /* ----------------------------------------
          ** Build all interfaces and superclasses
@@ -524,12 +603,17 @@ extension Schema.Object {
          ** facilitate the generation of queries.
          */
         var inheritances: [String] = []
+        
+        if !isInterface {
+            inheritances.append("Field")
+        }
+        
         if let interfaces = self.interfaces, !interfaces.isEmpty {
-            inheritances.insert("Field", at: 0)
             inheritances.append(contentsOf: interfaces.map {
                 $0.name!
             })
         }
+        
         return inheritances
     }
 }
@@ -595,7 +679,7 @@ extension Schema.ObjectType {
     }
 }
 
-extension DescribedType {
+extension Describeable {
     
     func descriptionComments() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
@@ -607,7 +691,7 @@ extension Schema.Argument {
     func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
         
         var defaultValue: Swift.Method.Parameter.Default?
-        if self.type.kind != .nonNull && useDefaultValues {
+        if self.type.isTopLevelNullable && useDefaultValues {
             defaultValue = .nil
         }
         
@@ -615,6 +699,7 @@ extension Schema.Argument {
         
         let type: Swift.Method.Parameter.ValueType
         if self.type.needsGenericConstraint {
+            // TODO: Remove
             type = .constrained(Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [typeString]))
         } else {
             type = .normal(typeString)

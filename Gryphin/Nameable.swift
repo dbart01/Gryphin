@@ -1,5 +1,5 @@
 //
-//  NamedType.swift
+//  Nameable.swift
 //  Gryphin
 //
 //  Created by Dima Bart on 2017-01-01.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol NamedType {
+protocol Nameable {
     var name: String { get }
 }
