@@ -395,11 +395,19 @@ extension Swift {
         
         private func generate<T>(propertyFor field: T, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) where T: Typeable, T: Describeable {
             
+            let isScalar = field.type.hasScalar
+            
             let body: [Line]
             if isInterface {
                 body = ["get"]
             } else {
-                body = self.subfieldBodyWith(name: field.name, type: field.type.leafName!, buildable: false, isObject: !field.type.hasScalar)
+                body = self.subfieldBodyWith(name: field.name, type: field.type.leafName!, buildable: false, isObject: !isScalar)
+            }
+            
+            var comments = field.descriptionComments()
+            
+            if isScalar {
+                comments.append(Line(content: " - Value Type: `\(field.type.recursiveTypeString())`"))
             }
             
             containerType.add(child: Property(
@@ -407,7 +415,7 @@ extension Swift {
                 name:       field.name,
                 returnType: isInterface ? "Self" : type,
                 body:       body,
-                comments:   field.descriptionComments()
+                comments:   comments
             ))
         }
         
