@@ -34,6 +34,16 @@ extension Swift {
              */
         ]
         
+        private struct SchemaKey {
+            static let data             = "data"
+            static let schema           = "__schema"
+            static let types            = "types"
+            static let directives       = "directives"
+            static let queryType        = "queryType"
+            static let mutationType     = "mutationType"
+            static let subscriptionType = "subscriptionType"
+        }
+        
         // ----------------------------------
         //  MARK: - Init -
         //
@@ -54,10 +64,10 @@ extension Swift {
         //
         func generate() -> Container {
             
-            let schemaData     = self.schemaJSON["data"]  as! JSON
-            let jsonSchema     = schemaData["__schema"]   as! JSON
-            let jsonTypes      = jsonSchema["types"]      as! [JSON]
-            let jsonDirectives = jsonSchema["directives"] as! [JSON]
+            let schemaData     = self.schemaJSON[SchemaKey.data]  as! JSON
+            let jsonSchema     = schemaData[SchemaKey.schema]     as! JSON
+            let jsonTypes      = jsonSchema[SchemaKey.types]      as! [JSON]
+            let jsonDirectives = jsonSchema[SchemaKey.directives] as! [JSON]
             
             let container = Container()
             
@@ -89,24 +99,26 @@ extension Swift {
                  */
                 switch type.kind {
                 case .object:
-                    self.generate(object: type, in: container)
+                    container += self.generate(object: type)
                     
                 case .interface:
-                    self.generate(interface: type, generatedTypes: generatedTypes, in: container)
-                    self.generate(concreteInterface: type, in: container)
+                    container += self.generate(interface: type, parsedTypes: generatedTypes)
+                    container += self.generate(concreteInterface: type)
                     
                 case .enum:
-                    self.generate(enum: type, in: container)
+                    container += self.generate(enum: type)
                     
                 case .inputObject:
-                    self.generate(inputObject: type, in: container)
+                    container += self.generate(inputObject: type)
                     
                 case .scalar:
-                    self.generate(scalar: type, in: container)
+                    if let alias = self.generate(scalar: type) {
+                        container += alias
+                    }
                     
                 case .union:
-                    self.generate(union: type, in: container)
-                    self.generate(concreteInterface: type, in: container)
+                    container += self.generate(union: type)
+                    container += self.generate(concreteInterface: type)
                     
                 case .list:
                     break
@@ -128,7 +140,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Type Generation -
         //
-        private func generate(enum object: Schema.Object, in container: Container) {
+        private func generate(enum object: Schema.Object) -> Class {
             precondition(object.kind == .enum)
             
             let enumClass = Class(
@@ -146,10 +158,10 @@ extension Swift {
                 ))
             }
             
-            container.add(child: enumClass)
+            return enumClass
         }
         
-        private func generate(scalar: Schema.Object, in container: Container) {
+        private func generate(scalar: Schema.Object) -> Alias? {
             precondition(scalar.kind == .scalar)
             
             /* ----------------------------------------
@@ -157,18 +169,20 @@ extension Swift {
              ** alias for a standard type (redundant).
              */
             guard !self.standardScalars.contains(scalar.name) else {
-                return
+                return nil
             }
             
-            container.add(child: Alias(
+            return Alias(
                 name:    scalar.name,
                 forType: "String"
-            ))
+            )
         }
         
-        private func generate(interface: Schema.Object, generatedTypes: [String : Schema.Object], in container: Container) {
+        private func generate(interface: Schema.Object, parsedTypes: [String : Schema.Object]) -> [Class] {
             
             precondition(interface.kind == .interface)
+            
+            var container: [Class] = []
             
             /* -------------------------------------------
              ** Initialize the abstract protocol. It will
@@ -186,7 +200,7 @@ extension Swift {
                 self.generate(fields: fields, ofType: "Self", appendingTo: swiftInterface, isInterface: true)
             }
             
-            container.add(child: swiftInterface)
+            container.append(swiftInterface)
             
             /* ----------------------------------------
              ** Iterate over all possibleTypes and check 
@@ -205,7 +219,7 @@ extension Swift {
                 let fieldNameDictionary = fields.keyedUsing { $0.name }
                 
                 for possibleType in possibleTypes where possibleType.leafName != nil {
-                    if let object = generatedTypes[possibleType.leafName!] {
+                    if let object = parsedTypes[possibleType.leafName!] {
                         
                         /* ---------------------------------------
                          ** Filter out only the fields that have
@@ -233,14 +247,16 @@ extension Swift {
                                 self.generate(propertyFor: objectField, ofType: swiftExtension.name, appendingTo: swiftExtension, isInterface: false)
                             }
                             
-                            container.add(child: swiftExtension)
+                            container.append(swiftExtension)
                         }
                     }
                 }
             }
+            
+            return container
         }
         
-        private func generate(concreteInterface: Schema.Object, in container: Container) {
+        private func generate(concreteInterface: Schema.Object) -> Class {
             
             precondition(concreteInterface.kind == .interface || concreteInterface.kind == .union)
             
@@ -289,12 +305,14 @@ extension Swift {
                 }
             }
             
-            container.add(child: swiftClass)
+            return swiftClass
         }
         
-        private func generate(union: Schema.Object, in container: Container) {
+        private func generate(union: Schema.Object) -> [Class] {
             
             precondition(union.kind == .union)
+            
+            var container: [Class] = []
             
             /* -----------------------------------------
              ** Initialize the class that will represent
@@ -308,12 +326,12 @@ extension Swift {
                 comments:     union.descriptionComments()
             )
             
-            container.add(child: swiftClass)
+            container.append(swiftClass)
             
             if let possibleTypes = union.possibleTypes {
                 possibleTypes.forEach {
                     
-                    container.add(child: Class(
+                    container.append(Class(
                         visibility:   .none,
                         kind:         .extension,
                         name:         $0.name!,
@@ -321,9 +339,11 @@ extension Swift {
                     ))
                 }
             }
+            
+            return container
         }
         
-        private func generate(object: Schema.Object, in container: Container) {
+        private func generate(object: Schema.Object) -> Class {
             
             precondition(object.kind == .object)
 
@@ -343,10 +363,10 @@ extension Swift {
                 self.generate(fields: fields, ofType: object.name, appendingTo: swiftClass, isInterface: false)
             }
             
-            container.add(child: swiftClass)
+            return swiftClass
         }
         
-        private func generate(inputObject: Schema.Object, in container: Container) {
+        private func generate(inputObject: Schema.Object) -> Class {
             
             precondition(inputObject.kind == .inputObject)
             
@@ -368,7 +388,7 @@ extension Swift {
                 }
             }
             
-            container.add(child: swiftClass)
+            return swiftClass
         }
         
         // ----------------------------------

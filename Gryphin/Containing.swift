@@ -18,8 +18,7 @@ extension Containing {
     //  MARK: - Children -
     //
     func add(child: Containable) {
-        child.parent = self
-        self.children.append(child)
+        self.add(children: [child])
     }
     
     func add(children: [Containable]) {
@@ -28,6 +27,29 @@ extension Containing {
         }
         self.children.append(contentsOf: children)
     }
+    
+    func prepend(child: Containable) {
+        self.prepend(children: [child])
+    }
+    
+    func prepend(children: [Containable]) {
+        children.forEach {
+            $0.parent = self
+        }
+        self.children.insert(contentsOf: children, at: 0)
+    }
+}
+
+
+// ----------------------------------
+//  MARK: - Operators -
+//
+func +=<T: Containing>(lhs: T, rhs: Containable) {
+    lhs.add(child: rhs)
+}
+
+func +=<T: Containing>(lhs: T, rhs: [Containable]) {
+    lhs.add(children: rhs)
 }
 
 extension Array where Element: Containing {
