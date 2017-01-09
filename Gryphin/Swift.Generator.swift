@@ -270,7 +270,7 @@ extension Swift {
                     let closure   = self.closureNameWith(type: type)
                     let parameter = Method.Parameter(
                         unnamed: true,
-                        name:    type,
+                        name:    closure.name,
                         type:    .normal(closure.type)
                     )
                     
@@ -279,7 +279,7 @@ extension Swift {
                         name:        .func("fragmentOn\(type)"),
                         returnType:  swiftClass.name,
                         parameters:  [parameter],
-                        body:        self.buildableInlineFragmentContent(),
+                        body:        self.inlineFragmentContentWith(type: type),
                         comments:    [
                             Line(content: "Use an inline fragment to query specific fields of `\(type)`")
                         ]
@@ -499,10 +499,8 @@ extension Swift {
                 let nonNullArguments = arguments.filter { !$0.type.isTopLevelNullable }
                 if !nonNullArguments.isEmpty {
                     
-                    for argument in nonNullArguments {
-                        if argument.name != closure.name {
-                            lines += Line(content: "parameters.append(Parameter(name: \"\(argument.name)\", value: \(argument.name)))")
-                        }
+                    for argument in nonNullArguments where argument.name != closure.name {
+                        lines += Line(content: "parameters.append(Parameter(name: \"\(argument.name)\", value: \(argument.name)))")
                     }
                     lines += ""
                 }
@@ -513,10 +511,8 @@ extension Swift {
                 let nullableArguments = arguments.filter { $0.type.isTopLevelNullable }
                 if !nullableArguments.isEmpty {
                     
-                    for argument in nullableArguments {
-                        if argument.name != closure.name {
-                            lines += Line(content: "if let arg = \(argument.name) { parameters.append(Parameter(name: \"\(argument.name)\", value: arg)) }")
-                        }
+                    for argument in nullableArguments where argument.name != closure.name {
+                        lines += Line(content: "if let arg = \(argument.name) { parameters.append(Parameter(name: \"\(argument.name)\", value: arg)) }")
                     }
                     lines += ""
                 }
@@ -548,10 +544,21 @@ extension Swift {
             return lines
         }
         
-        private func buildableInlineFragmentContent() -> [Line] {
-            return [
-                "return self"
-            ]
+        private func inlineFragmentContentWith(type: String) -> [Line] {
+            var lines: [Line] = []
+            
+            lines += Line(content: "let field    = \(type)(name: \"\", parameters: [])")
+            lines += Line(content: "let fragment = InlineFragment(type: \"\(type)\")")
+            lines += Line(content: "")
+            lines += Line(content: "self._add(child: fragment)")
+            lines += Line(content: "")
+            lines += Line(content: "buildOn(field)")
+            lines += Line(content: "fragment._add(children: field._children)")
+            lines += Line(content: "")
+            lines += Line(content: "return self")
+            
+            
+            return lines
         }
     }
 }

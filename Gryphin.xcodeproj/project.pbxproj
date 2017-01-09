@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */; };
 		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
 		9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
 		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineFragment.swift; sourceTree = "<group>"; };
 		9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.InputField.swift; sourceTree = "<group>"; };
 		9A7F3C9C1E196F91000D4455 /* Nameable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nameable.swift; sourceTree = "<group>"; };
 		9A7F3C9E1E196FBA000D4455 /* Describeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Describeable.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				9A9A6A481E0ECA33008754A4 /* ContainerType.swift */,
 				9A9A6A491E0ECA33008754A4 /* Referencing.swift */,
 				9A9A6A4A1E0ECA33008754A4 /* Field.swift */,
+				9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */,
 				9A9A6A4B1E0ECA33008754A4 /* Fragment.swift */,
 				9A9A6A4C1E0ECA33008754A4 /* FragmentReference.swift */,
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
@@ -368,6 +371,7 @@
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
 				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
 				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
+				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
 				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,
 				9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */,
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
