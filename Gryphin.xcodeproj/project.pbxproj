@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */; };
+		9A27B03A1E23339000AFBDA6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3331E141DC300B2AD52 /* API.swift */; };
 		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
 		9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
 		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
@@ -370,6 +371,7 @@
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
 				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
+				9A27B03A1E23339000AFBDA6 /* API.swift in Sources */,
 				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
 				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,

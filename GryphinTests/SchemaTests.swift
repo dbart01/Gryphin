@@ -23,7 +23,80 @@ class SchemaTests: XCTestCase {
         
         let path = URL(fileURLWithPath: "/Users/dbart/Desktop/API.swift")
         try! string.write(to: path, atomically: true, encoding: .utf8)
-        
+    }
+    
+    func testQuery() {
+        let query = Query(name: "query").repository(owner: "dbart01", name: "someName") { $0
+            .owner { $0
+                .fragmentOnOrganization { $0
+                    .id
+                    .login
+                }
+                .fragmentOnUser { $0
+                    .id
+                    .login
+                    .isViewer
+                    .isEmployee
+                }
+            }
+            .alias("ownerAlias").owner { $0
+                .id
+                .login
+            }
+            .alias("issueAlias").issues(first: 20) { $0
+                .edges { $0
+                    .node { $0
+                        .body
+                        .createdAt
+                        .id
+                    }
+                }
+            }
+            .ref(qualifiedName: "/ref/branch/master") { $0
+                .associatedPullRequests(first: 20, states: [.OPEN, .CLOSED]) { $0
+                    .edges { $0
+                        .node { $0
+                            .bodyHTML
+                            .body
+                        }
+                    }
+                }
+            }
+            .issues { $0
+                .totalCount
+                .edges { $0
+                    .node { $0
+                        .assignees { $0
+                            .edges { $0
+                                .node { $0
+                                    .name
+                                    .id
+                                    .isViewer
+                                    .isEmployee
+                                    .isSiteAdmin
+                                    .isBountyHunter
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .forks { $0
+                .edges { $0
+                    .cursor
+                    .node { _ = $0
+                        .createdAt
+                        .description
+                        .descriptionHTML
+                        .id
+                        .name
+                        .homepageURL
+                    }
+                }
+            }
+        }
+    
+        print(query._stringRepresentation)
         print("")
     }
 }
