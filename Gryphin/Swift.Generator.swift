@@ -197,10 +197,10 @@ extension Swift {
             )
             
             if let fields = interface.fields {
-                self.generate(fields: fields, ofType: "Self", appendingTo: swiftInterface, isInterface: true)
+                swiftInterface += self.generate(fields: fields, ofType: "Self", isInterface: true)
             }
             
-            container.append(swiftInterface)
+            container += swiftInterface
             
             /* ----------------------------------------
              ** Iterate over all possibleTypes and check 
@@ -244,10 +244,10 @@ extension Swift {
                             )
                             
                             for objectField in objectFields {
-                                self.generate(propertyFor: objectField, ofType: swiftExtension.name, appendingTo: swiftExtension, isInterface: false)
+                                swiftExtension += self.generate(propertyFor: objectField, ofType: swiftExtension.name, isInterface: false)
                             }
                             
-                            container.append(swiftExtension)
+                            container += swiftExtension
                         }
                     }
                 }
@@ -276,7 +276,7 @@ extension Swift {
             )
             
             if let fields = concreteInterface.fields {
-                self.generate(fields: fields, ofType: swiftClass.name, appendingTo: swiftClass, isInterface: false)
+                swiftClass += self.generate(fields: fields, ofType: swiftClass.name, isInterface: false)
             }
             
             if let possibleTypes = concreteInterface.possibleTypes {
@@ -326,17 +326,17 @@ extension Swift {
                 comments:     union.descriptionComments()
             )
             
-            container.append(swiftClass)
+            container += swiftClass
             
             if let possibleTypes = union.possibleTypes {
                 possibleTypes.forEach {
                     
-                    container.append(Class(
+                    container += Class(
                         visibility:   .none,
                         kind:         .extension,
                         name:         $0.name!,
                         inheritances: [union.primitiveName]
-                    ))
+                    )
                 }
             }
             
@@ -360,7 +360,7 @@ extension Swift {
             )
             
             if let fields = object.fields {
-                self.generate(fields: fields, ofType: object.name, appendingTo: swiftClass, isInterface: false)
+                swiftClass += self.generate(fields: fields, ofType: object.name, isInterface: false)
             }
             
             return swiftClass
@@ -384,7 +384,7 @@ extension Swift {
             
             if let fields = inputObject.inputFields {
                 for field in fields {
-                    self.generate(propertyFor: field, ofType: inputObject.name, appendingTo: swiftClass, isInterface: false)
+                    swiftClass += self.generate(propertyFor: field, ofType: inputObject.name, isInterface: false)
                 }
             }
             
@@ -394,7 +394,9 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Field Generation -
         //
-        private func generate(fields: [Schema.Field], ofType name: String, appendingTo containerType: Swift.Class, isInterface: Bool) {
+        private func generate(fields: [Schema.Field], ofType name: String, isInterface: Bool) -> [Container] {
+            
+            var containers: [Container] = []
             
             for field in fields {
                 
@@ -406,14 +408,16 @@ extension Swift {
                  ** than a method with a `buildOn` parameter.
                  */
                 if field.type.hasScalar && field.arguments.isEmpty {
-                    self.generate(propertyFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface)
+                    containers += self.generate(propertyFor: field, ofType: name, isInterface: isInterface)
                 } else {
-                    self.generate(methodFor: field, ofType: name, appendingTo: containerType, isInterface: isInterface, buildable: !field.type.hasScalar)
+                    containers += self.generate(methodFor: field, ofType: name, isInterface: isInterface, buildable: !field.type.hasScalar)
                 }
             }
+            
+            return containers
         }
         
-        private func generate<T>(propertyFor field: T, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool) where T: Typeable, T: Describeable {
+        private func generate<T>(propertyFor field: T, ofType type: String, isInterface: Bool) -> Property where T: Typeable, T: Describeable {
             
             let isScalar = field.type.hasScalar
             
@@ -427,19 +431,19 @@ extension Swift {
             var comments = field.descriptionComments()
             
             if isScalar {
-                comments.append(Line(content: " - Value Type: `\(field.type.recursiveTypeString())`"))
+                comments += Line(content: " - Value Type: `\(field.type.recursiveTypeString())`")
             }
             
-            containerType.add(child: Property(
+            return Property(
                 visibility: .none,
                 name:       field.name,
                 returnType: isInterface ? "Self" : type,
                 body:       body,
                 comments:   comments
-            ))
+            )
         }
         
-        private func generate(methodFor field: Schema.Field, ofType type: String, appendingTo containerType: Swift.Class, isInterface: Bool, buildable: Bool) {
+        private func generate(methodFor field: Schema.Field, ofType type: String, isInterface: Bool, buildable: Bool) -> Method {
             
             precondition(!field.arguments.isEmpty || !field.type.hasScalar)
             
@@ -458,11 +462,11 @@ extension Swift {
             let closure   = self.closureNameWith(type: fieldType)
             
             if buildable {
-                parameters.append(Method.Parameter(
+                parameters += Method.Parameter(
                     unnamed: true,
                     name:    closure.name,
                     type:    .normal(closure.type)
-                ))
+                )
             }
             
             var body: [Line] = []
@@ -470,7 +474,7 @@ extension Swift {
                 body = self.subfieldBodyWith(name: field.name, type: fieldType, buildable: buildable, isObject: !field.type.hasScalar, arguments: field.arguments)
             }
             
-            containerType.add(child: Method(
+            return Method(
                 visibility:  .none,
                 name:        .func(field.name),
                 returnType:  isInterface ? "Self" : type,
@@ -478,7 +482,7 @@ extension Swift {
                 annotations: [.discardableResult],
                 body:        body,
                 comments:    field.parameterDocComments()
-            ))
+            )
         }
         
         // ----------------------------------
@@ -601,6 +605,10 @@ func +=<T>(lhs: inout [T], rhs: T) {
     lhs.append(rhs)
 }
 
+func +=<T>(lhs: inout [T], rhs: [T]) {
+    lhs.append(contentsOf: rhs)
+}
+
 // ----------------------------------
 //  MARK: - Schema Type Extensions -
 //
@@ -616,13 +624,13 @@ extension Schema.Object {
          */
         if let possibleTypes = self.possibleTypes, !possibleTypes.isEmpty {
             
-            commentLines.append("")
-            commentLines.append("## Implementing types:")
+            commentLines += ""
+            commentLines += "## Implementing types:"
             
             for possibleType in possibleTypes {
                 
                 precondition(possibleType.name != nil)
-                commentLines.append(Swift.Line(content: " - `\(possibleType.name!)`"))
+                commentLines += Swift.Line(content: " - `\(possibleType.name!)`")
             }
         }
         
@@ -640,13 +648,13 @@ extension Schema.Object {
         var inheritances: [String] = []
         
         if !isInterface {
-            inheritances.append("Field")
+            inheritances += "Field"
         }
         
         if let interfaces = self.interfaces, !interfaces.isEmpty {
-            inheritances.append(contentsOf: interfaces.map {
+            inheritances += interfaces.map {
                 $0.name!
-            })
+            }
         }
         
         return inheritances
@@ -752,16 +760,16 @@ extension Schema.Field {
     
     func parameterDocComments() -> [Swift.Line] {
         var comments: [Swift.Line] = []
-        comments.append(contentsOf: Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`"))
+        comments += Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
         
         if !self.arguments.isEmpty {
-            comments.append("")
-            comments.append("- parameters:")
+            comments += ""
+            comments += "- parameters:"
             for arg in self.arguments {
                 let description = arg.description ?? "No documentation"
-                comments.append(Swift.Line(content: "    - \(arg.name): \(description)"))
+                comments += Swift.Line(content: "    - \(arg.name): \(description)")
             }
-            comments.append("")
+            comments += ""
         }
         return comments
     }
