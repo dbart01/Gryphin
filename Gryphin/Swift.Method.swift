@@ -145,7 +145,7 @@ extension Swift.Method {
             switch self {
             case .init(let type):
                 let type   = "\(type)"
-                let spaced = type.isEmpty ? "" : "\(type) "
+                let spaced = type == .none ? "" : "\(type) "
                 return "\(spaced)init"
                 
             case .func(let title):

@@ -69,6 +69,9 @@ extension Swift {
             let jsonTypes      = jsonSchema[SchemaKey.types]      as! [JSON]
             let jsonDirectives = jsonSchema[SchemaKey.directives] as! [JSON]
             
+            let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
+            let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
+            
             let container = Container()
             
             /* -----------------------------
@@ -99,7 +102,17 @@ extension Swift {
                  */
                 switch type.kind {
                 case .object:
-                    container += self.generate(object: type)
+                    let objectClass = self.generate(object: type)
+                    
+                    switch objectClass.name {
+                    case queryType:
+                        objectClass.prepend(child: self.generate(initNamed: "query", type: objectClass.name))
+                    case mutationType:
+                        objectClass.prepend(child: self.generate(initNamed: "mutation", type: objectClass.name))
+                    default: break
+                    }
+                    
+                    container += objectClass
                     
                 case .interface:
                     container += self.generate(interface: type, parsedTypes: generatedTypes)
@@ -394,6 +407,29 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Field Generation -
         //
+        private func generate(initNamed name: String, type: String) -> Method {
+            let closure = self.closureNameWith(type: type)
+            
+            return Method(
+                visibility:  .none,
+                name:        .init(.convenience),
+                parameters:  [
+                    Method.Parameter(
+                        unnamed: true,
+                        name: closure.name,
+                        type: .normal(closure.type)
+                    )
+                ],
+                body:        [
+                    Line(content: "self.init(name: \"\(name)\", parameters: [])"),
+                    Line(content: "\(closure.name)(self)"),
+                ],
+                comments:    [
+                    "Auto-generated convenience initializer"
+                ]
+            )
+        }
+        
         private func generate(fields: [Schema.Field], ofType name: String, isInterface: Bool) -> [Container] {
             
             var containers: [Container] = []

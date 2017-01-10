@@ -26,71 +26,73 @@ class SchemaTests: XCTestCase {
     }
     
     func testQuery() {
-        let query = Query(name: "query").repository(owner: "dbart01", name: "someName") { $0
-            .owner { $0
-                .fragmentOnOrganization { $0
-                    .id
-                    .login
-                }
-                .fragmentOnUser { $0
-                    .id
-                    .login
-                    .isViewer
-                    .isEmployee
-                }
-            }
-            .alias("ownerAlias").owner { $0
-                .id
-                .login
-            }
-            .alias("issueAlias").issues(first: 20) { $0
-                .edges { $0
-                    .node { $0
-                        .body
-                        .createdAt
+        let query = Query { $0
+            .repository(owner: "dbart01", name: "someName") { $0
+                .owner { $0
+                    .fragmentOnOrganization { $0
                         .id
+                        .login
+                    }
+                    .fragmentOnUser { $0
+                        .id
+                        .login
+                        .isViewer
+                        .isEmployee
                     }
                 }
-            }
-            .ref(qualifiedName: "/ref/branch/master") { $0
-                .associatedPullRequests(first: 20, states: [.OPEN, .CLOSED]) { $0
+                .alias("ownerAlias").owner { $0
+                    .id
+                    .login
+                }
+                .alias("issueAlias").issues(first: 20) { $0
                     .edges { $0
                         .node { $0
-                            .bodyHTML
                             .body
+                            .createdAt
+                            .id
                         }
                     }
                 }
-            }
-            .issues { $0
-                .totalCount
-                .edges { $0
-                    .node { $0
-                        .assignees { $0
-                            .edges { $0
-                                .node { $0
-                                    .name
-                                    .id
-                                    .isViewer
-                                    .isEmployee
-                                    .isSiteAdmin
-                                    .isBountyHunter
+                .ref(qualifiedName: "/ref/branch/master") { $0
+                    .associatedPullRequests(first: 20, states: [.OPEN, .CLOSED]) { $0
+                        .edges { $0
+                            .node { $0
+                                .bodyHTML
+                                .body
+                            }
+                        }
+                    }
+                }
+                .issues { $0
+                    .totalCount
+                    .edges { $0
+                        .node { $0
+                            .assignees { $0
+                                .edges { $0
+                                    .node { $0
+                                        .name
+                                        .id
+                                        .isViewer
+                                        .isEmployee
+                                        .isSiteAdmin
+                                        .isBountyHunter
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            .forks { $0
-                .edges { $0
-                    .cursor
-                    .node { _ = $0
-                        .createdAt
-                        .description
-                        .descriptionHTML
-                        .id
-                        .name
-                        .homepageURL
+                .forks { $0
+                    .edges { $0
+                        .cursor
+                        .node { _ = $0
+                            .createdAt
+                            .description
+                            .descriptionHTML
+                            .id
+                            .name
+                            .homepageURL
+                        }
                     }
                 }
             }
