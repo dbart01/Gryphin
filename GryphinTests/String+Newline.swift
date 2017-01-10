@@ -15,5 +15,14 @@ precedencegroup Concatenation {
 infix operator ~: Concatenation
 
 func ~(lhs: String, rhs: String) -> String {
-    return "\(lhs)\n\(rhs)"
+    guard !lhs.isEmpty || !rhs.isEmpty else {
+        return ""
+    }
+    
+    if lhs.isEmpty && !rhs.isEmpty {
+        return rhs
+        
+    } else {
+        return "\(lhs)\n\(rhs)"
+    }
 }

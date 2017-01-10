@@ -309,6 +309,7 @@ extension Swift {
                         name:        .func("fragmentOn\(type)"),
                         returnType:  swiftClass.name,
                         parameters:  [parameter],
+                        annotations: [.discardableResult],
                         body:        self.inlineFragmentContentWith(type: type),
                         comments:    [
                             Line(content: "Use an inline fragment to query specific fields of `\(type)`")

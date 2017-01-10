@@ -29,24 +29,24 @@ class SchemaTests: XCTestCase {
         let query = Query { $0
             .repository(owner: "dbart01", name: "someName") { $0
                 .owner { $0
-                    .fragmentOnOrganization { $0
+                    .fragmentOnOrganization { _ = $0
                         .id
                         .login
                     }
-                    .fragmentOnUser { $0
+                    .fragmentOnUser { _ = $0
                         .id
                         .login
                         .isViewer
                         .isEmployee
                     }
                 }
-                .alias("ownerAlias").owner { $0
+                .alias("ownerAlias").owner { _ = $0
                     .id
                     .login
                 }
                 .alias("issueAlias").issues(first: 20) { $0
                     .edges { $0
-                        .node { $0
+                        .node { _ = $0
                             .body
                             .createdAt
                             .id
@@ -56,7 +56,7 @@ class SchemaTests: XCTestCase {
                 .ref(qualifiedName: "/ref/branch/master") { $0
                     .associatedPullRequests(first: 20, states: [.open, .closed]) { $0
                         .edges { $0
-                            .node { $0
+                            .node { _ = $0
                                 .bodyHTML
                                 .body
                             }
@@ -69,7 +69,7 @@ class SchemaTests: XCTestCase {
                         .node { $0
                             .assignees { $0
                                 .edges { $0
-                                    .node { $0
+                                    .node { _ = $0
                                         .name
                                         .id
                                         .isViewer

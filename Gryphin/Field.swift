@@ -70,9 +70,9 @@ extension Field {
         var representation: String
         
         if let alias = self._alias {
-            representation = "\(self._newline)\(self._indent)\(alias): \(self._name)"
+            representation = "\(self._indent)\(alias): \(self._name)"
         } else {
-            representation = "\(self._newline)\(self._indent)\(self._name)"
+            representation = "\(self._indent)\(self._name)"
         }
         
         if !self._parameters.isEmpty {
@@ -83,9 +83,14 @@ extension Field {
         
         if !self._children.isEmpty {
             let children       = self._children.map { $0._stringRepresentation }
-            let joinedChildren = children.joined(separator: " ")
-            representation    += "\(self._space){\(joinedChildren)\(self._newline)\(self._indent)}"
+            let joinedChildren = children.joined()
+            
+            representation += "\(self._space){\(self._newline)"
+            representation += joinedChildren
+            representation += "\(self._indent)}"
         }
+        
+        representation += self._newline
         
         return representation
     }

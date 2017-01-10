@@ -17,19 +17,30 @@ func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
     return lhs === rhs
 }
 
-#if DEBUG
 extension ReferenceType {
     
     var _newline: String {
-        return "\n"
+        if Env.prettyPrint {
+            return "\n"
+        } else {
+            return ""
+        }
     }
     
     var _space: String {
-        return " "
+        if Env.prettyPrint {
+            return " "
+        } else {
+            return ""
+        }
     }
     
     var _indent: String {
-        return [String](repeating: " ", count: self._distanceToRoot * 4).joined(separator: "")
+        if Env.prettyPrint {
+            return [String](repeating: " ", count: self._distanceToRoot * 4).joined(separator: "")
+        } else {
+            return ""
+        }
     }
     
     var _distanceToRoot: Int {
@@ -43,10 +54,7 @@ extension ReferenceType {
         return distance
     }
 }
-#else
-extension ReferenceType {
-    let _newline = ""
-    let _space   = ""
-    let _indent  = ""
+
+private struct Env {
+    static var prettyPrint: Bool = ProcessInfo.processInfo.environment["com.gryphin.prettyPrint"] != nil
 }
-#endif

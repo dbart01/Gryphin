@@ -41,13 +41,10 @@
 		9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A481E0ECA33008754A4 /* ContainerType.swift */; };
 		9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A491E0ECA33008754A4 /* Referencing.swift */; };
 		9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4A1E0ECA33008754A4 /* Field.swift */; };
-		9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4B1E0ECA33008754A4 /* Fragment.swift */; };
-		9A9A6A541E0ECA33008754A4 /* FragmentReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4C1E0ECA33008754A4 /* FragmentReference.swift */; };
 		9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */; };
 		9A9A6A5C1E0ECA55008754A4 /* String+Newline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A561E0ECA55008754A4 /* String+Newline.swift */; };
 		9A9A6A5D1E0ECA55008754A4 /* FieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A571E0ECA55008754A4 /* FieldTests.swift */; };
-		9A9A6A5E1E0ECA55008754A4 /* FragmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A581E0ECA55008754A4 /* FragmentTests.swift */; };
-		9A9A6A5F1E0ECA55008754A4 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A591E0ECA55008754A4 /* QueryTests.swift */; };
+		9A9A6A5F1E0ECA55008754A4 /* QueryGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A591E0ECA55008754A4 /* QueryGenerationTests.swift */; };
 		9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */; };
 		9A9A6A611E0ECA55008754A4 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5B1E0ECA55008754A4 /* schema.json */; };
 		9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */; };
@@ -105,13 +102,10 @@
 		9A9A6A481E0ECA33008754A4 /* ContainerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerType.swift; sourceTree = "<group>"; };
 		9A9A6A491E0ECA33008754A4 /* Referencing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Referencing.swift; sourceTree = "<group>"; };
 		9A9A6A4A1E0ECA33008754A4 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
-		9A9A6A4B1E0ECA33008754A4 /* Fragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fragment.swift; sourceTree = "<group>"; };
-		9A9A6A4C1E0ECA33008754A4 /* FragmentReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentReference.swift; sourceTree = "<group>"; };
 		9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		9A9A6A561E0ECA55008754A4 /* String+Newline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Newline.swift"; sourceTree = "<group>"; };
 		9A9A6A571E0ECA55008754A4 /* FieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldTests.swift; sourceTree = "<group>"; };
-		9A9A6A581E0ECA55008754A4 /* FragmentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentTests.swift; sourceTree = "<group>"; };
-		9A9A6A591E0ECA55008754A4 /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
+		9A9A6A591E0ECA55008754A4 /* QueryGenerationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryGenerationTests.swift; sourceTree = "<group>"; };
 		9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaTests.swift; sourceTree = "<group>"; };
 		9A9A6A5B1E0ECA55008754A4 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.Directive.swift; sourceTree = "<group>"; };
@@ -148,6 +142,40 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		9A8878BB1E253AB9007FB44F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		9A8878BC1E253B0A007FB44F /* Query Generation */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A6A571E0ECA55008754A4 /* FieldTests.swift */,
+			);
+			name = "Query Generation";
+			sourceTree = "<group>";
+		};
+		9A8878BD1E253B64007FB44F /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */,
+				9A9A6A5B1E0ECA55008754A4 /* schema.json */,
+				9A98A3331E141DC300B2AD52 /* API.swift */,
+			);
+			name = Schema;
+			sourceTree = "<group>";
+		};
+		9A8878BF1E254214007FB44F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A6A561E0ECA55008754A4 /* String+Newline.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		9A9A6A031E0EC9C6008754A4 = {
 			isa = PBXGroup;
 			children = (
@@ -182,14 +210,11 @@
 		9A9A6A1A1E0EC9C6008754A4 /* GryphinTests */ = {
 			isa = PBXGroup;
 			children = (
-				9A9A6A561E0ECA55008754A4 /* String+Newline.swift */,
-				9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */,
-				9A9A6A571E0ECA55008754A4 /* FieldTests.swift */,
-				9A9A6A581E0ECA55008754A4 /* FragmentTests.swift */,
-				9A9A6A591E0ECA55008754A4 /* QueryTests.swift */,
-				9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */,
-				9A9A6A5B1E0ECA55008754A4 /* schema.json */,
-				9A98A3331E141DC300B2AD52 /* API.swift */,
+				9A8878BF1E254214007FB44F /* Utilities */,
+				9A8878BB1E253AB9007FB44F /* Extensions */,
+				9A8878BC1E253B0A007FB44F /* Query Generation */,
+				9A8878BD1E253B64007FB44F /* Schema */,
+				9A9A6A591E0ECA55008754A4 /* QueryGenerationTests.swift */,
 				9A9A6A1D1E0EC9C6008754A4 /* Info.plist */,
 			);
 			path = GryphinTests;
@@ -246,8 +271,6 @@
 				9A9A6A491E0ECA33008754A4 /* Referencing.swift */,
 				9A9A6A4A1E0ECA33008754A4 /* Field.swift */,
 				9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */,
-				9A9A6A4B1E0ECA33008754A4 /* Fragment.swift */,
-				9A9A6A4C1E0ECA33008754A4 /* FragmentReference.swift */,
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
 			);
 			name = "Query Generation";
@@ -375,7 +398,6 @@
 				9A9A6A511E0ECA33008754A4 /* Referencing.swift in Sources */,
 				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,
 				9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */,
-				9A9A6A541E0ECA33008754A4 /* FragmentReference.swift in Sources */,
 				9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */,
 				9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */,
 				9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */,
@@ -389,7 +411,6 @@
 				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
 				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,
-				9A9A6A531E0ECA33008754A4 /* Fragment.swift in Sources */,
 				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
 				9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */,
 				9A98A33F1E15F2A700B2AD52 /* Swift.Property.swift in Sources */,
@@ -411,8 +432,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A9A6A5F1E0ECA55008754A4 /* QueryTests.swift in Sources */,
-				9A9A6A5E1E0ECA55008754A4 /* FragmentTests.swift in Sources */,
+				9A9A6A5F1E0ECA55008754A4 /* QueryGenerationTests.swift in Sources */,
 				9A9A6A5D1E0ECA55008754A4 /* FieldTests.swift in Sources */,
 				9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */,
 				9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */,
