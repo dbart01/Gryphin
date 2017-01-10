@@ -30,6 +30,24 @@ class FieldTests: XCTestCase {
         XCTAssertEqual(node._alias, "someIssue")
     }
     
+    func testEnqueueAlias() {
+        let node = Field(name: "query")
+        
+        node.alias("test")._add(children: [
+            Field(name: "subfield"),
+            Field(name: "anotherSubfield"),
+        ])
+        
+        let firstChild  = node._children[0] as! Field
+        let secondChild = node._children[1] as! Field
+        
+        XCTAssertEqual(firstChild._name, "subfield")
+        XCTAssertEqual(firstChild._alias, "test")
+        
+        XCTAssertEqual(secondChild._name, "anotherSubfield")
+        XCTAssertNil(secondChild._alias)
+    }
+    
     func testFieldWithParameters() {
         let parameter = Parameter(name: "first", value: 30)
         let node      = Field(name: "issues", parameters: [
