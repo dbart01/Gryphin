@@ -10,8 +10,20 @@ import XCTest
 @testable import Gryphin
 
 class QueryGenerationTests: XCTestCase {
+    
+    // ----------------------------------
+    //  MARK: - Setup -
+    //
+    override func setUp() {
+        super.setUp()
+        
+        precondition(Environment.prettyPrint, "Query generation requires the \"com.gryphin.prettyPrint\" environment variable to be set.")
+    }
 
-    func testParametersWithChildren() {
+    // ----------------------------------
+    //  MARK: - Tests -
+    //
+    func testFieldsWithChildren() {
         
         let root = Field(name: "query", children: [
             Field(name: "issues", parameters: [
@@ -43,7 +55,7 @@ class QueryGenerationTests: XCTestCase {
         )
     }
     
-    func testParametersWithoutChildren() {
+    func testFieldsWithoutChildren() {
         
         let root = Field(name: "query", children: [
             Field(name: "issues", children: [
@@ -77,7 +89,7 @@ class QueryGenerationTests: XCTestCase {
         )
     }
     
-    func testAliases() {
+    func testFieldAliases() {
         
         let root = Field(name: "query", children: [
             Field(name: "issues", children: [
