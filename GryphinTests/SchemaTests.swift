@@ -54,7 +54,7 @@ class SchemaTests: XCTestCase {
                     }
                 }
                 .ref(qualifiedName: "/ref/branch/master") { $0
-                    .associatedPullRequests(first: 20, states: [.OPEN, .CLOSED]) { $0
+                    .associatedPullRequests(first: 20, states: [.open, .closed]) { $0
                         .edges { $0
                             .node { $0
                                 .bodyHTML

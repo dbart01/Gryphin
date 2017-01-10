@@ -166,7 +166,8 @@ extension Swift {
             
             for value in object.enumValues! {
                 enumClass.add(child: Enum.Case(
-                    name:     value.name,
+                    name:     "`\(value.name.snakeToCamel ?? value.name)`",
+                    value:    .quoted(value.name),
                     comments: value.descriptionComments()
                 ))
             }

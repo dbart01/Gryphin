@@ -12,17 +12,34 @@ import Foundation
 extension Swift  {
     struct Enum {
         final class Case: Containable {
+            
+            enum CaseValue: StringRepresentable {
+                case `default`(String)
+                case quoted(String)
+                
+                var stringRepresentation: String {
+                    switch self {
+                    case .default(let value):
+                        return value
+                    case .quoted(let value):
+                        return "\"\(value)\""
+                    }
+                }
+            }
+            
             var parent: Containing?
             
-            let name: String
+            let name:  String
+            let value: CaseValue?
             
             fileprivate(set) var comments: [Line]
             
             // ----------------------------------
             //  MARK: - Init -
             //
-            init(name: String, comments: [Line]? = nil) {
+            init(name: String, value: CaseValue? = nil, comments: [Line]? = nil) {
                 self.name     = name
+                self.value    = value
                 self.comments = comments ?? []
             }
             
@@ -32,8 +49,10 @@ extension Swift  {
             var stringRepresentation: String {
                 var string = ""
                 
+                let value = self.value != nil ? " = \(self.value!.stringRepresentation)" : ""
+                
                 string += self.comments.commentStringIndentedBy(self.indent)
-                string += "\(self.indent)case \(self.name)\n"
+                string += "\(self.indent)case \(self.name)\(value)\n"
                 
                 return string
             }
