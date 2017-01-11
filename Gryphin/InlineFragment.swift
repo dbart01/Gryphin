@@ -34,10 +34,14 @@ final class InlineFragment: ContainerType {
         
         if !self._children.isEmpty {
             let children       = self._children.map { $0._stringRepresentation }
-            let joinedChildren = children.joined(separator: " ")
+            let joinedChildren = children.joined()
             
-            string += "\(self._space){\(joinedChildren)\(self._newline)\(self._indent)}"
+            string += "\(self._space){\(self._newline)"
+            string += joinedChildren
+            string += "\(self._indent)}"
         }
+        
+        string += self._newline
         
         return string
     }
