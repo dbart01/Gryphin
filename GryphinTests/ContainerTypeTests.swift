@@ -11,6 +11,9 @@ import XCTest
 
 class ContainerTypeTests: XCTestCase {
     
+    // ----------------------------------
+    //  MARK: - Init -
+    //
     func testInit() {
         let container = TestContainer(name: "1")
         
@@ -18,6 +21,9 @@ class ContainerTypeTests: XCTestCase {
         XCTAssertNil(container._parent)
     }
 
+    // ----------------------------------
+    //  MARK: - Children -
+    //
     func testAddChild() {
         let container = TestContainer(name: "1")
         let child     = TestContainer(name: "2")
@@ -45,6 +51,20 @@ class ContainerTypeTests: XCTestCase {
         
         XCTAssertEqual(child2._parent!._name, container._name)
         XCTAssertEqual(child3._parent!._name, container._name)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Equality -
+    //
+    func testEquality() {
+        let container1 = TestContainer(name: "container")
+        let container2 = TestContainer(name: "container")
+        let container3 = container1
+        
+        XCTAssertFalse(container1 === container2)
+        XCTAssertFalse(container1 == container2)
+        
+        XCTAssertTrue(container1 == container3)
     }
 }
 

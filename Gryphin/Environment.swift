@@ -8,6 +8,27 @@
 
 import Foundation
 
-struct Environment {
-    static var prettyPrint: Bool = ProcessInfo.processInfo.environment["com.gryphin.prettyPrint"] != nil
+class Environment {
+    
+    enum Key: String {
+        case prettyPrint = "com.gryphin.prettyPrint"
+    }
+    
+    static var prettyPrint: Bool = Environment.shared[Key.prettyPrint] != nil
+    
+    // ----------------------------------
+    //  MARK: - Singleton -
+    //
+    static let shared = Environment()
+    
+    private init() {}
+    
+    // ----------------------------------
+    //  MARK: - Subscript -
+    //
+    subscript(key: Key) -> String? {
+        get {
+            return ProcessInfo.processInfo.environment[key.rawValue]
+        }
+    }
 }
