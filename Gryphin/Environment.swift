@@ -14,7 +14,9 @@ class Environment {
         case prettyPrint = "com.gryphin.prettyPrint"
     }
     
-    static var prettyPrint: Bool = Environment.shared[Key.prettyPrint] != nil
+    static var prettyPrint: Bool {
+        return Environment.shared[.prettyPrint] != nil
+    }
     
     // ----------------------------------
     //  MARK: - Singleton -
@@ -27,8 +29,18 @@ class Environment {
     //  MARK: - Subscript -
     //
     subscript(key: Key) -> String? {
+        set {
+            if let newValue = newValue {
+                setenv(key.rawValue, newValue, 1)
+            } else {
+                unsetenv(key.rawValue)
+            }
+        }
         get {
-            return ProcessInfo.processInfo.environment[key.rawValue]
+            if let cString = getenv(key.rawValue) {
+                return String(cString: cString)
+            }
+            return nil
         }
     }
 }
