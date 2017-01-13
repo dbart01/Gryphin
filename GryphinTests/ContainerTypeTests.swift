@@ -68,6 +68,9 @@ class ContainerTypeTests: XCTestCase {
     }
 }
 
+// ----------------------------------
+//  MARK: - TestContainer -
+//
 private final class TestContainer: ContainerType {
     
     let _name: String

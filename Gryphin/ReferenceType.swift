@@ -19,28 +19,38 @@ func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
 
 extension ReferenceType {
     
+    var _indentUnit: String {
+        return " "
+    }
+    
+    var _indentUnitCount: Int {
+        return 4
+    }
+    
     var _newline: String {
         if Environment.prettyPrint {
             return "\n"
-        } else {
-            return ""
         }
+        return ""
     }
     
     var _space: String {
         if Environment.prettyPrint {
             return " "
-        } else {
-            return ""
         }
+        return ""
     }
     
     var _indent: String {
         if Environment.prettyPrint {
-            return [String](repeating: " ", count: self._distanceToRoot * 4).joined(separator: "")
-        } else {
-            return ""
+            
+            return [String](
+                repeating: self._indentUnit,
+                count:     self._distanceToRoot * self._indentUnitCount
+            ).joined()
+            
         }
+        return ""
     }
     
     var _distanceToRoot: Int {
