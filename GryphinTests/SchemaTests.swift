@@ -25,6 +25,24 @@ class SchemaTests: XCTestCase {
         try! string.write(to: path, atomically: true, encoding: .utf8)
     }
     
+    func testMutation() {
+        let project = CreateProjectInput(clientMutationId: "some123", ownerId: "owner123", name: "Wobbly Bear", body: "Nothing to pu here")
+        
+        let mutation = Mutation { $0
+            .createProject(input: project) { $0
+                .clientMutationId
+                .project { _ = $0
+                    .id
+                    .name
+                    .body
+                    .url
+                }
+            }
+        }
+        
+        print(mutation._stringRepresentation)
+    }
+    
     func testQuery() {
         let query = Query { $0
             .repository(owner: "dbart01", name: "someName") { $0
@@ -99,6 +117,5 @@ class SchemaTests: XCTestCase {
         }
     
         print(query._stringRepresentation)
-        print("")
     }
 }

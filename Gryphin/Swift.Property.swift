@@ -20,7 +20,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, returnType: String, body: [Line]? = nil, comments: [Line]? = nil) {
+        init(visibility: Visibility = .internal, name: String, returnType: String, accessors: [Accessor]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
             
             self.visibility = visibility
             self.name       = name
@@ -29,7 +29,14 @@ extension Swift {
             
             super.init()
             
-            if let body = body {
+            /* ---------------------------------
+             ** If accessors are provided, then
+             ** the body will be ignored as it
+             ** otherwise makes no sense.
+             */
+            if let accessors = accessors {
+                self.add(children: accessors)
+            } else if let body = body {
                 self.add(children: body)
             }
         }
@@ -60,6 +67,43 @@ extension Swift {
             
             return string
 
+        }
+    }
+}
+
+extension Swift.Property {
+    final class Accessor: Swift.Container {
+        
+        enum Kind: String {
+            case get
+            case set
+            case didSet
+            case willSet
+        }
+        
+        let kind: Kind
+        
+        // ----------------------------------
+        //  MARK: - Init -
+        //
+        init(kind: Kind, body: [Swift.Line]? = nil) {
+            self.kind = kind
+            
+            super.init()
+            
+            if let body = body {
+                self.add(children: body)
+            }
+        }
+        
+        override var stringRepresentation: String {
+            var string: String = ""
+            
+            string += "\(self.indent)\(self.kind.rawValue) {\n"
+            string += super.stringRepresentation
+            string += "}\n"
+            
+            return string
         }
     }
 }

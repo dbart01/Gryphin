@@ -136,7 +136,7 @@ extension Swift.Method {
         case `func`(String)
         
         enum InitializerType: String {
-            case none = ""
+            case none
             case required
             case convenience
         }
@@ -144,9 +144,8 @@ extension Swift.Method {
         var string: String {
             switch self {
             case .init(let type):
-                let type   = "\(type)"
-                let spaced = type == .none ? "" : "\(type) "
-                return "\(spaced)init"
+                let type = (type == .none) ? "" : "\(type.rawValue) "
+                return "\(type)init"
                 
             case .func(let title):
                 return "func \(title)"

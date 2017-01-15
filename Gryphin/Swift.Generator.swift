@@ -206,7 +206,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .protocol,
                 name:         interface.primitiveName,
-                inheritances: interface.inheritances(isInterface: true),
+                inheritances: interface.inheritances(),
                 comments:     interface.descriptionComments()
             )
             
@@ -337,7 +337,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .protocol,
                 name:         union.primitiveName,
-                inheritances: union.inheritances(isInterface: true),
+                inheritances: union.inheritances(),
                 comments:     union.descriptionComments()
             )
             
@@ -370,7 +370,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         object.name,
-                inheritances: object.inheritances(isInterface: false),
+                inheritances: object.inheritances(from: [self.fieldClassName()]),
                 comments:     object.descriptionComments()
             )
             
@@ -391,16 +391,91 @@ extension Swift {
              */
             let swiftClass = Class(
                 visibility:   .none,
-                kind:         .class(.final),
+                kind:         .struct,
                 name:         inputObject.name,
-                inheritances: inputObject.inheritances(isInterface: false),
+                inheritances: inputObject.inheritances(from: [self.inputClassName()]),
                 comments:     inputObject.descriptionComments()
             )
             
             if let fields = inputObject.inputFields {
+                
+                /* -----------------------------------
+                 ** First we create stored  properties
+                 ** that will be set by the caller.
+                 */
                 for field in fields {
-                    swiftClass += self.generate(propertyFor: field, ofType: inputObject.name, isInterface: false)
+                    swiftClass += self.generate(inputPropertyFor: field)
                 }
+                
+                var initParams: [Method.Parameter] = []
+                for field in fields {
+                    initParams += Method.Parameter(
+                        unnamed: false,
+                        name:    field.name,
+                        type:    .normal(field.type.inputTypeString()),
+                        default: field.type.isTopLevelNullable ? .nil : nil
+                    )
+                }
+                
+                var initBody: [Line] = []
+                for field in fields {
+                    initBody += Line(content: "self.\(field.name) = \(field.name)")
+                }
+                
+                swiftClass += Method(
+                    visibility: .none,
+                    name:       .init(.none),
+                    parameters: initParams,
+                    body:       initBody,
+                    comments:   [
+                        "Auto-generate initialier that provides default values for nullable parameters"
+                    ]
+                )
+                
+                /* ------------------------------------------
+                 ** We then create a conformance to InputType
+                 ** by declaring and implementing the following
+                 ** method, appending only parameters that
+                 ** have been set (ignoring nil params).
+                 */
+                var body: [Line] = []
+                
+                body += "var parameters: [Parameter] = []"
+                body += ""
+                
+                /* -----------------------------
+                 ** Append non-null values first
+                 */
+                let nonNullFields = fields.filter { !$0.type.isTopLevelNullable }
+                if !nonNullFields.isEmpty {
+                    
+                    for field in nonNullFields {
+                        body += Line(content: "parameters += Parameter(name: \"\(field.name)\", value: self.\(field.name))")
+                    }
+                    body += ""
+                }
+                
+                /* -----------------------------
+                 ** Append nullable values after
+                 */
+                let nullableFields = fields.filter { $0.type.isTopLevelNullable }
+                if !nullableFields.isEmpty {
+                    
+                    for field in nullableFields {
+                        body += Line(content: "if let v = self.\(field.name) { parameters += Parameter(name: \"\(field.name)\", value: v) }")
+                    }
+                    body += ""
+                }
+                
+                body += "return parameters"
+                
+                swiftClass += Method(
+                    visibility:  .none,
+                    name:        .func("_representationParameters"),
+                    returnType:  "[Parameter]",
+                    body:        body,
+                    comments:    ["Auto-generated method for conformance to InputType"]
+                )
             }
             
             return swiftClass
@@ -429,6 +504,15 @@ extension Swift {
                 comments:    [
                     "Auto-generated convenience initializer"
                 ]
+            )
+        }
+        
+        private func generate(inputPropertyFor field: Schema.InputField) -> Property {
+            return Property(
+                visibility: .none,
+                name:       field.name,
+                returnType: field.type.inputTypeString(),
+                comments:   field.descriptionComments()
             )
         }
         
@@ -526,8 +610,12 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Content -
         //
-        private func baseClassName() -> String {
+        private func fieldClassName() -> String {
             return "Field"
+        }
+        
+        private func inputClassName() -> String {
+            return "InputType"
         }
         
         private func closureNameWith(type: String) -> (name: String, type: String) {
@@ -589,7 +677,7 @@ extension Swift {
             if isObject {
                 objectType = type
             } else {
-                objectType = self.baseClassName()
+                objectType = self.fieldClassName()
             }
             
             lines += Line(content: "let field = \(objectType)(name: \"\(name)\", parameters: \(paramVariable))")
@@ -675,19 +763,13 @@ extension Schema.Object {
         return commentLines
     }
     
-    func inheritances(isInterface: Bool) -> [String] {
+    func inheritances(from: [String]? = nil) -> [String] {
         
         /* ----------------------------------------
          ** Build all interfaces and superclasses
-         ** that this object will inherit from. It
-         ** will always inherit from `Field` to
-         ** facilitate the generation of queries.
+         ** that this object will inherit from.
          */
-        var inheritances: [String] = []
-        
-        if !isInterface {
-            inheritances += "Field"
-        }
+        var inheritances: [String] = from ?? []
         
         if let interfaces = self.interfaces, !interfaces.isEmpty {
             inheritances += interfaces.map {
@@ -724,13 +806,24 @@ extension Schema.ObjectType {
         return leafKind == .interface || leafKind == .union
     }
     
+    func inputTypeString() -> String {
+        let nullability = self.isTopLevelNullable ? "?" : ""
+        let type        = self.recursiveNonNullableTypeString()
+        
+        return "\(type)\(nullability)"
+    }
+    
     func recursiveTypeString() -> String {
         return self.recursiveTypeString(nonNull: false)
     }
     
-    private func recursiveTypeString(nonNull: Bool) -> String {
+    func recursiveNonNullableTypeString() -> String {
+        return self.recursiveTypeString(nonNull: false, ignoreNull: true)
+    }
+    
+    private func recursiveTypeString(nonNull: Bool, ignoreNull: Bool = false) -> String {
         let isNonNull = self.kind == .nonNull
-        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull) ?? ""
+        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull, ignoreNull: ignoreNull) ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -740,7 +833,7 @@ extension Schema.ObjectType {
         case .interface:  fallthrough
         case .inputObject:
             
-            if nonNull {
+            if nonNull || ignoreNull {
                 return "\(self.mappedName!)"
             } else {
                 return "\(self.mappedName!)?"
@@ -748,7 +841,7 @@ extension Schema.ObjectType {
             
         case .list:
             
-            if nonNull {
+            if nonNull || ignoreNull {
                 return "[\(childType)]"
             } else {
                 return "[\(childType)]?"
