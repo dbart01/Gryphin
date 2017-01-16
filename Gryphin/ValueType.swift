@@ -21,7 +21,7 @@ extension ValueType {
     }
 }
 
-func ==(lhs: ValueType, rhs: ValueType) -> Bool {
+func ==<T: ValueType>(lhs: T, rhs: T) -> Bool {
     return lhs._stringRepresentation == rhs._stringRepresentation
 }
 
