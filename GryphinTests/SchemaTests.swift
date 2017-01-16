@@ -44,6 +44,7 @@ class SchemaTests: XCTestCase {
     }
     
     func testQuery() {
+        let order = RepositoryOrder(field: .createdAt, direction: .asc)
         let query = Query { $0
             .repository(owner: "dbart01", name: "someName") { $0
                 .owner { $0
@@ -56,6 +57,15 @@ class SchemaTests: XCTestCase {
                         .login
                         .isViewer
                         .isEmployee
+                    }
+                    .repositories(first: 15, orderBy: order) { $0
+                        .edges { $0
+                            .node { _ = $0
+                                .createdAt
+                                .name
+                                .description
+                            }
+                        }
                     }
                 }
                 .alias("ownerAlias").owner { _ = $0
