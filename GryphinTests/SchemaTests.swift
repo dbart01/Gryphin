@@ -91,11 +91,11 @@ class SchemaTests: XCTestCase {
                         }
                     }
                 }
-                .issues { $0
+                .issues(first: 20) { $0
                     .totalCount
                     .edges { $0
                         .node { $0
-                            .assignees { $0
+                            .assignees(first: 20) { $0
                                 .edges { $0
                                     .node { _ = $0
                                         .name
@@ -110,7 +110,7 @@ class SchemaTests: XCTestCase {
                         }
                     }
                 }
-                .forks { $0
+                .forks(first: 20) { $0
                     .edges { $0
                         .cursor
                         .node { _ = $0
