@@ -40,8 +40,8 @@ class Field: ContainerType {
         return self
     }
     
-    private func insertAlias(children: [ReferenceType]) {
-        if let field = children.first as? Field {
+    private func applyAliasTo(child: ReferenceType?) {
+        if let field = child as? Field {
             field._alias = self.enquedAlias
         }
         self.enquedAlias = nil
@@ -52,7 +52,7 @@ class Field: ContainerType {
     //
     func _add(children: [ReferenceType]) {
         if !children.isEmpty {
-            self.insertAlias(children: children)
+            self.applyAliasTo(child: children.first)
             
             children.forEach {
                 $0._parent = self
