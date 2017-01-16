@@ -283,7 +283,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         concreteInterface.name,
-                inheritances: ["Field", concreteInterface.primitiveName],
+                inheritances: ["TypedField", concreteInterface.primitiveName],
                 comments:     [
                     Swift.Line(content: "Concrete type aut-generated for `\(concreteInterface.primitiveName)`")
                 ]

@@ -20,6 +20,7 @@
 		9A8878F71E2CF1E4007FB44F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3331E141DC300B2AD52 /* API.swift */; };
 		9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878F81E2CF344007FB44F /* InputTypeTests.swift */; };
 		9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878FA1E2CF682007FB44F /* ValueTypeTests.swift */; };
+		9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8879031E2D4D0D007FB44F /* TypedField.swift */; };
 		9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
@@ -83,6 +84,7 @@
 		9A8878D11E2588CC007FB44F /* ContainerTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTypeTests.swift; sourceTree = "<group>"; };
 		9A8878F81E2CF344007FB44F /* InputTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTypeTests.swift; sourceTree = "<group>"; };
 		9A8878FA1E2CF682007FB44F /* ValueTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTypeTests.swift; sourceTree = "<group>"; };
+		9A8879031E2D4D0D007FB44F /* TypedField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedField.swift; sourceTree = "<group>"; };
 		9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Enum.Case.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
@@ -192,6 +194,13 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		9A8879021E2D40A2007FB44F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		9A9A6A031E0EC9C6008754A4 = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +227,7 @@
 				9A9A6A351E0EC9E5008754A4 /* Schema */,
 				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
 				9A9A6A451E0EC9FA008754A4 /* Query Generation */,
+				9A8879021E2D40A2007FB44F /* Models */,
 				9A9A6A111E0EC9C6008754A4 /* Info.plist */,
 			);
 			path = Gryphin;
@@ -288,6 +298,7 @@
 				9A47206C1E286588002A2B64 /* InputType.swift */,
 				9A9A6A491E0ECA33008754A4 /* Referencing.swift */,
 				9A9A6A4A1E0ECA33008754A4 /* Field.swift */,
+				9A8879031E2D4D0D007FB44F /* TypedField.swift */,
 				9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */,
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
 			);
@@ -427,6 +438,7 @@
 				9A9A6A421E0EC9F8008754A4 /* Swift.Visibility.swift in Sources */,
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
+				9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */,
 				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
 				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
