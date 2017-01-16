@@ -30,7 +30,7 @@ final class InlineFragment: ContainerType {
     //  MARK: - ValueType -
     //
     var _stringRepresentation: String {
-        var string = "\(self._newline)\(self._indent)... on \(self._typeCondition)"
+        var string = "\(self._indent)... on \(self._typeCondition)"
         
         if !self._children.isEmpty {
             let children       = self._children.map { $0._stringRepresentation }
