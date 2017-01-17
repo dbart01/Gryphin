@@ -62,7 +62,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Generation -
         //
-        func generate() -> Container {
+        func generate() -> (schema: Container, models: Container) {
             
             let schemaData     = self.schemaJSON[SchemaKey.data]  as! JSON
             let jsonSchema     = schemaData[SchemaKey.schema]     as! JSON
@@ -72,7 +72,8 @@ extension Swift {
             let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
             let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
             
-            let container = Container()
+            let schemaContainer = Container()
+            let modelsContainer = Namespace(name: self.modelNamespace())
             
             /* -----------------------------
              ** Parse the schema types first
@@ -104,6 +105,10 @@ extension Swift {
                 case .object:
                     let objectClass = self.generate(object: type)
                     
+                    /* ---------------------------------
+                     ** Specific logic for root Query
+                     ** and Mutation types.
+                     */
                     switch objectClass.name {
                     case queryType:
                         objectClass.prepend(child: self.generate(initNamed: "query", type: objectClass.name))
@@ -112,26 +117,27 @@ extension Swift {
                     default: break
                     }
                     
-                    container += objectClass
+                    schemaContainer += objectClass
+                    modelsContainer += self.generate(modelFor: type)
                     
                 case .interface:
-                    container += self.generate(interface: type, parsedTypes: generatedTypes)
-                    container += self.generate(concreteInterface: type)
+                    schemaContainer += self.generate(interface: type, parsedTypes: generatedTypes)
+                    schemaContainer += self.generate(concreteInterface: type)
                     
                 case .enum:
-                    container += self.generate(enum: type)
+                    schemaContainer += self.generate(enum: type)
                     
                 case .inputObject:
-                    container += self.generate(inputObject: type)
+                    schemaContainer += self.generate(inputObject: type)
                     
                 case .scalar:
                     if let alias = self.generate(scalar: type) {
-                        container += alias
+                        schemaContainer += alias
                     }
                     
                 case .union:
-                    container += self.generate(union: type)
-                    container += self.generate(concreteInterface: type)
+                    schemaContainer += self.generate(union: type)
+                    schemaContainer += self.generate(concreteInterface: type)
                     
                 case .list:
                     break
@@ -147,7 +153,7 @@ extension Swift {
                 Schema.Directive(json: $0)
             }
             
-            return container
+            return (schemaContainer, modelsContainer)
         }
         
         // ----------------------------------
@@ -482,6 +488,90 @@ extension Swift {
         }
         
         // ----------------------------------
+        //  MARK: - Model Generation -
+        //
+        private func generate(modelFor object: Schema.Object) -> Class {
+            
+            precondition(object.kind == .object)
+            
+            let namespace  = self.modelNamespace()
+            let modelSuper = self.modelClassName()
+            
+            /* -----------------------------------------
+             ** Initialize the class that will represent
+             ** this object.
+             */
+            let swiftClass = Class(
+                visibility:   .none,
+                kind:         .class(.final),
+                name:         object.name,
+                inheritances: [modelSuper],
+                comments:     object.descriptionComments()
+            )
+            
+            if let fields = object.fields {
+                
+                /* ---------------------------------
+                 ** Generate the properties of this
+                 ** model object.
+                 */
+                for field in fields {
+                    
+                    let fieldType = field.type.recursiveTypeString()
+                    
+                    let namespacedClass: String
+                    if field.type.leafKind == .object {
+                        namespacedClass = "\(namespace).\(fieldType)"
+                    } else {
+                        namespacedClass = fieldType
+                    }
+                    
+                    swiftClass += Property(
+                        visibility: .none,
+                        name:       field.name,
+                        returnType: namespacedClass,
+                        comments:   field.descriptionComments()
+                    )
+                }
+                
+                /* ---------------------------------
+                 ** Build the initializer for this
+                 ** class that will parse and create
+                 ** all children for this model.
+                 */
+                var initBody: [Line] = []
+                
+                let scalarFields = fields.filter { $0.type.hasScalar }
+                if !scalarFields.isEmpty {
+                    for field in scalarFields {
+                        initBody += Line(content: "self.\(field.name) = json.v(\"\(field.name)\")")
+                    }
+                    initBody += ""
+                }
+                
+                let objectFields = fields.filter { !$0.type.hasScalar }
+                if !objectFields.isEmpty {
+                    for field in objectFields {
+                        initBody += Line(content: "self.\(field.name) = \(namespace).\(field.type.leafName!)(json: json.v(\"\(field.name)\"))")
+                    }
+                    initBody += ""
+                }
+                initBody += "super.init(json: json)"
+                
+                swiftClass += Method(
+                    visibility: .none,
+                    name:       .init(.none),
+                    parameters: [
+                        Method.Parameter(name: "json", type: .normal("JSON")),
+                    ],
+                    body: initBody
+                )
+            }
+            
+            return swiftClass
+        }
+        
+        // ----------------------------------
         //  MARK: - Field Generation -
         //
         private func generate(initNamed name: String, type: String) -> Method {
@@ -610,6 +700,14 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Content -
         //
+        private func modelNamespace() -> String {
+            return "Model"
+        }
+        
+        private func modelClassName() -> String {
+            return "GraphModel"
+        }
+        
         private func fieldClassName() -> String {
             return "Field"
         }

@@ -17,10 +17,10 @@
 		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
 		9A8878D01E258585007FB44F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
 		9A8878D21E2588CC007FB44F /* ContainerTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878D11E2588CC007FB44F /* ContainerTypeTests.swift */; };
-		9A8878F71E2CF1E4007FB44F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3331E141DC300B2AD52 /* API.swift */; };
 		9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878F81E2CF344007FB44F /* InputTypeTests.swift */; };
 		9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878FA1E2CF682007FB44F /* ValueTypeTests.swift */; };
 		9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8879031E2D4D0D007FB44F /* TypedField.swift */; };
+		9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88790B1E2E4718007FB44F /* GraphModel.swift */; };
 		9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
@@ -85,10 +85,10 @@
 		9A8878F81E2CF344007FB44F /* InputTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTypeTests.swift; sourceTree = "<group>"; };
 		9A8878FA1E2CF682007FB44F /* ValueTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTypeTests.swift; sourceTree = "<group>"; };
 		9A8879031E2D4D0D007FB44F /* TypedField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedField.swift; sourceTree = "<group>"; };
+		9A88790B1E2E4718007FB44F /* GraphModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphModel.swift; sourceTree = "<group>"; };
 		9A8DAACF1E1712960032CC6F /* Swift.Enum.Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Enum.Case.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
-		9A98A3331E141DC300B2AD52 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = /Users/dbart/Desktop/API.swift; sourceTree = "<absolute>"; };
 		9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Alias.swift; sourceTree = "<group>"; };
 		9A98A33A1E159E5100B2AD52 /* Containable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Containable.swift; sourceTree = "<group>"; };
 		9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Property.swift; sourceTree = "<group>"; };
@@ -127,6 +127,8 @@
 		9A9A6A661E12CAC1008754A4 /* Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.swift; sourceTree = "<group>"; };
 		9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Line.swift; sourceTree = "<group>"; };
 		9AA48FBE1E227D410028F044 /* Typeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typeable.swift; sourceTree = "<group>"; };
+		9AAF01611E2EC16C004062EE /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Models.swift; path = ../../../../../Desktop/Models.swift; sourceTree = "<group>"; };
+		9AAF01621E2EC16C004062EE /* Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Schema.swift; path = ../../../../../Desktop/Schema.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +183,7 @@
 			children = (
 				9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */,
 				9A9A6A5B1E0ECA55008754A4 /* schema.json */,
-				9A98A3331E141DC300B2AD52 /* API.swift */,
+				9AAF01601E2EC148004062EE /* Generated */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -197,8 +199,17 @@
 		9A8879021E2D40A2007FB44F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9A88790B1E2E4718007FB44F /* GraphModel.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		9A8879071E2D5DD9007FB44F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */,
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 		9A9A6A031E0EC9C6008754A4 = {
@@ -224,6 +235,7 @@
 			children = (
 				9A9A6A101E0EC9C6008754A4 /* Gryphin.h */,
 				9A27B03B1E24728300AFBDA6 /* Extensions */,
+				9A8879071E2D5DD9007FB44F /* Shared */,
 				9A9A6A351E0EC9E5008754A4 /* Schema */,
 				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
 				9A9A6A451E0EC9FA008754A4 /* Query Generation */,
@@ -249,7 +261,6 @@
 		9A9A6A351E0EC9E5008754A4 /* Schema */ = {
 			isa = PBXGroup;
 			children = (
-				9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */,
 				9A7F3C9C1E196F91000D4455 /* Nameable.swift */,
 				9AA48FBE1E227D410028F044 /* Typeable.swift */,
 				9A7F3C9E1E196FBA000D4455 /* Describeable.swift */,
@@ -303,6 +314,15 @@
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
 			);
 			name = "Query Generation";
+			sourceTree = "<group>";
+		};
+		9AAF01601E2EC148004062EE /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				9AAF01611E2EC16C004062EE /* Models.swift */,
+				9AAF01621E2EC16C004062EE /* Schema.swift */,
+			);
+			name = Generated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,8 +471,8 @@
 				9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */,
 				9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */,
 				9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */,
+				9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */,
 				9A8DAAD01E1712960032CC6F /* Swift.Enum.Case.swift in Sources */,
-				9A8878F71E2CF1E4007FB44F /* API.swift in Sources */,
 				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
 				9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */,

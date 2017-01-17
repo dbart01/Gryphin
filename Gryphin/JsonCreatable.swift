@@ -41,3 +41,10 @@ extension JsonCreatable {
         return self.collectionWith(requiredJson: json)
     }
 }
+
+extension Dictionary where Value: Any {
+    
+    func v<T>(_ key: Key) -> T {
+        return self[key] as! T
+    }
+}

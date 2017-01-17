@@ -14,12 +14,12 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(items: [Containing]) {
-            super.init(visibility: .public, kind: .struct, name: "API", comments: [
-                "Automatically generated API schema using Gryphin. Do not modify."
-            ])
+        init(name: String, comments: [Line]? = nil, items: [Containing]? = nil) {
+            super.init(visibility: .public, kind: .struct, name: name, comments: comments)
             
-            self.add(children: items)
+            if let items = items {
+                self.add(children: items)
+            }
         }
     }
 }
