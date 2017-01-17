@@ -59,6 +59,7 @@
 		9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
 		9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
 		9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
+		9AAF016A1E2EC2A0004062EE /* APISchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01671E2EC295004062EE /* APISchema.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,8 +128,8 @@
 		9A9A6A661E12CAC1008754A4 /* Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.swift; sourceTree = "<group>"; };
 		9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Line.swift; sourceTree = "<group>"; };
 		9AA48FBE1E227D410028F044 /* Typeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typeable.swift; sourceTree = "<group>"; };
-		9AAF01611E2EC16C004062EE /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Models.swift; path = ../../../../../Desktop/Models.swift; sourceTree = "<group>"; };
-		9AAF01621E2EC16C004062EE /* Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Schema.swift; path = ../../../../../Desktop/Schema.swift; sourceTree = "<group>"; };
+		9AAF01661E2EC295004062EE /* APIModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIModels.swift; path = ../../../../../Desktop/APIModels.swift; sourceTree = "<group>"; };
+		9AAF01671E2EC295004062EE /* APISchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APISchema.swift; path = ../../../../../Desktop/APISchema.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,8 +320,8 @@
 		9AAF01601E2EC148004062EE /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				9AAF01611E2EC16C004062EE /* Models.swift */,
-				9AAF01621E2EC16C004062EE /* Schema.swift */,
+				9AAF01661E2EC295004062EE /* APIModels.swift */,
+				9AAF01671E2EC295004062EE /* APISchema.swift */,
 			);
 			name = Generated;
 			sourceTree = "<group>";
@@ -439,6 +440,7 @@
 			files = (
 				9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */,
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
+				9AAF016A1E2EC2A0004062EE /* APISchema.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
 				9A47206D1E286588002A2B64 /* InputType.swift in Sources */,
 				9A9A6A651E12CAA4008754A4 /* Swift.Namespace.swift in Sources */,
