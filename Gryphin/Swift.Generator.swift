@@ -494,9 +494,6 @@ extension Swift {
             
             precondition(object.kind == .object)
             
-            let namespace  = self.modelNamespace()
-            let modelSuper = self.modelClassName()
-            
             /* -----------------------------------------
              ** Initialize the class that will represent
              ** this object.
@@ -505,7 +502,7 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         object.name,
-                inheritances: [modelSuper],
+                inheritances: [self.modelClassName()],
                 comments:     object.descriptionComments()
             )
             
@@ -517,19 +514,10 @@ extension Swift {
                  */
                 for field in fields {
                     
-                    let fieldType = field.type.recursiveTypeString()
-                    
-                    let namespacedClass: String
-                    if field.type.leafKind == .object {
-                        namespacedClass = "\(namespace).\(fieldType)"
-                    } else {
-                        namespacedClass = fieldType
-                    }
-                    
                     swiftClass += Property(
                         visibility: .none,
                         name:       field.name,
-                        returnType: namespacedClass,
+                        returnType: field.type.recursiveTypeString(),
                         comments:   field.descriptionComments()
                     )
                 }
@@ -552,7 +540,7 @@ extension Swift {
                 let objectFields = fields.filter { !$0.type.hasScalar }
                 if !objectFields.isEmpty {
                     for field in objectFields {
-                        initBody += Line(content: "self.\(field.name) = \(namespace).\(field.type.leafName!)(json: json.v(\"\(field.name)\"))")
+                        initBody += Line(content: "self.\(field.name) = \(field.type.leafName!)(json: json.v(\"\(field.name)\"))")
                     }
                     initBody += ""
                 }
