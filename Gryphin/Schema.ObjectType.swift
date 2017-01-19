@@ -22,14 +22,6 @@ extension Schema {
             return self.kind == .scalar || self.kind == .enum
         }
         
-        var leafName: String? {
-            if let childType = self.ofType {
-                return childType.leafName
-            } else {
-                return Object.concreteNameFor(name: self.name, with: self.kind)
-            }
-        }
-        
         var isTopLevelNullable: Bool {
             return self.kind != .nonNull
         }

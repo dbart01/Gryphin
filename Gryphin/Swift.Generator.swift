@@ -243,8 +243,15 @@ extension Swift {
                  */
                 let fieldNameDictionary = fields.keyedUsing { $0.name }
                 
-                for possibleType in possibleTypes where possibleType.leafName != nil {
-                    if let object = parsedTypes[possibleType.leafName!] {
+                for possibleType in possibleTypes {
+                    
+                    /* ----------------------------------------
+                     ** We assume that all possible types have
+                     ** a non-null name property that is it's type.
+                     */
+                    let type = self.concreteTypeFor(possibleType)!
+                    
+                    if let object = parsedTypes[type] {
                         
                         /* ---------------------------------------
                          ** Filter out only the fields that have
@@ -305,9 +312,9 @@ extension Swift {
             }
             
             if let possibleTypes = concreteInterface.possibleTypes {
-                for possibleType in possibleTypes where possibleType.leafName != nil {
+                for possibleType in possibleTypes {
                     
-                    let type      = possibleType.leafName!
+                    let type      = self.concreteTypeFor(possibleType)!
                     let closure   = self.closureNameWith(type: type)
                     let parameter = Method.Parameter(
                         unnamed: true,
@@ -510,9 +517,9 @@ extension Swift {
             )
             
             if let possibleTypes = concreteInterface.possibleTypes {
-                for possibleType in possibleTypes where possibleType.leafName != nil {
+                for possibleType in possibleTypes {
                     
-                    let type = possibleType.leafName!
+                    let type = self.concreteTypeFor(possibleType)!
                     
                     swiftClass += Property(
                         visibility: .none,
@@ -586,7 +593,7 @@ extension Swift {
             let objectFields = fields.filter { !$0.type.hasScalar }
             if !objectFields.isEmpty {
                 for field in objectFields {
-                    initBody += self.generate(propertyAssignmentNamed: field.name, type: field.type.leafName!)
+                    initBody += self.generate(propertyAssignmentNamed: field.name, type: self.concreteTypeFor(field.type)!)
                 }
                 initBody += ""
             }
@@ -606,7 +613,8 @@ extension Swift {
             var initBody: [Line] = []
             
             for type in types {
-                initBody += self.generate(propertyAssignmentNamed: type.leafName!, type: type.leafName!)
+                let name  = self.concreteTypeFor(type)!
+                initBody += self.generate(propertyAssignmentNamed: name, type: name)
             }
             initBody += ""
             initBody += "super.init(json: json)"
@@ -695,7 +703,7 @@ extension Swift {
             if isInterface {
                 body = ["get"]
             } else {
-                body = self.subfieldBodyWith(name: field.name, type: field.type.leafName!, buildable: false, isObject: !isScalar)
+                body = self.subfieldBodyWith(name: field.name, type: self.concreteTypeFor(field.type)!, buildable: false, isObject: !isScalar)
             }
             
             var comments = field.descriptionComments()
@@ -728,7 +736,7 @@ extension Swift {
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
-            let fieldType = field.type.leafName!
+            let fieldType = self.concreteTypeFor(field.type)!
             let closure   = self.closureNameWith(type: fieldType)
             
             if buildable {
@@ -865,6 +873,30 @@ extension Swift {
             
             
             return lines
+        }
+        
+        // ----------------------------------
+        //  MARK: - Naming -
+        //
+        private func concretize(_ type: String) -> String {
+            return "Concrete\(type)"
+        }
+        
+        private func concreteTypeFor(_ type: Schema.ObjectType) -> String? {
+            if let childType = type.ofType {
+                return self.concreteTypeFor(childType)
+            } else {
+                
+                guard let name = type.name else {
+                    return nil
+                }
+                
+                if type.kind == .interface || type.kind == .union {
+                    return self.concretize(name)
+                } else {
+                    return name
+                }
+            }
         }
     }
 }
