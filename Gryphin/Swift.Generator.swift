@@ -118,11 +118,14 @@ extension Swift {
                     }
                     
                     schemaContainer += objectClass
-                    modelsContainer += self.generate(modelFor: type)
+                    modelsContainer += self.generate(objectModel: type)
                     
                 case .interface:
                     schemaContainer += self.generate(interface: type, parsedTypes: generatedTypes)
                     schemaContainer += self.generate(concreteInterface: type)
+                    
+                    // TODO: generate(interfaceModel: type)
+                    modelsContainer += self.generate(concreteInterfaceModel: type)
                     
                 case .enum:
                     schemaContainer += self.generate(enum: type)
@@ -138,6 +141,8 @@ extension Swift {
                 case .union:
                     schemaContainer += self.generate(union: type)
                     schemaContainer += self.generate(concreteInterface: type)
+                    
+                    modelsContainer += self.generate(concreteInterfaceModel: type)
                     
                 case .list:
                     break
@@ -157,7 +162,7 @@ extension Swift {
         }
         
         // ----------------------------------
-        //  MARK: - Type Generation -
+        //  MARK: - (Query) Type Generation -
         //
         private func generate(enum object: Schema.Object) -> Class {
             precondition(object.kind == .enum)
@@ -488,9 +493,45 @@ extension Swift {
         }
         
         // ----------------------------------
-        //  MARK: - Model Generation -
+        //  MARK: - (Model) Type Generation -
         //
-        private func generate(modelFor object: Schema.Object) -> Class {
+        private func generate(concreteInterfaceModel concreteInterface: Schema.Object) -> Class {
+            
+            precondition(concreteInterface.kind == .interface || concreteInterface.kind == .union)
+            
+            let swiftClass = Class(
+                visibility:   .none,
+                kind:         .class(.final),
+                name:         concreteInterface.name,
+                inheritances: [self.modelClassName()],
+                comments:     [
+                    Line(content: "Auto-generated concrete model for interface `\(concreteInterface.primitiveName)`"),
+                ]
+            )
+            
+            if let possibleTypes = concreteInterface.possibleTypes {
+                for possibleType in possibleTypes where possibleType.leafName != nil {
+                    
+                    let type = possibleType.leafName!
+                    
+                    swiftClass += Property(
+                        visibility: .none,
+                        name:       type,
+                        returnType: type,
+                        comments: [
+                            Line(content: "Auto-generated property for fragment on `\(type)`"),
+                        ]
+                    )
+                }
+                
+                swiftClass += self.generate(initializerWith: possibleTypes)
+            }
+            
+            
+            return swiftClass
+        }
+        
+        private func generate(objectModel object: Schema.Object) -> Class {
             
             precondition(object.kind == .object)
             
@@ -517,50 +558,79 @@ extension Swift {
                     swiftClass += Property(
                         visibility: .none,
                         name:       field.name,
-                        returnType: field.type.recursiveTypeString(),
+                        returnType: field.type.recursiveTypeString(primitive: false),
                         comments:   field.descriptionComments()
                     )
                 }
                 
-                /* ---------------------------------
-                 ** Build the initializer for this
-                 ** class that will parse and create
-                 ** all children for this model.
-                 */
-                var initBody: [Line] = []
-                
-                let scalarFields = fields.filter { $0.type.hasScalar }
-                if !scalarFields.isEmpty {
-                    for field in scalarFields {
-                        initBody += Line(content: "self.\(field.name) = json.v(\"\(field.name)\")")
-                    }
-                    initBody += ""
-                }
-                
-                let objectFields = fields.filter { !$0.type.hasScalar }
-                if !objectFields.isEmpty {
-                    for field in objectFields {
-                        initBody += Line(content: "self.\(field.name) = \(field.type.leafName!)(json: json.v(\"\(field.name)\"))")
-                    }
-                    initBody += ""
-                }
-                initBody += "super.init(json: json)"
-                
-                swiftClass += Method(
-                    visibility: .none,
-                    name:       .init(.none),
-                    parameters: [
-                        Method.Parameter(name: "json", type: .normal("JSON")),
-                    ],
-                    body: initBody
-                )
+                swiftClass += self.generate(initializerWith: fields)
             }
             
             return swiftClass
         }
         
         // ----------------------------------
-        //  MARK: - Field Generation -
+        //  MARK: - (Model) Member Generation -
+        //
+        private func generate(initializerWith fields: [Schema.Field]) -> Method {
+            var initBody: [Line] = []
+            
+            let scalarFields = fields.filter { $0.type.hasScalar }
+            if !scalarFields.isEmpty {
+                for field in scalarFields {
+                    initBody += self.generate(propertyAssignmentNamed: field.name)
+                }
+                initBody += ""
+            }
+            
+            let objectFields = fields.filter { !$0.type.hasScalar }
+            if !objectFields.isEmpty {
+                for field in objectFields {
+                    initBody += self.generate(propertyAssignmentNamed: field.name, type: field.type.leafName!)
+                }
+                initBody += ""
+            }
+            initBody += "super.init(json: json)"
+            
+            return Method(
+                visibility: .none,
+                name:       .init(.required),
+                parameters: [
+                    Method.Parameter(name: "json", type: .normal("JSON")),
+                ],
+                body: initBody
+            )
+        }
+        
+        private func generate(initializerWith types: [Schema.ObjectType]) -> Method {
+            var initBody: [Line] = []
+            
+            for type in types {
+                initBody += self.generate(propertyAssignmentNamed: type.leafName!, type: type.leafName!)
+            }
+            initBody += ""
+            initBody += "super.init(json: json)"
+            
+            return Method(
+                visibility: .none,
+                name:       .init(.required),
+                parameters: [
+                    Method.Parameter(name: "json", type: .normal("JSON")),
+                ],
+                body: initBody
+            )
+        }
+        
+        private func generate(propertyAssignmentNamed name: String, type: String? = nil) -> Line {
+            if let type = type {
+                return Line(content: "self.\(name) = \(type)(json: json.v(\"\(name)\"))")
+            } else {
+                return Line(content: "self.\(name) = json.v(\"\(name)\")")
+            }
+        }
+        
+        // ----------------------------------
+        //  MARK: - (Query) Field Generation -
         //
         private func generate(initNamed name: String, type: String) -> Method {
             let closure = self.closureNameWith(type: type)
@@ -876,8 +946,8 @@ extension Schema.ObjectType {
         "Float"   : "Float",
     ]
     
-    var mappedName: String? {
-        guard let name = self.name else {
+    private func mappedName(primitive: Bool) -> String? {
+        guard let name = primitive ? self.name : Schema.Object.concreteNameFor(name: self.name, with: self.kind) else {
             return nil
         }
         
@@ -887,11 +957,6 @@ extension Schema.ObjectType {
         return name
     }
     
-    var needsGenericConstraint: Bool {
-        let leafKind = self.leafKind
-        return leafKind == .interface || leafKind == .union
-    }
-    
     func inputTypeString() -> String {
         let nullability = self.isTopLevelNullable ? "?" : ""
         let type        = self.recursiveNonNullableTypeString()
@@ -899,17 +964,17 @@ extension Schema.ObjectType {
         return "\(type)\(nullability)"
     }
     
-    func recursiveTypeString() -> String {
-        return self.recursiveTypeString(nonNull: false)
+    func recursiveTypeString(primitive: Bool = true) -> String {
+        return self.recursiveTypeString(nonNull: false, primitive: primitive)
     }
     
-    func recursiveNonNullableTypeString() -> String {
-        return self.recursiveTypeString(nonNull: false, ignoreNull: true)
+    func recursiveNonNullableTypeString(primitive: Bool = true) -> String {
+        return self.recursiveTypeString(nonNull: false, primitive: primitive, ignoreNull: true)
     }
     
-    private func recursiveTypeString(nonNull: Bool, ignoreNull: Bool = false) -> String {
+    private func recursiveTypeString(nonNull: Bool, primitive: Bool = true, ignoreNull: Bool = false) -> String {
         let isNonNull = self.kind == .nonNull
-        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull, ignoreNull: ignoreNull) ?? ""
+        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull, primitive: primitive, ignoreNull: ignoreNull) ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -920,9 +985,9 @@ extension Schema.ObjectType {
         case .inputObject:
             
             if nonNull || ignoreNull {
-                return "\(self.mappedName!)"
+                return "\(self.mappedName(primitive: primitive)!)"
             } else {
-                return "\(self.mappedName!)?"
+                return "\(self.mappedName(primitive: primitive)!)?"
             }
             
         case .list:
@@ -957,17 +1022,9 @@ extension Schema.Argument {
         
         let typeString = self.type.recursiveTypeString()
         
-        let type: Swift.Method.Parameter.ValueType
-        if self.type.needsGenericConstraint {
-            // TODO: Remove
-            type = .constrained(Swift.Method.Parameter.GenericConstraint(alias: "T", constraints: [typeString]))
-        } else {
-            type = .normal(typeString)
-        }
-        
         return Swift.Method.Parameter(
             name:    self.name,
-            type:    type,
+            type:    .normal(typeString),
             default: defaultValue
         )
     }

@@ -30,14 +30,6 @@ extension Schema {
             }
         }
         
-        var leafKind: Schema.Kind {
-            if let childKind = self.ofType?.leafKind {
-                return childKind
-            } else {
-                return self.kind
-            }
-        }
-        
         var isTopLevelNullable: Bool {
             return self.kind != .nonNull
         }
