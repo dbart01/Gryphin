@@ -9,11 +9,15 @@
 import Foundation
 
 extension Schema {
-    final class ObjectType: JsonCreatable {
+    final class ObjectType: JsonCreatable, Nameable {
         
-        let kind:   Kind
-        let name:   String?
-        let ofType: ObjectType?
+        let kind:         Kind
+        let possibleName: String?
+        let ofType:       ObjectType?
+        
+        var name: String {
+            return self.possibleName!
+        }
         
         var hasScalar: Bool {
             if let type = self.ofType {
@@ -30,9 +34,9 @@ extension Schema {
         //  MARK: - Init -
         //
         init(json: JSON) {
-            self.kind   = Kind(string: json["kind"]       as! String)
-            self.name   = json["name"]                    as? String
-            self.ofType = ObjectType(json: json["ofType"] as? JSON)
+            self.kind         = Kind(string: json["kind"]       as! String)
+            self.possibleName = json["name"]                    as? String
+            self.ofType       = ObjectType(json: json["ofType"] as? JSON)
         }
     }
 }

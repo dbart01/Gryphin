@@ -30,9 +30,9 @@ class SchemaTests: XCTestCase {
     }
     
     func testMutation() {
-        let project = CreateProjectInput(clientMutationId: "some123", ownerId: "owner123", name: "Wobbly Bear", body: "Nothing to pu here")
+        let project = QCreateProjectInput(clientMutationId: "some123", ownerId: "owner123", name: "Wobbly Bear", body: "Nothing to pu here")
         
-        let mutation = Mutation { $0
+        let mutation = QMutation { $0
             .createProject(input: project) { $0
                 .clientMutationId
                 .project { _ = $0
@@ -48,8 +48,8 @@ class SchemaTests: XCTestCase {
     }
     
     func testQuery() {
-        let order = RepositoryOrder(field: .createdAt, direction: .asc)
-        let query = Query { $0
+        let order = QRepositoryOrder(field: .createdAt, direction: .asc)
+        let query = QQuery { $0
             .repository(owner: "dbart01", name: "someName") { $0
                 .owner { $0
                     .fragmentOnOrganization { _ = $0

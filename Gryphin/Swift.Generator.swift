@@ -109,7 +109,7 @@ extension Swift {
                      ** Specific logic for root Query
                      ** and Mutation types.
                      */
-                    switch objectClass.name {
+                    switch type.name {
                     case queryType:
                         objectClass.prepend(child: self.generate(initNamed: "query", type: objectClass.name))
                     case mutationType:
@@ -216,7 +216,7 @@ extension Swift {
             let swiftInterface = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         interface.primitiveName,
+                name:         interface.typeName,
                 inheritances: interface.inheritances(),
                 comments:     interface.descriptionComments()
             )
@@ -249,9 +249,7 @@ extension Swift {
                      ** We assume that all possible types have
                      ** a non-null name property that is it's type.
                      */
-                    let type = self.concreteTypeFor(possibleType)!
-                    
-                    if let object = parsedTypes[type] {
+                    if let object = parsedTypes[possibleType.possibleName!] {
                         
                         /* ---------------------------------------
                          ** Filter out only the fields that have
@@ -269,9 +267,9 @@ extension Swift {
                             let swiftExtension = Class(
                                 visibility: .none,
                                 kind:       .extension,
-                                name:       possibleType.name!,
+                                name:       possibleType.typeName,
                                 comments:   [
-                                    Swift.Line(content: "Auto-generated property for compatibility with `\(interface.name)`")
+                                    Swift.Line(content: "Auto-generated property for compatibility with `\(interface.typeName)`")
                                 ]
                             )
                             
@@ -300,10 +298,10 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         concreteInterface.name,
-                inheritances: ["TypedField", concreteInterface.primitiveName],
+                name:         concreteInterface.concreteTypeName,
+                inheritances: ["TypedField", concreteInterface.typeName],
                 comments:     [
-                    Swift.Line(content: "Concrete type aut-generated for `\(concreteInterface.primitiveName)`")
+                    Swift.Line(content: "Concrete type auto-generated for `\(concreteInterface.typeName)`")
                 ]
             )
             
@@ -314,8 +312,10 @@ extension Swift {
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
                     
-                    let type      = self.concreteTypeFor(possibleType)!
-                    let closure   = self.closureNameWith(type: type)
+                    let fieldName = possibleType.name
+                    let typeName  = possibleType.typeName
+                    
+                    let closure   = self.closureNameWith(type: typeName)
                     let parameter = Method.Parameter(
                         unnamed: true,
                         name:    closure.name,
@@ -324,13 +324,13 @@ extension Swift {
                     
                     let method = Method(
                         visibility: .none,
-                        name:        .func("fragmentOn\(type)"),
+                        name:        .func("fragmentOn\(fieldName)"),
                         returnType:  swiftClass.name,
                         parameters:  [parameter],
                         annotations: [.discardableResult],
-                        body:        self.inlineFragmentContentWith(type: type),
+                        body:        self.inlineFragmentContentWith(type: typeName, field: fieldName),
                         comments:    [
-                            Line(content: "Use an inline fragment to query specific fields of `\(type)`")
+                            Line(content: "Use an inline fragment to query specific fields of `\(typeName)`")
                         ]
                     )
                     
@@ -354,7 +354,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         union.primitiveName,
+                name:         union.typeName,
                 inheritances: union.inheritances(),
                 comments:     union.descriptionComments()
             )
@@ -367,8 +367,8 @@ extension Swift {
                     container += Class(
                         visibility:   .none,
                         kind:         .extension,
-                        name:         $0.name!,
-                        inheritances: [union.primitiveName]
+                        name:         $0.typeName,
+                        inheritances: [union.typeName]
                     )
                 }
             }
@@ -387,13 +387,13 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         object.name,
+                name:         object.typeName,
                 inheritances: object.inheritances(from: [self.fieldClassName()]),
                 comments:     object.descriptionComments()
             )
             
             if let fields = object.fields {
-                swiftClass += self.generate(fields: fields, ofType: object.name, isInterface: false)
+                swiftClass += self.generate(fields: fields, ofType: object.typeName, isInterface: false)
             }
             
             return swiftClass
@@ -410,7 +410,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .struct,
-                name:         inputObject.name,
+                name:         inputObject.typeName,
                 inheritances: inputObject.inheritances(from: [self.inputClassName()]),
                 comments:     inputObject.descriptionComments()
             )
@@ -430,7 +430,7 @@ extension Swift {
                     initParams += Method.Parameter(
                         unnamed: false,
                         name:    field.name,
-                        type:    .normal(field.type.inputTypeString()),
+                        type:    .normal(field.type.recursiveInputType(unmodified: field.type.hasScalar)),
                         default: field.type.isTopLevelNullable ? .nil : nil
                     )
                 }
@@ -509,17 +509,17 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         concreteInterface.name,
+                name:         concreteInterface.concreteTypeName,
                 inheritances: [self.modelClassName()],
                 comments:     [
-                    Line(content: "Auto-generated concrete model for interface `\(concreteInterface.primitiveName)`"),
+                    Line(content: "Auto-generated concrete model for interface `\(concreteInterface.typeName)`"),
                 ]
             )
             
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
                     
-                    let type = self.concreteTypeFor(possibleType)!
+                    let type = self.concreteTypeFor(possibleType)
                     
                     swiftClass += Property(
                         visibility: .none,
@@ -549,7 +549,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         object.name,
+                name:         object.typeName,
                 inheritances: [self.modelClassName()],
                 comments:     object.descriptionComments()
             )
@@ -565,7 +565,7 @@ extension Swift {
                     swiftClass += Property(
                         visibility: .none,
                         name:       field.name,
-                        returnType: field.type.recursiveTypeString(primitive: false),
+                        returnType: field.type.recursiveConcreteType(),
                         comments:   field.descriptionComments()
                     )
                 }
@@ -593,7 +593,7 @@ extension Swift {
             let objectFields = fields.filter { !$0.type.hasScalar }
             if !objectFields.isEmpty {
                 for field in objectFields {
-                    initBody += self.generate(propertyAssignmentNamed: field.name, type: self.concreteTypeFor(field.type)!)
+                    initBody += self.generate(propertyAssignmentNamed: field.name, type: self.concreteTypeFor(field.type))
                 }
                 initBody += ""
             }
@@ -613,7 +613,7 @@ extension Swift {
             var initBody: [Line] = []
             
             for type in types {
-                let name  = self.concreteTypeFor(type)!
+                let name  = self.concreteTypeFor(type)
                 initBody += self.generate(propertyAssignmentNamed: name, type: name)
             }
             initBody += ""
@@ -667,7 +667,7 @@ extension Swift {
             return Property(
                 visibility: .none,
                 name:       field.name,
-                returnType: field.type.inputTypeString(),
+                returnType: field.type.recursiveInputType(unmodified: field.type.hasScalar),
                 comments:   field.descriptionComments()
             )
         }
@@ -703,13 +703,13 @@ extension Swift {
             if isInterface {
                 body = ["get"]
             } else {
-                body = self.subfieldBodyWith(name: field.name, type: self.concreteTypeFor(field.type)!, buildable: false, isObject: !isScalar)
+                body = self.subfieldBodyWith(name: field.name, type: self.concreteTypeFor(field.type), buildable: false, isObject: !isScalar)
             }
             
             var comments = field.descriptionComments()
             
             if isScalar {
-                comments += Line(content: " - Value Type: `\(field.type.recursiveTypeString())`")
+                comments += Line(content: " - Value Type: `\(field.type.recursiveType(unmodified: field.type.hasScalar))`")
             }
             
             return Property(
@@ -736,7 +736,7 @@ extension Swift {
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
-            let fieldType = self.concreteTypeFor(field.type)!
+            let fieldType = self.concreteTypeFor(field.type)
             let closure   = self.closureNameWith(type: fieldType)
             
             if buildable {
@@ -858,11 +858,11 @@ extension Swift {
             return lines
         }
         
-        private func inlineFragmentContentWith(type: String) -> [Line] {
+        private func inlineFragmentContentWith(type: String, field: String) -> [Line] {
             var lines: [Line] = []
             
             lines += Line(content: "let field    = \(type)(name: \"\", parameters: [])")
-            lines += Line(content: "let fragment = InlineFragment(type: \"\(type)\")")
+            lines += Line(content: "let fragment = InlineFragment(type: \"\(field)\")")
             lines += Line(content: "")
             lines += Line(content: "self._add(child: fragment)")
             lines += Line(content: "")
@@ -878,23 +878,15 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Naming -
         //
-        private func concretize(_ type: String) -> String {
-            return "Concrete\(type)"
-        }
-        
-        private func concreteTypeFor(_ type: Schema.ObjectType) -> String? {
+        private func concreteTypeFor(_ type: Schema.ObjectType) -> String {
             if let childType = type.ofType {
                 return self.concreteTypeFor(childType)
             } else {
                 
-                guard let name = type.name else {
-                    return nil
-                }
-                
                 if type.kind == .interface || type.kind == .union {
-                    return self.concretize(name)
+                    return type.concreteTypeName
                 } else {
-                    return name
+                    return type.typeName
                 }
             }
         }
@@ -942,9 +934,7 @@ extension Schema.Object {
             commentLines += "## Implementing types:"
             
             for possibleType in possibleTypes {
-                
-                precondition(possibleType.name != nil)
-                commentLines += Swift.Line(content: " - `\(possibleType.name!)`")
+                commentLines += Swift.Line(content: " - `\(possibleType.typeName)`")
             }
         }
         
@@ -961,7 +951,7 @@ extension Schema.Object {
         
         if let interfaces = self.interfaces, !interfaces.isEmpty {
             inheritances += interfaces.map {
-                $0.name!
+                $0.typeName
             }
         }
         
@@ -969,44 +959,56 @@ extension Schema.Object {
     }
 }
 
-extension Schema.ObjectType {
+extension String {
     
-    private static var typeMap: [String : String] = [
+    private static var __TypeMap: [String : String] = [
         "String"  : "String",
         "Boolean" : "Bool",
         "Int"     : "Int",
         "Float"   : "Float",
     ]
     
-    private func mappedName(primitive: Bool) -> String? {
-        guard let name = primitive ? self.name : Schema.Object.concreteNameFor(name: self.name, with: self.kind) else {
-            return nil
+    var mapped: String {
+        if let type = String.__TypeMap[self] {
+            return type
         }
-        
-        if let mappedType = Schema.ObjectType.typeMap[name] {
-            return mappedType
-        }
-        return name
+        return self
+    }
+}
+
+extension Nameable {
+    
+    var concreteTypeName: String {
+        return "QConcrete\(self.name.mapped)"
     }
     
-    func inputTypeString() -> String {
-        let nullability = self.isTopLevelNullable ? "?" : ""
-        let type        = self.recursiveNonNullableTypeString()
-        
-        return "\(type)\(nullability)"
+    var typeName: String {
+        return "Q\(self.name.mapped)"
+    }
+}
+
+extension Schema.ObjectType {
+    
+    func recursiveInputType(unmodified: Bool) -> String {
+        let type = self.recursiveNonNullType(unmodified: unmodified)
+        return self.isTopLevelNullable ? "\(type)?" : type
     }
     
-    func recursiveTypeString(primitive: Bool = true) -> String {
-        return self.recursiveTypeString(nonNull: false, primitive: primitive)
+    func recursiveType(unmodified: Bool) -> String {
+        return self.recursiveType(nonNull: false, unmodified: unmodified)
     }
     
-    func recursiveNonNullableTypeString(primitive: Bool = true) -> String {
-        return self.recursiveTypeString(nonNull: false, primitive: primitive, ignoreNull: true)
+    func recursiveConcreteType() -> String {
+        return self.recursiveType(nonNull: false)
     }
     
-    private func recursiveTypeString(nonNull: Bool, primitive: Bool = true, ignoreNull: Bool = false) -> String {
+    private func recursiveNonNullType(unmodified: Bool) -> String {
+        return self.recursiveType(nonNull: false, unmodified: unmodified, ignoreNull: true)
+    }
+    
+    private func recursiveType(nonNull: Bool, unmodified: Bool = false, ignoreNull: Bool = false) -> String {
         let isNonNull = self.kind == .nonNull
-        let childType = self.ofType?.recursiveTypeString(nonNull: isNonNull, primitive: primitive, ignoreNull: ignoreNull) ?? ""
+        let childType = self.ofType?.recursiveType(nonNull: isNonNull, unmodified: unmodified, ignoreNull: ignoreNull) ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -1017,9 +1019,9 @@ extension Schema.ObjectType {
         case .inputObject:
             
             if nonNull || ignoreNull {
-                return "\(self.mappedName(primitive: primitive)!)"
+                return unmodified ? self.name.mapped : self.typeName
             } else {
-                return "\(self.mappedName(primitive: primitive)!)?"
+                return unmodified ? "\(self.name.mapped)?" : "\(self.typeName)?"
             }
             
         case .list:
@@ -1052,7 +1054,7 @@ extension Schema.Argument {
             defaultValue = .nil
         }
         
-        let typeString = self.type.recursiveTypeString()
+        let typeString = self.type.recursiveType(unmodified: self.type.hasScalar)
         
         return Swift.Method.Parameter(
             name:    self.name,
