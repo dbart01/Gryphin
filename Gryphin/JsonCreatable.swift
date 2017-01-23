@@ -44,7 +44,7 @@ extension JsonCreatable {
 
 extension Dictionary where Value: Any {
     
-    func v<T>(_ key: Key) -> T {
-        return self[key] as! T
+    func v<T>(_ key: Key) -> T? {
+        return self[key] as? T
     }
 }

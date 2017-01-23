@@ -100,8 +100,8 @@ extension Swift.Property {
             var string: String = ""
             
             string += "\(self.indent)\(self.kind.rawValue) {\n"
-            string += super.stringRepresentation
-            string += "}\n"
+            string += "\(super.stringRepresentation)\n"
+            string += "\(self.indent)}"
             
             return string
         }

@@ -523,6 +523,14 @@ extension Swift {
                         visibility: .none,
                         name:       possibleType.name.lowercased(),
                         returnType: possibleType.modelTypeName,
+                        accessors:  [
+                            Property.Accessor(kind: .get, body: [
+                                Line(content: "return try! self.valueFor(nonnull: \"\(possibleType.name.lowercased())\")")
+                            ]),
+                            Property.Accessor(kind: .set, body: [
+                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercased())\")")
+                            ]),
+                        ],
                         comments: [
                             Line(content: "Auto-generated property for fragment on `\(possibleType.modelTypeName)`"),
                         ]
@@ -564,6 +572,14 @@ extension Swift {
                         visibility: .none,
                         name:       field.name,
                         returnType: field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
+                        accessors:  [
+                            Property.Accessor(kind: .get, body: [
+                                Line(content: "return try! self.valueFor(nonnull: \"\(field.name)\")")
+                            ]),
+                            Property.Accessor(kind: .set, body: [
+                                Line(content: "self.set(newValue, for: \"\(field.name)\")")
+                            ]),
+                        ],
                         comments:   field.descriptionComments()
                     )
                 }
@@ -580,23 +596,26 @@ extension Swift {
         private func generate(initializerWith fields: [Schema.Field]) -> Method {
             var initBody: [Line] = []
             
+            initBody += "super.init(json: json)"
+            
             let scalarFields = fields.filter { $0.type.hasScalar }
             if !scalarFields.isEmpty {
+                initBody += ""
+                
                 for field in scalarFields {
                     initBody += self.generate(propertyAssignmentNamed: field.name)
                 }
-                initBody += ""
             }
             
             let objectFields = fields.filter { !$0.type.hasScalar }
             if !objectFields.isEmpty {
+                initBody += ""
+                
                 for field in objectFields {
                     let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
                     initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isCollection: field.type.isCollection)
                 }
-                initBody += ""
             }
-            initBody += "super.init(json: json)"
             
             return Method(
                 visibility: .none,
@@ -610,6 +629,8 @@ extension Swift {
         
         private func generate(initializerWith types: [Schema.ObjectType]) -> Method {
             var initBody: [Line] = []
+            initBody += "super.init(json: json)"
+            initBody += ""
             
             for type in types {
                 
@@ -618,8 +639,6 @@ extension Swift {
                 let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
                 initBody += self.generate(propertyAssignmentNamed: type.name.lowercased(), type: name, isCollection: type.isCollection)
             }
-            initBody += ""
-            initBody += "super.init(json: json)"
             
             return Method(
                 visibility: .none,
@@ -634,12 +653,12 @@ extension Swift {
         private func generate(propertyAssignmentNamed name: String, type: String? = nil, isCollection: Bool = false) -> Line {
             if let type = type {
                 if isCollection {
-                    return Line(content: "self.\(name) = \(type).from(json.v(\"\(name)\"))")
+                    return Line(content: "self.set(\(type).from(json.v(\"\(name)\")), for: \"\(name)\")")
                 } else {
-                    return Line(content: "self.\(name) = \(type)(json: json.v(\"\(name)\"))")
+                    return Line(content: "self.set(\(type)(json: json.v(\"\(name)\")), for: \"\(name)\")")
                 }
             } else {
-                return Line(content: "self.\(name) = json.v(\"\(name)\")")
+                return Line(content: "self.set(json.v(\"\(name)\"), for: \"\(name)\")")
             }
         }
         

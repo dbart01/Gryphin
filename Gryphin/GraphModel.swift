@@ -8,9 +8,14 @@
 
 import Foundation
 
+enum ModelError: Error {
+    case KeyNotFound
+}
+
 class GraphModel: JsonCreatable {
     
-    private var aliases: [String : Any] = [:]
+    private var values:  JSON = [:]
+    private var aliases: JSON = [:]
     
     // ----------------------------------
     //  MARK: - Init -
@@ -20,10 +25,44 @@ class GraphModel: JsonCreatable {
     }
     
     // ----------------------------------
+    //  MARK: - Subscript -
+    //
+    func hasValueFor(key: String) -> Bool {
+        return self.values[key] != nil
+    }
+    
+    func valueFor<T>(nullable key: String) throws -> T? {
+        guard let value = self.values[key] else {
+            throw ModelError.KeyNotFound
+        }
+        
+        return value as? T
+    }
+    
+    func valueFor<T>(nonnull key: String) throws -> T {
+        guard let value: T? = try self.valueFor(nullable: key) else {
+            throw ModelError.KeyNotFound
+        }
+        
+        return value!
+    }
+    
+    func set(_ value: Any, for key: String) {
+        self.values[key] = value
+    }
+    
+    func set(_ value: Any?, for key: String) {
+        if let value = value {
+            self.set(value, for: key)
+        }
+    }
+    
+    // ----------------------------------
     //  MARK: - Alias Management -
     //
     func alias<T>(_ key: String) -> T {
-        return aliases[key] as! T
+        let aliasKey = "__alias_\(key)"
+        return self.aliases[aliasKey] as! T
     }
     
     private func parseAliasesFrom(_ json: JSON) {
@@ -34,6 +73,13 @@ class GraphModel: JsonCreatable {
 }
 
 extension Array where Element: GraphModel {
+    
+    static func from(_ json: [JSON]?) -> [Element]? {
+        if let json = json {
+            return Array.from(json)
+        }
+        return nil
+    }
     
     static func from(_ json: [JSON]) -> [Element] {
         return json.map { Element(json: $0) }
