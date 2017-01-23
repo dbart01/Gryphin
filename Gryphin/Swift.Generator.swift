@@ -73,7 +73,7 @@ extension Swift {
             let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
             
             let schemaContainer = Container()
-            let modelsContainer = Namespace(name: self.modelNamespace())
+            let modelsContainer = Container()
             
             /* -----------------------------
              ** Parse the schema types first
@@ -985,11 +985,11 @@ extension Nameable {
     }
     
     var modelConcreteTypeName: String {
-        return "MConcrete\(self.name.mapped)"
+        return "Concrete\(self.name.mapped)"
     }
     
     var modelTypeName: String {
-        return "M\(self.name.mapped)"
+        return "\(self.name.mapped)"
     }
 }
 
