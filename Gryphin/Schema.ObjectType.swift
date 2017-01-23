@@ -26,8 +26,34 @@ extension Schema {
             return self.kind == .scalar || self.kind == .enum
         }
         
+        var isAbstract: Bool {
+            if let type = self.ofType {
+                return type.isAbstract
+            }
+            return self.kind == .interface || self.kind == .union
+        }
+        
+        var isCollection: Bool {
+            guard self.kind != .list else {
+                return true
+            }
+            
+            if let type = self.ofType {
+                return type.isCollection
+            }
+            
+            return false
+        }
+        
         var isTopLevelNullable: Bool {
             return self.kind != .nonNull
+        }
+        
+        var leaf: ObjectType {
+            if let type = self.ofType {
+                return type.leaf
+            }
+            return self
         }
         
         // ----------------------------------

@@ -216,7 +216,7 @@ extension Swift {
             let swiftInterface = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         interface.typeName,
+                name:         interface.queryTypeName,
                 inheritances: interface.inheritances(),
                 comments:     interface.descriptionComments()
             )
@@ -267,9 +267,9 @@ extension Swift {
                             let swiftExtension = Class(
                                 visibility: .none,
                                 kind:       .extension,
-                                name:       possibleType.typeName,
+                                name:       possibleType.queryTypeName,
                                 comments:   [
-                                    Swift.Line(content: "Auto-generated property for compatibility with `\(interface.typeName)`")
+                                    Swift.Line(content: "Auto-generated property for compatibility with `\(interface.queryTypeName)`")
                                 ]
                             )
                             
@@ -298,10 +298,10 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         concreteInterface.concreteTypeName,
-                inheritances: ["TypedField", concreteInterface.typeName],
+                name:         concreteInterface.queryConcreteTypeName,
+                inheritances: ["TypedField", concreteInterface.queryTypeName],
                 comments:     [
-                    Swift.Line(content: "Concrete type auto-generated for `\(concreteInterface.typeName)`")
+                    Swift.Line(content: "Concrete type auto-generated for `\(concreteInterface.queryTypeName)`")
                 ]
             )
             
@@ -313,7 +313,7 @@ extension Swift {
                 for possibleType in possibleTypes {
                     
                     let fieldName = possibleType.name
-                    let typeName  = possibleType.typeName
+                    let typeName  = possibleType.queryTypeName
                     
                     let closure   = self.closureNameWith(type: typeName)
                     let parameter = Method.Parameter(
@@ -354,7 +354,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .protocol,
-                name:         union.typeName,
+                name:         union.queryTypeName,
                 inheritances: union.inheritances(),
                 comments:     union.descriptionComments()
             )
@@ -367,8 +367,8 @@ extension Swift {
                     container += Class(
                         visibility:   .none,
                         kind:         .extension,
-                        name:         $0.typeName,
-                        inheritances: [union.typeName]
+                        name:         $0.queryTypeName,
+                        inheritances: [union.queryTypeName]
                     )
                 }
             }
@@ -387,13 +387,13 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         object.typeName,
+                name:         object.queryTypeName,
                 inheritances: object.inheritances(from: [self.fieldClassName()]),
                 comments:     object.descriptionComments()
             )
             
             if let fields = object.fields {
-                swiftClass += self.generate(fields: fields, ofType: object.typeName, isInterface: false)
+                swiftClass += self.generate(fields: fields, ofType: object.queryTypeName, isInterface: false)
             }
             
             return swiftClass
@@ -410,7 +410,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .struct,
-                name:         inputObject.typeName,
+                name:         inputObject.queryTypeName,
                 inheritances: inputObject.inheritances(from: [self.inputClassName()]),
                 comments:     inputObject.descriptionComments()
             )
@@ -430,7 +430,7 @@ extension Swift {
                     initParams += Method.Parameter(
                         unnamed: false,
                         name:    field.name,
-                        type:    .normal(field.type.recursiveInputType(unmodified: field.type.hasScalar)),
+                        type:    .normal(field.type.recursiveQueryInputType(unmodified: field.type.hasScalar)),
                         default: field.type.isTopLevelNullable ? .nil : nil
                     )
                 }
@@ -509,24 +509,22 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         concreteInterface.concreteTypeName,
+                name:         concreteInterface.modelConcreteTypeName,
                 inheritances: [self.modelClassName()],
                 comments:     [
-                    Line(content: "Auto-generated concrete model for interface `\(concreteInterface.typeName)`"),
+                    Line(content: "Auto-generated concrete model for interface `\(concreteInterface.modelTypeName)`"),
                 ]
             )
             
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
                     
-                    let type = self.concreteTypeFor(possibleType)
-                    
                     swiftClass += Property(
                         visibility: .none,
-                        name:       type,
-                        returnType: type,
+                        name:       possibleType.name.lowercased(),
+                        returnType: possibleType.modelTypeName,
                         comments: [
-                            Line(content: "Auto-generated property for fragment on `\(type)`"),
+                            Line(content: "Auto-generated property for fragment on `\(possibleType.modelTypeName)`"),
                         ]
                     )
                 }
@@ -549,7 +547,7 @@ extension Swift {
             let swiftClass = Class(
                 visibility:   .none,
                 kind:         .class(.final),
-                name:         object.typeName,
+                name:         object.modelTypeName,
                 inheritances: [self.modelClassName()],
                 comments:     object.descriptionComments()
             )
@@ -565,7 +563,7 @@ extension Swift {
                     swiftClass += Property(
                         visibility: .none,
                         name:       field.name,
-                        returnType: field.type.recursiveConcreteType(),
+                        returnType: field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
                         comments:   field.descriptionComments()
                     )
                 }
@@ -593,7 +591,8 @@ extension Swift {
             let objectFields = fields.filter { !$0.type.hasScalar }
             if !objectFields.isEmpty {
                 for field in objectFields {
-                    initBody += self.generate(propertyAssignmentNamed: field.name, type: self.concreteTypeFor(field.type))
+                    let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
+                    initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isCollection: field.type.isCollection)
                 }
                 initBody += ""
             }
@@ -613,8 +612,11 @@ extension Swift {
             var initBody: [Line] = []
             
             for type in types {
-                let name  = self.concreteTypeFor(type)
-                initBody += self.generate(propertyAssignmentNamed: name, type: name)
+                
+                precondition(!type.hasScalar) // These should always be possible object types
+                
+                let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
+                initBody += self.generate(propertyAssignmentNamed: type.name.lowercased(), type: name, isCollection: type.isCollection)
             }
             initBody += ""
             initBody += "super.init(json: json)"
@@ -629,9 +631,13 @@ extension Swift {
             )
         }
         
-        private func generate(propertyAssignmentNamed name: String, type: String? = nil) -> Line {
+        private func generate(propertyAssignmentNamed name: String, type: String? = nil, isCollection: Bool = false) -> Line {
             if let type = type {
-                return Line(content: "self.\(name) = \(type)(json: json.v(\"\(name)\"))")
+                if isCollection {
+                    return Line(content: "self.\(name) = \(type).from(json.v(\"\(name)\"))")
+                } else {
+                    return Line(content: "self.\(name) = \(type)(json: json.v(\"\(name)\"))")
+                }
             } else {
                 return Line(content: "self.\(name) = json.v(\"\(name)\")")
             }
@@ -667,7 +673,7 @@ extension Swift {
             return Property(
                 visibility: .none,
                 name:       field.name,
-                returnType: field.type.recursiveInputType(unmodified: field.type.hasScalar),
+                returnType: field.type.recursiveQueryInputType(unmodified: field.type.hasScalar),
                 comments:   field.descriptionComments()
             )
         }
@@ -703,13 +709,14 @@ extension Swift {
             if isInterface {
                 body = ["get"]
             } else {
-                body = self.subfieldBodyWith(name: field.name, type: self.concreteTypeFor(field.type), buildable: false, isObject: !isScalar)
+                let type = field.type.recursiveType(queryKind: .query, unmodified: field.type.hasScalar)
+                body     = self.subfieldBodyWith(name: field.name, type: type, buildable: false, isObject: !isScalar)
             }
             
             var comments = field.descriptionComments()
             
             if isScalar {
-                comments += Line(content: " - Value Type: `\(field.type.recursiveType(unmodified: field.type.hasScalar))`")
+                comments += Line(content: " - Value Type: `\(field.type.recursiveQueryType(unmodified: field.type.hasScalar))`")
             }
             
             return Property(
@@ -736,10 +743,11 @@ extension Swift {
              ** the field type isn't a scalar type. We
              ** can't nest fields in scalar types.
              */
-            let fieldType = self.concreteTypeFor(field.type)
-            let closure   = self.closureNameWith(type: fieldType)
+            let fieldType = field.type.leaf.recursiveType(queryKind: .query, unmodified: field.type.hasScalar, ignoreNull: true)
             
             if buildable {
+                let closure = self.closureNameWith(type: fieldType)
+                
                 parameters += Method.Parameter(
                     unnamed: true,
                     name:    closure.name,
@@ -792,8 +800,6 @@ extension Swift {
         private func subfieldBodyWith(name: String, type: String, buildable: Bool, isObject: Bool, arguments: [Schema.Argument]? = nil) -> [Line] {
             var lines: [Line] = []
             
-            let closure = self.closureNameWith(type: "")
-            
             /* ----------------------------------------
              ** If this field accepts arguments, we'll
              ** need to add logic for appending only
@@ -801,6 +807,8 @@ extension Swift {
              */
             var paramVariable = "[]"
             if let arguments = arguments, !arguments.isEmpty {
+                
+                let closure = self.closureNameWith(type: "")
                 
                 lines += "var parameters: [Parameter] = []"
                 lines += ""
@@ -874,22 +882,6 @@ extension Swift {
             
             return lines
         }
-        
-        // ----------------------------------
-        //  MARK: - Naming -
-        //
-        private func concreteTypeFor(_ type: Schema.ObjectType) -> String {
-            if let childType = type.ofType {
-                return self.concreteTypeFor(childType)
-            } else {
-                
-                if type.kind == .interface || type.kind == .union {
-                    return type.concreteTypeName
-                } else {
-                    return type.typeName
-                }
-            }
-        }
     }
 }
 
@@ -934,7 +926,7 @@ extension Schema.Object {
             commentLines += "## Implementing types:"
             
             for possibleType in possibleTypes {
-                commentLines += Swift.Line(content: " - `\(possibleType.typeName)`")
+                commentLines += Swift.Line(content: " - `\(possibleType.queryTypeName)`")
             }
         }
         
@@ -951,7 +943,7 @@ extension Schema.Object {
         
         if let interfaces = self.interfaces, !interfaces.isEmpty {
             inheritances += interfaces.map {
-                $0.typeName
+                $0.queryTypeName
             }
         }
         
@@ -959,6 +951,9 @@ extension Schema.Object {
     }
 }
 
+// ----------------------------------
+//  MARK: - String Extension -
+//
 extension String {
     
     private static var __TypeMap: [String : String] = [
@@ -976,39 +971,71 @@ extension String {
     }
 }
 
+// ----------------------------------
+//  MARK: - Nameable Extension -
+//
 extension Nameable {
     
-    var concreteTypeName: String {
+    var queryConcreteTypeName: String {
         return "QConcrete\(self.name.mapped)"
     }
     
-    var typeName: String {
+    var queryTypeName: String {
         return "Q\(self.name.mapped)"
+    }
+    
+    var modelConcreteTypeName: String {
+        return "MConcrete\(self.name.mapped)"
+    }
+    
+    var modelTypeName: String {
+        return "M\(self.name.mapped)"
     }
 }
 
+// ----------------------------------
+//  MARK: - ObjectType Extension -
+//
 extension Schema.ObjectType {
     
-    func recursiveInputType(unmodified: Bool) -> String {
-        let type = self.recursiveNonNullType(unmodified: unmodified)
+    enum RecursiveKind {
+        case query
+        case model
+    }
+    
+    func recursiveQueryInputType(unmodified: Bool) -> String {
+        let type = self.recursiveType(queryKind: .query, unmodified: unmodified, ignoreNull: true)
         return self.isTopLevelNullable ? "\(type)?" : type
     }
     
-    func recursiveType(unmodified: Bool) -> String {
-        return self.recursiveType(nonNull: false, unmodified: unmodified)
+    func recursiveModelInputType(unmodified: Bool) -> String {
+        let type = self.recursiveType(queryKind: .model, unmodified: unmodified, ignoreNull: true)
+        return self.isTopLevelNullable ? "\(type)?" : type
     }
     
-    func recursiveConcreteType() -> String {
-        return self.recursiveType(nonNull: false)
+    func recursiveQueryType(unmodified: Bool) -> String {
+        return self.recursiveType(queryKind: .query, unmodified: unmodified)
     }
     
-    private func recursiveNonNullType(unmodified: Bool) -> String {
-        return self.recursiveType(nonNull: false, unmodified: unmodified, ignoreNull: true)
+    func recursiveModelType(unmodified: Bool) -> String {
+        return self.recursiveType(queryKind: .model, unmodified: unmodified)
     }
     
-    private func recursiveType(nonNull: Bool, unmodified: Bool = false, ignoreNull: Bool = false) -> String {
+    func recursiveQueryConcreteType() -> String {
+        return self.recursiveType(queryKind: .query)
+    }
+    
+    func recursiveModelConcreteType() -> String {
+        return self.recursiveType(queryKind: .model)
+    }
+    
+    func recursiveType(queryKind: RecursiveKind, concrete: Bool? = nil, unmodified: Bool = false, ignoreNull: Bool = false) -> String {
+        return self.recursiveType(queryKind: queryKind, nonNull: false, concrete: concrete ?? self.isAbstract, unmodified: unmodified, ignoreNull: ignoreNull)
+    }
+    
+    private func recursiveType(queryKind: RecursiveKind, nonNull: Bool, concrete: Bool, unmodified: Bool, ignoreNull: Bool) -> String {
         let isNonNull = self.kind == .nonNull
-        let childType = self.ofType?.recursiveType(nonNull: isNonNull, unmodified: unmodified, ignoreNull: ignoreNull) ?? ""
+        let childType = self.ofType?.recursiveType(queryKind: queryKind, nonNull: isNonNull, concrete: concrete, unmodified: unmodified, ignoreNull: ignoreNull) ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -1018,10 +1045,17 @@ extension Schema.ObjectType {
         case .interface:  fallthrough
         case .inputObject:
             
+            let modifiedType: (Void) -> String = {
+                switch queryKind {
+                case .query: return self.isAbstract ? self.queryConcreteTypeName : self.queryTypeName
+                case .model: return self.isAbstract ? self.modelConcreteTypeName : self.modelTypeName
+                }
+            }
+            
             if nonNull || ignoreNull {
-                return unmodified ? self.name.mapped : self.typeName
+                return unmodified ? self.name.mapped : modifiedType()
             } else {
-                return unmodified ? "\(self.name.mapped)?" : "\(self.typeName)?"
+                return unmodified ? "\(self.name.mapped)?" : "\(modifiedType())?"
             }
             
         case .list:
@@ -1038,6 +1072,9 @@ extension Schema.ObjectType {
     }
 }
 
+// ----------------------------------
+//  MARK: - Describeable Extension -
+//
 extension Describeable {
     
     func descriptionComments() -> [Swift.Line] {
@@ -1045,6 +1082,9 @@ extension Describeable {
     }
 }
 
+// ----------------------------------
+//  MARK: - Argument Extension -
+//
 extension Schema.Argument {
     
     func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
@@ -1054,7 +1094,7 @@ extension Schema.Argument {
             defaultValue = .nil
         }
         
-        let typeString = self.type.recursiveType(unmodified: self.type.hasScalar)
+        let typeString = self.type.recursiveQueryType(unmodified: self.type.hasScalar)
         
         return Swift.Method.Parameter(
             name:    self.name,
@@ -1064,6 +1104,9 @@ extension Schema.Argument {
     }
 }
 
+// ----------------------------------
+//  MARK: - Field Extension -
+//
 extension Schema.Field {
     
     func parameterDocComments() -> [Swift.Line] {

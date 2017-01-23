@@ -12,7 +12,6 @@
 		9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */; };
 		9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206A1E28573A002A2B64 /* ReferenceTypeTests.swift */; };
 		9A47206D1E286588002A2B64 /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206C1E286588002A2B64 /* InputType.swift */; };
-		9A4720791E311366002A2B64 /* APISchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01671E2EC295004062EE /* APISchema.swift */; };
 		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
 		9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
 		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
@@ -60,6 +59,8 @@
 		9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
 		9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
 		9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
+		9AD6AA6F1E364FDC00BF909C /* APISchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01671E2EC295004062EE /* APISchema.swift */; };
+		9AD6AA721E36549200BF909C /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01661E2EC295004062EE /* APIModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -440,7 +441,7 @@
 			files = (
 				9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */,
 				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
-				9A4720791E311366002A2B64 /* APISchema.swift in Sources */,
+				9AD6AA6F1E364FDC00BF909C /* APISchema.swift in Sources */,
 				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
 				9A47206D1E286588002A2B64 /* InputType.swift in Sources */,
 				9A9A6A651E12CAA4008754A4 /* Swift.Namespace.swift in Sources */,
@@ -462,6 +463,7 @@
 				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
 				9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */,
 				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
+				9AD6AA721E36549200BF909C /* APIModels.swift in Sources */,
 				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
 				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,

@@ -32,3 +32,10 @@ class GraphModel: JsonCreatable {
         }
     }
 }
+
+extension Array where Element: GraphModel {
+    
+    static func from(_ json: [JSON]) -> [Element] {
+        return json.map { Element(json: $0) }
+    }
+}
