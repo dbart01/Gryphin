@@ -568,13 +568,15 @@ extension Swift {
                  */
                 for field in fields {
                     
+                    let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
+                    
                     swiftClass += Property(
                         visibility: .none,
                         name:       field.name,
                         returnType: field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
                         accessors:  [
                             Property.Accessor(kind: .get, body: [
-                                Line(content: "return try! self.valueFor(nonnull: \"\(field.name)\")")
+                                Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
                                 Line(content: "self.set(newValue, for: \"\(field.name)\")")
@@ -595,7 +597,8 @@ extension Swift {
                 for field in fields where !field.type.hasScalar && !field.type.isCollection {
                     
                     let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
-                    
+                    let tryString = field.type.isTopLevelNullable ? "" : "try! "
+                        
                     swiftClass += Method(
                         visibility: .none,
                         name:       .func(field.name),
@@ -608,7 +611,7 @@ extension Swift {
                             )
                         ],
                         body:  [
-                            Line(content: "return try! self.aliasedWith(alias)"),
+                            Line(content: "return \(tryString)self.aliasedWith(alias)"),
                         ],
                         comments: field.descriptionComments()
                     )

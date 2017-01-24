@@ -10,6 +10,7 @@ import Foundation
 
 enum ModelError: Error {
     case KeyNotFound
+    case TypeConversionFailed
     case AliasNotFound
 }
 
@@ -42,7 +43,7 @@ class GraphModel: JsonCreatable {
     
     func valueFor<T>(nonnull key: String) throws -> T {
         guard let value: T? = try self.valueFor(nullable: key) else {
-            throw ModelError.KeyNotFound
+            throw ModelError.TypeConversionFailed
         }
         
         return value!

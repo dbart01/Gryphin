@@ -2,6 +2,7 @@
   "data": {
     "repository": {
       "name": "Shopkey",
+      "description": "Second iteration of the Shopkey app.",
       "owner": {
         "__typename": "Organization",
         "repositories": {
