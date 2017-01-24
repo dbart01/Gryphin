@@ -585,6 +585,34 @@ extension Swift {
                 }
                 
                 swiftClass += self.generate(initializerWith: fields)
+                
+                /* ----------------------------------
+                 ** Generate the alias accessors that
+                 ** can convert JSON response object
+                 ** into valid models on demand. This
+                 ** only applies to non-scalars, tho.
+                 */
+                for field in fields where !field.type.hasScalar && !field.type.isCollection {
+                    
+                    let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
+                    
+                    swiftClass += Method(
+                        visibility: .none,
+                        name:       .func(field.name),
+                        returnType: fieldType,
+                        parameters: [
+                            Method.Parameter(
+                                unnamed: true,
+                                name:    "alias",
+                                type:    .normal("String")
+                            )
+                        ],
+                        body:  [
+                            Line(content: "return try! self.aliasedWith(alias)"),
+                        ],
+                        comments: field.descriptionComments()
+                    )
+                }
             }
             
             return swiftClass

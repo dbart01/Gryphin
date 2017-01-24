@@ -10,6 +10,7 @@ import Foundation
 
 enum ModelError: Error {
     case KeyNotFound
+    case AliasNotFound
 }
 
 class GraphModel: JsonCreatable {
@@ -60,9 +61,19 @@ class GraphModel: JsonCreatable {
     // ----------------------------------
     //  MARK: - Alias Management -
     //
-    func alias<T>(_ key: String) -> T {
-        let aliasKey = "__alias_\(key)"
-        return self.aliases[aliasKey] as! T
+    func aliasedWith<T: JsonCreatable>(_ key: String) -> T? {
+        if let aliasJson = self.aliases["__alias_\(key)"] as? JSON {
+            return T(json: aliasJson)
+        }
+        return nil
+    }
+    
+    func aliasedWith<T: JsonCreatable>(_ key: String) throws -> T {
+        if let value: T = self.aliasedWith(key) {
+            return value
+        }
+        
+        throw ModelError.AliasNotFound
     }
     
     private func parseAliasesFrom(_ json: JSON) {

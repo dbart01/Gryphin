@@ -20,6 +20,8 @@ class ModelSerializationTests: XCTestCase {
         let name  = query.repository!.name
         let issues = query.repository!.issues.edges!.flatMap { $0!.node!.assignees.edges!.map { $0!.node!.name } }
         
+        let issues2 = query.repository!.issues("issueAlias").edges!.map { $0!.node!.assignees.edges!.map { $0!.node!.name } }
+        
         print()
     }
 
