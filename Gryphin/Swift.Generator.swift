@@ -523,14 +523,14 @@ extension Swift {
                     
                     swiftClass += Property(
                         visibility: .none,
-                        name:       possibleType.name.lowercased(),
+                        name:       possibleType.name.lowercasedFirst,
                         returnType: possibleType.modelTypeName.nullable,
                         accessors:  [
                             Property.Accessor(kind: .get, body: [
-                                Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercased())\")")
+                                Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
-                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercased())\")")
+                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercasedFirst))\")")
                             ]),
                         ],
                         comments: [
@@ -685,7 +685,7 @@ extension Swift {
                 precondition(!type.hasScalar) // These should always be possible object types
                 
                 let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
-                initBody += self.generate(propertyAssignmentNamed: type.name.lowercased(), type: name, isFragment: true, isCollection: type.isCollection)
+                initBody += self.generate(propertyAssignmentNamed: type.name.lowercasedFirst, type: name, isFragment: true, isCollection: type.isCollection)
             }
             
             return Method(

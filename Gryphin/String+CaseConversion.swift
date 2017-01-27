@@ -32,6 +32,14 @@ extension String {
             return self.lowercased()
         }
     }
+    
+    var lowercasedFirst: String {
+        let index = self.index(after: self.startIndex)
+        let first = self.substring(to: index)
+        let last  = self.substring(from: index)
+        
+        return "\(first.lowercased())\(last)"
+    }
 }
 
 private extension UInt8 {

@@ -22,4 +22,10 @@ class String_CaseConversionTests: XCTestCase {
         XCTAssertEqual("snake".snakeToCamel, "snake")
         XCTAssertEqual("sNaKe".snakeToCamel, "snake")
     }
+    
+    func testLowerCasedFirst() {
+        XCTAssertEqual("SomeClass".lowercasedFirst, "someClass")
+        XCTAssertEqual("SOMECLASS".lowercasedFirst, "sOMECLASS")
+        XCTAssertEqual("someclass".lowercasedFirst, "someclass")
+    }
 }
