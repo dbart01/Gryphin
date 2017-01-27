@@ -16,7 +16,7 @@ class ModelSerializationTests: XCTestCase {
     //
     func testComprehensive() {
         let json  = self.jsonFromFile(named: "queryComprehensive")
-        let query = Query(json: json["data"] as! JSON)
+        let query = Query(json: json["data"] as! JSON)!
         let name  = query.repository!.name
         let issues = query.repository!.issues.edges!.flatMap { $0!.node!.assignees.edges!.map { $0!.node!.name } }
         
@@ -24,7 +24,19 @@ class ModelSerializationTests: XCTestCase {
             print("Description: \(description)")
         }
         
-        print(query.repository!.description)
+        print(query.repository!.owner)
+    }
+    
+    func testNodeWithID() {
+        let json  = self.jsonFromFile(named: "queryNode")
+        let query = Query(json: json["data"] as! JSON)!
+        
+        if let user = query.node!.blob {
+            
+            print("This user is: \(user.id)")
+        }
+        
+        print()
     }
 
     // ----------------------------------

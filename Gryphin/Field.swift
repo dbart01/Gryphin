@@ -36,7 +36,7 @@ class Field: ContainerType {
     //  MARK: - Alias -
     //
     func alias(_ alias: String) -> Self {
-        self.enquedAlias = "__alias_\(alias)"
+        self.enquedAlias = "\(GraphQL.Custom.aliasPrefix)\(alias)"
         return self
     }
     

@@ -14,16 +14,32 @@ enum ModelError: Error {
     case AliasNotFound
 }
 
-class GraphModel: JsonCreatable {
+class GraphModel {
     
     private var values:  JSON = [:]
     private var aliases: JSON = [:]
     
+    class var typeName: String {
+        fatalError("Subclasses must override `typeName`.")
+    }
+    
     // ----------------------------------
     //  MARK: - Init -
     //
-    required init(json: JSON) {
+    required init?(json: JSON) {
+        if let typeName = json[GraphQL.Key.typeName] as? String, typeName != type(of: self).typeName {
+            return nil
+        }
+        
         self.parseAliasesFrom(json)
+    }
+    
+    convenience init?(json: JSON?) {
+        guard let json = json else {
+            return nil
+        }
+        
+        self.init(json: json)
     }
     
     // ----------------------------------
@@ -62,14 +78,14 @@ class GraphModel: JsonCreatable {
     // ----------------------------------
     //  MARK: - Alias Management -
     //
-    func aliasedWith<T: JsonCreatable>(_ key: String) -> T? {
-        if let aliasJson = self.aliases["__alias_\(key)"] as? JSON {
+    func aliasedWith<T: GraphModel>(_ key: String) -> T? {
+        if let aliasJson = self.aliases["\(GraphQL.Custom.aliasPrefix)\(key)"] as? JSON {
             return T(json: aliasJson)
         }
         return nil
     }
     
-    func aliasedWith<T: JsonCreatable>(_ key: String) throws -> T {
+    func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
         if let value: T = self.aliasedWith(key) {
             return value
         }
@@ -78,7 +94,7 @@ class GraphModel: JsonCreatable {
     }
     
     private func parseAliasesFrom(_ json: JSON) {
-        for (key, value) in json where key.hasPrefix("__alias_") {
+        for (key, value) in json where key.hasPrefix(GraphQL.Custom.aliasPrefix) {
             self.aliases[key] = value
         }
     }
@@ -94,6 +110,12 @@ extension Array where Element: GraphModel {
     }
     
     static func from(_ json: [JSON]) -> [Element] {
-        return json.map { Element(json: $0) }
+        var container = [Element]()
+        for jsonValue in json {
+            if let element = Element(json: jsonValue) {
+                container.append(element)
+            }
+        }
+        return container
     }
 }

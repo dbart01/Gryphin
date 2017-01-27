@@ -132,7 +132,7 @@ extension Swift {
 //
 extension Swift.Method {
     enum Name {
-        case `init`(InitializerType)
+        case `init`(InitializerType, Bool)
         case `func`(String)
         
         enum InitializerType: String {
@@ -143,9 +143,11 @@ extension Swift.Method {
         
         var string: String {
             switch self {
-            case .init(let type):
-                let type = (type == .none) ? "" : "\(type.rawValue) "
-                return "\(type)init"
+            case .init(let type, let failable):
+                let type     = (type == .none) ? "" : "\(type.rawValue) "
+                let failable = failable ? "?" : ""
+                
+                return "\(type)init\(failable)"
                 
             case .func(let title):
                 return "func \(title)"

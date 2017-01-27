@@ -11,7 +11,9 @@ import Foundation
 extension Swift {
     final class Property: Container {
         
+        let kind:        Kind
         let visibility:  Visibility
+        let override:    Bool
         let name:        String
         let returnType:  String
         
@@ -20,8 +22,10 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(visibility: Visibility = .internal, name: String, returnType: String, accessors: [Accessor]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
+        init(kind: Kind = .instance, visibility: Visibility = .internal, override: Bool = false, name: String, returnType: String, accessors: [Accessor]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
             
+            self.kind       = kind
+            self.override   = override
             self.visibility = visibility
             self.name       = name
             self.returnType = returnType
@@ -48,9 +52,11 @@ extension Swift {
             var string = ""
             
             let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
+            let override   = self.override ? "override " : ""
+            let kind       = self.kind == .instance ? "" : "\(self.kind.rawValue) "
             
             string += self.comments.commentStringIndentedBy(self.indent)
-            string += "\(self.indent)\(visibility)var \(self.name): \(self.returnType) "
+            string += "\(self.indent)\(visibility)\(kind)\(override)var \(self.name): \(self.returnType) "
             
             /* ----------------------------------------
              ** Only append body and opening / closing
@@ -68,6 +74,14 @@ extension Swift {
             return string
 
         }
+    }
+}
+
+extension Swift.Property {
+    enum Kind: String {
+        case `instance`
+        case `class`
+        case `static`
     }
 }
 

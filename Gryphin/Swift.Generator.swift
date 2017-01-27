@@ -442,7 +442,7 @@ extension Swift {
                 
                 swiftClass += Method(
                     visibility: .none,
-                    name:       .init(.none),
+                    name:       .init(.none, false),
                     parameters: initParams,
                     body:       initBody,
                     comments:   [
@@ -510,11 +510,13 @@ extension Swift {
                 visibility:   .none,
                 kind:         .class(.final),
                 name:         concreteInterface.modelConcreteTypeName,
-                inheritances: [self.modelClassName()],
+                inheritances: [self.modelConcreteClassName()],
                 comments:     [
                     Line(content: "Auto-generated concrete model for interface `\(concreteInterface.modelTypeName)`"),
                 ]
             )
+            
+            swiftClass += self.generate(typeNamePropertyWith: concreteInterface.name)
             
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
@@ -522,10 +524,10 @@ extension Swift {
                     swiftClass += Property(
                         visibility: .none,
                         name:       possibleType.name.lowercased(),
-                        returnType: possibleType.modelTypeName,
+                        returnType: possibleType.modelTypeName.nullable,
                         accessors:  [
                             Property.Accessor(kind: .get, body: [
-                                Line(content: "return try! self.valueFor(nonnull: \"\(possibleType.name.lowercased())\")")
+                                Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercased())\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
                                 Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercased())\")")
@@ -560,6 +562,8 @@ extension Swift {
                 comments:     object.descriptionComments()
             )
             
+            swiftClass += self.generate(typeNamePropertyWith: object.name.mapped)
+            
             if let fields = object.fields {
                 
                 /* ---------------------------------
@@ -582,7 +586,7 @@ extension Swift {
                                 Line(content: "self.set(newValue, for: \"\(field.name)\")")
                             ]),
                         ],
-                        comments:   field.descriptionComments()
+                        comments: field.descriptionComments()
                     )
                 }
                 
@@ -624,6 +628,19 @@ extension Swift {
         // ----------------------------------
         //  MARK: - (Model) Member Generation -
         //
+        private func generate(typeNamePropertyWith name: String) -> Property {
+            return Property(
+                kind:       .static,
+                visibility: .none,
+                override:   true,
+                name:       "typeName",
+                returnType: "String",
+                body:       [
+                    Line(content: "return \"\(name)\""),
+                ]
+            )
+        }
+        
         private func generate(initializerWith fields: [Schema.Field]) -> Method {
             var initBody: [Line] = []
             
@@ -634,7 +651,7 @@ extension Swift {
                 initBody += ""
                 
                 for field in scalarFields {
-                    initBody += self.generate(propertyAssignmentNamed: field.name)
+                    initBody += self.generate(propertyAssignmentNamed: field.name, isFragment: false)
                 }
             }
             
@@ -644,13 +661,13 @@ extension Swift {
                 
                 for field in objectFields {
                     let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
-                    initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isCollection: field.type.isCollection)
+                    initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isFragment: false, isCollection: field.type.isCollection)
                 }
             }
             
             return Method(
                 visibility: .none,
-                name:       .init(.required),
+                name:       .init(.required, true),
                 parameters: [
                     Method.Parameter(name: "json", type: .normal("JSON")),
                 ],
@@ -668,12 +685,12 @@ extension Swift {
                 precondition(!type.hasScalar) // These should always be possible object types
                 
                 let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
-                initBody += self.generate(propertyAssignmentNamed: type.name.lowercased(), type: name, isCollection: type.isCollection)
+                initBody += self.generate(propertyAssignmentNamed: type.name.lowercased(), type: name, isFragment: true, isCollection: type.isCollection)
             }
             
             return Method(
                 visibility: .none,
-                name:       .init(.required),
+                name:       .init(.required, true),
                 parameters: [
                     Method.Parameter(name: "json", type: .normal("JSON")),
                 ],
@@ -681,13 +698,22 @@ extension Swift {
             )
         }
         
-        private func generate(propertyAssignmentNamed name: String, type: String? = nil, isCollection: Bool = false) -> Line {
+        private func generate(propertyAssignmentNamed name: String, type: String? = nil, isFragment: Bool, isCollection: Bool = false) -> Line {
             if let type = type {
-                if isCollection {
-                    return Line(content: "self.set(\(type).from(json.v(\"\(name)\")), for: \"\(name)\")")
+                
+                let value: String
+                if isFragment {
+                    value = "json"
                 } else {
-                    return Line(content: "self.set(\(type)(json: json.v(\"\(name)\")), for: \"\(name)\")")
+                    value = "json.v(\"\(name)\")"
                 }
+                
+                if isCollection {
+                    return Line(content: "self.set(\(type).from(\(value)), for: \"\(name)\")")
+                } else {
+                    return Line(content: "self.set(\(type)(json: \(value)), for: \"\(name)\")")
+                }
+                
             } else {
                 return Line(content: "self.set(json.v(\"\(name)\"), for: \"\(name)\")")
             }
@@ -701,7 +727,7 @@ extension Swift {
             
             return Method(
                 visibility:  .none,
-                name:        .init(.convenience),
+                name:        .init(.convenience, false),
                 parameters:  [
                     Method.Parameter(
                         unnamed: true,
@@ -830,6 +856,10 @@ extension Swift {
         
         private func modelClassName() -> String {
             return "GraphModel"
+        }
+        
+        private func modelConcreteClassName() -> String {
+            return "ConcreteGraphModel"
         }
         
         private func fieldClassName() -> String {
@@ -1019,6 +1049,10 @@ extension String {
         }
         return self
     }
+    
+    var nullable: String {
+        return "\(self)?"
+    }
 }
 
 // ----------------------------------
@@ -1055,12 +1089,12 @@ extension Schema.ObjectType {
     
     func recursiveQueryInputType(unmodified: Bool) -> String {
         let type = self.recursiveType(queryKind: .query, unmodified: unmodified, ignoreNull: true)
-        return self.isTopLevelNullable ? "\(type)?" : type
+        return self.isTopLevelNullable ? type.nullable : type
     }
     
     func recursiveModelInputType(unmodified: Bool) -> String {
         let type = self.recursiveType(queryKind: .model, unmodified: unmodified, ignoreNull: true)
-        return self.isTopLevelNullable ? "\(type)?" : type
+        return self.isTopLevelNullable ? type.nullable : type
     }
     
     func recursiveQueryType(unmodified: Bool) -> String {
@@ -1105,7 +1139,7 @@ extension Schema.ObjectType {
             if nonNull || ignoreNull {
                 return unmodified ? self.name.mapped : modifiedType()
             } else {
-                return unmodified ? "\(self.name.mapped)?" : "\(modifiedType())?"
+                return unmodified ? self.name.mapped.nullable : modifiedType().nullable
             }
             
         case .list:
@@ -1113,7 +1147,7 @@ extension Schema.ObjectType {
             if nonNull || ignoreNull {
                 return "[\(childType)]"
             } else {
-                return "[\(childType)]?"
+                return "[\(childType)]".nullable
             }
             
         case .nonNull:
