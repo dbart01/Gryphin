@@ -530,7 +530,7 @@ extension Swift {
                                 Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
-                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercasedFirst))\")")
+                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                         ],
                         comments: [
