@@ -50,7 +50,7 @@ class SchemaTests: XCTestCase {
     func testQuery() {
         let order = QRepositoryOrder(field: .createdAt, direction: .asc)
         let query = QQuery { $0
-            .repository(owner: "dbart01", name: "someName") { $0
+            .repository(owner: "dbart01", name: "Gryphin") { $0
                 .owner { $0
                     .fragmentOnOrganization { _ = $0
                         .id

@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum FieldError: Error {
+    case InvalidSyntax(String)
+}
+
 class Field: ContainerType {
     
     var _name:       String
@@ -40,10 +44,19 @@ class Field: ContainerType {
         return self
     }
     
-    private func applyAliasTo(child: ReferenceType?) {
-        if let field = child as? Field {
-            field._alias = self.enquedAlias
+    private func applyEnqueuedAliasTo(_ child: ReferenceType) throws {
+        guard let alias = self.enquedAlias else {
+            return
         }
+        
+        guard !(child is InlineFragment) else {
+            throw FieldError.InvalidSyntax("Alias cannot be applied to inline fragments.")
+        }
+        
+        if let field = child as? Field {
+            field._alias = alias
+        }
+        
         self.enquedAlias = nil
     }
     
@@ -52,7 +65,10 @@ class Field: ContainerType {
     //
     func _add(children: [ReferenceType]) {
         if !children.isEmpty {
-            self.applyAliasTo(child: children.first)
+            
+            if let child = children.first {
+                try! self.applyEnqueuedAliasTo(child)
+            }
             
             children.forEach {
                 $0._parent = self
