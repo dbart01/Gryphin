@@ -933,7 +933,7 @@ extension Swift {
             }
             
             lines += Line(content: "let field = \(objectType)(name: \"\(name)\", parameters: \(paramVariable))")
-            lines += Line(content: "self._add(child: field)")
+            lines += Line(content: "try! self._add(child: field)")
             lines += Line(content: "")
             
             if buildable {
@@ -952,10 +952,10 @@ extension Swift {
             lines += Line(content: "let field    = \(type)(name: \"\", parameters: [])")
             lines += Line(content: "let fragment = InlineFragment(type: \"\(field)\")")
             lines += Line(content: "")
-            lines += Line(content: "self._add(child: fragment)")
+            lines += Line(content: "try! self._add(child: fragment)")
             lines += Line(content: "")
             lines += Line(content: "buildOn(field)")
-            lines += Line(content: "fragment._add(children: field._children)")
+            lines += Line(content: "try! fragment._add(children: field._children)")
             lines += Line(content: "")
             lines += Line(content: "return self")
             

@@ -79,7 +79,7 @@ class GraphModel {
     //  MARK: - Alias Management -
     //
     func aliasedWith<T: GraphModel>(_ key: String) -> T? {
-        if let aliasJson = self.aliases["\(GraphQL.Custom.aliasPrefix)\(key)"] as? JSON {
+        if let aliasJson = self.aliases[key.aliasPrefixed] as? JSON {
             return T(json: aliasJson)
         }
         return nil
@@ -94,7 +94,7 @@ class GraphModel {
     }
     
     private func parseAliasesFrom(_ json: JSON) {
-        for (key, value) in json where key.hasPrefix(GraphQL.Custom.aliasPrefix) {
+        for (key, value) in json where key.hasAliasPrefix {
             self.aliases[key] = value
         }
     }

@@ -43,17 +43,17 @@ class ReferenceTypeTests: XCTestCase {
         XCTAssertEqual(reference._space, " ")
         
         let field1 = Field(name: "field1")
-        field1._add(child: reference)
+        try! field1._add(child: reference)
         
         XCTAssertEqual(reference._indent, self.indentationStringFor(reference: reference, depth: 1))
         
         let field2 = Field(name: "field2")
-        field2._add(child: field1)
+        try! field2._add(child: field1)
         
         XCTAssertEqual(reference._indent, self.indentationStringFor(reference: reference, depth: 2))
         
         let field3 = Field(name: "field3")
-        field3._add(child: field2)
+        try! field3._add(child: field2)
         
         XCTAssertEqual(reference._indent, self.indentationStringFor(reference: reference, depth: 3))
     }

@@ -31,9 +31,9 @@ class ModelSerializationTests: XCTestCase {
         let json  = self.jsonFromFile(named: "queryNode")
         let query = Query(json: json["data"] as! JSON)!
         
-        if let user = query.node!.blob {
+        if let user = query.node!.user {
             
-            print("This user is: \(user.id)")
+            print("This user is: \(user.name)")
         }
         
         print()

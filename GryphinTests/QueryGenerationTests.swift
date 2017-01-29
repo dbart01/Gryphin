@@ -97,7 +97,7 @@ class QueryGenerationTests: XCTestCase {
                     Field(name: "node", children: [
                         Field(name: "image", alias: "smallImage", parameters: [
                             Parameter(name: "size", value: 125),
-                            ]),
+                        ]),
                         Field(name: "image", alias: "largeImage", parameters: [
                             Parameter(name: "size", value: 1024),
                         ]),
@@ -112,8 +112,8 @@ class QueryGenerationTests: XCTestCase {
             "    issues {" ~
             "        edges {" ~
             "            node {" ~
-            "                image(size: 125)" ~
-            "                largeImage: image(size: 1024)" ~
+            "                \(GraphQL.Custom.aliasPrefix)smallImage: image(size: 125)" ~
+            "                \(GraphQL.Custom.aliasPrefix)largeImage: image(size: 1024)" ~
             "            }" ~
             "        }" ~
             "    }" ~

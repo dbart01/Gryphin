@@ -18,3 +18,14 @@ struct GraphQL {
         static let aliasPrefix = "__alias_"
     }
 }
+
+extension String {
+    
+    var aliasPrefixed: String {
+        return "\(GraphQL.Custom.aliasPrefix)\(self)"
+    }
+    
+    var hasAliasPrefix: Bool {
+        return self.hasPrefix(GraphQL.Custom.aliasPrefix)
+    }
+}

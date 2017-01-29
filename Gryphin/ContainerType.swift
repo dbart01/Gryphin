@@ -12,7 +12,7 @@ protocol ContainerType: class, ReferenceType {
     var _children:   [ReferenceType]  { get set }
     var _parameters: [Parameter]      { get }
     
-    func _add(children: [ReferenceType])
+    func _add(children: [ReferenceType]) throws
 }
 
 extension ContainerType {
@@ -20,11 +20,11 @@ extension ContainerType {
     // ----------------------------------
     //  MARK: - Children -
     //
-    func _add(child: ReferenceType) {
-        _add(children: [child])
+    func _add(child: ReferenceType) throws {
+        try _add(children: [child])
     }
     
-    func _add(children: [ReferenceType]) {
+    func _add(children: [ReferenceType]) throws {
         if !children.isEmpty {
             children.forEach {
                 $0._parent = self

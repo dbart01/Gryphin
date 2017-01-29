@@ -28,11 +28,11 @@ class Field: ContainerType {
     //
     init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
         self._name       = name
-        self._alias      = alias
+        self._alias      = alias?.aliasPrefixed
         self._parameters = parameters
         
         if let children = children {
-            self._add(children: children)
+            try! self._add(children: children)
         }
     }
     
@@ -40,7 +40,7 @@ class Field: ContainerType {
     //  MARK: - Alias -
     //
     func alias(_ alias: String) -> Self {
-        self.enquedAlias = "\(GraphQL.Custom.aliasPrefix)\(alias)"
+        self.enquedAlias = alias.aliasPrefixed
         return self
     }
     
@@ -49,13 +49,11 @@ class Field: ContainerType {
             return
         }
         
-        guard !(child is InlineFragment) else {
-            throw FieldError.InvalidSyntax("Alias cannot be applied to inline fragments.")
+        guard let field = child as? Field else {
+            throw FieldError.InvalidSyntax("Alias can only be applied to Field types.")
         }
         
-        if let field = child as? Field {
-            field._alias = alias
-        }
+        field._alias = alias
         
         self.enquedAlias = nil
     }
@@ -63,11 +61,11 @@ class Field: ContainerType {
     // ----------------------------------
     //  MARK: - Children -
     //
-    func _add(children: [ReferenceType]) {
+    func _add(children: [ReferenceType]) throws {
         if !children.isEmpty {
             
             if let child = children.first {
-                try! self.applyEnqueuedAliasTo(child)
+                try self.applyEnqueuedAliasTo(child)
             }
             
             children.forEach {

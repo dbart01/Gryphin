@@ -28,7 +28,7 @@ class ContainerTypeTests: XCTestCase {
         let container = TestContainer(name: "1")
         let child     = TestContainer(name: "2")
         
-        container._add(child: child)
+        try! container._add(child: child)
         
         XCTAssertEqual(container._children.count, 1)
         XCTAssertNil(container._parent)
@@ -41,7 +41,7 @@ class ContainerTypeTests: XCTestCase {
         let child2     = TestContainer(name: "2")
         let child3     = TestContainer(name: "3")
         
-        container._add(children: [
+        try! container._add(children: [
             child2,
             child3,
         ])
