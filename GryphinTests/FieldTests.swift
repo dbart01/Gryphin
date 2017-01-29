@@ -12,6 +12,15 @@ import XCTest
 class FieldTests: XCTestCase {
 
     // ----------------------------------
+    //  MARK: - Setup -
+    //
+    override func setUp() {
+        super.setUp()
+        
+        precondition(Environment.prettyPrint, "Field tests require the \"com.gryphin.prettyPrint\" environment variable to be set.")
+    }
+    
+    // ----------------------------------
     //  MARK: - Init -
     //
     func testBasicField() {
@@ -118,5 +127,107 @@ class FieldTests: XCTestCase {
         
         XCTAssertNotNil(child._parent)
         XCTAssertTrue(parent == child._parent as! Field)
+    }
+    
+    // ----------------------------------
+    //  MARK: - StringRepresentable -
+    //
+    func testFieldsWithChildren() {
+        
+        let root = Field(name: "query", children: [
+            Field(name: "issues", parameters: [
+                Parameter(name: "first", value: 30),
+            ], children: [
+                Field(name: "edges", children: [
+                    Field(name: "node", children: [
+                        Field(name: "id"),
+                        Field(name: "title"),
+                    ])
+                ])
+            ])
+        ])
+        
+        let query = root._stringRepresentation
+        
+        XCTAssertEqual(query, "" ~
+            "query {" ~
+            "    issues(first: 30) {" ~
+            "        edges {" ~
+            "            node {" ~
+            "                id" ~
+            "                title" ~
+            "            }" ~
+            "        }" ~
+            "    }" ~
+            "}" ~
+            ""
+        )
+    }
+    
+    func testFieldsWithoutChildren() {
+        
+        let root = Field(name: "query", children: [
+            Field(name: "issues", children: [
+                Field(name: "edges", children: [
+                    Field(name: "node", children: [
+                        Field(name: "id"),
+                        Field(name: "title"),
+                        Field(name: "image", parameters: [
+                            Parameter(name: "size", value: 1024),
+                        ])
+                    ])
+                ])
+            ])
+        ])
+        
+        let query = root._stringRepresentation
+        
+        XCTAssertEqual(query, "" ~
+            "query {" ~
+            "    issues {" ~
+            "        edges {" ~
+            "            node {" ~
+            "                id" ~
+            "                title" ~
+            "                image(size: 1024)" ~
+            "            }" ~
+            "        }" ~
+            "    }" ~
+            "}" ~
+            ""
+        )
+    }
+    
+    func testFieldAliases() {
+        
+        let root = Field(name: "query", children: [
+            Field(name: "issues", children: [
+                Field(name: "edges", children: [
+                    Field(name: "node", children: [
+                        Field(name: "image", alias: "smallImage", parameters: [
+                            Parameter(name: "size", value: 125),
+                        ]),
+                        Field(name: "image", alias: "largeImage", parameters: [
+                            Parameter(name: "size", value: 1024),
+                        ]),
+                    ])
+                ])
+            ])
+        ])
+        
+        let query = root._stringRepresentation
+        XCTAssertEqual(query, "" ~
+            "query {" ~
+            "    issues {" ~
+            "        edges {" ~
+            "            node {" ~
+            "                \(GraphQL.Custom.aliasPrefix)smallImage: image(size: 125)" ~
+            "                \(GraphQL.Custom.aliasPrefix)largeImage: image(size: 1024)" ~
+            "            }" ~
+            "        }" ~
+            "    }" ~
+            "}" ~
+            ""
+        )
     }
 }

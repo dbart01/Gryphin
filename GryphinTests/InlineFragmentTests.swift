@@ -12,6 +12,15 @@ import XCTest
 class InlineFragmentTests: XCTestCase {
     
     // ----------------------------------
+    //  MARK: - Setup -
+    //
+    override func setUp() {
+        super.setUp()
+        
+        precondition(Environment.prettyPrint, "Inline fragment tests require the \"com.gryphin.prettyPrint\" environment variable to be set.")
+    }
+    
+    // ----------------------------------
     //  MARK: - Init -
     //
     func testInit() {
