@@ -46,12 +46,12 @@ class ValueTypeTests: XCTestCase {
         
         enum Dog: String {
             case husky
-            case rottweiler
+            case rottweiler = "rotty"
             case dachshund
         }
         
-        let value = Dog.husky
-        XCTAssertEqual(value._stringRepresentation, "husky")
+        XCTAssertEqual(Dog.husky._stringRepresentation, "husky")
+        XCTAssertEqual(Dog.rottweiler._stringRepresentation, "rotty")
     }
     
     // ----------------------------------
