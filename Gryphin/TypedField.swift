@@ -22,7 +22,7 @@ class TypedField: Field {
          ** fragments where a heterogeneous
          ** collection is returned.
          */
-        modifiedChildren.append(Field(name: GraphQL.Key.typeName))
+        modifiedChildren.insert(Field(name: GraphQL.Key.typeName), at: 0)
         
         super.init(name: name, alias: alias, parameters: parameters, children: modifiedChildren)
     }
