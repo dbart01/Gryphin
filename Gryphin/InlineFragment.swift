@@ -20,10 +20,14 @@ final class InlineFragment: ContainerType {
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(type: String) {
+    init(type: String, children: [ReferenceType]? = nil) {
         self._name          = ""
         self._typeCondition = type
         self._parameters    = []
+        
+        if let children = children {
+            try! self._add(children: children)
+        }
     }
     
     // ----------------------------------
