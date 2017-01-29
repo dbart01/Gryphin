@@ -22,7 +22,7 @@ extension Containable {
     }
     
     var indent: String {
-        return self.indentFor(distanceToRoot: self.distanceToRoot)
+        return self.indentFor(distanceToRoot: max(self.distanceToRoot - 1, 0))
     }
     
     var distanceToRoot: Int {

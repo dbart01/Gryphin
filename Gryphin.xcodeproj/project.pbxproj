@@ -11,6 +11,7 @@
 		9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27555C1E3E4C9F00F3FD4A /* InlineFragmentTests.swift */; };
 		9A27555F1E3E57F500F3FD4A /* ParameterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27555E1E3E57F500F3FD4A /* ParameterTests.swift */; };
 		9A2755621E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2755611E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift */; };
+		9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2755631E3E5CB500F3FD4A /* Swift.ContainerTests.swift */; };
 		9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */; };
 		9A27B03D1E24728E00AFBDA6 /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
 		9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */; };
@@ -85,6 +86,7 @@
 		9A27555C1E3E4C9F00F3FD4A /* InlineFragmentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineFragmentTests.swift; sourceTree = "<group>"; };
 		9A27555E1E3E57F500F3FD4A /* ParameterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterTests.swift; sourceTree = "<group>"; };
 		9A2755611E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.VisibilityTests.swift; sourceTree = "<group>"; };
+		9A2755631E3E5CB500F3FD4A /* Swift.ContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.ContainerTests.swift; sourceTree = "<group>"; };
 		9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineFragment.swift; sourceTree = "<group>"; };
 		9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CaseConversion.swift"; sourceTree = "<group>"; };
 		9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CaseConversionTests.swift"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				9A2755611E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift */,
+				9A2755631E3E5CB500F3FD4A /* Swift.ContainerTests.swift */,
 			);
 			name = "Code Generation";
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */,
 				9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */,
 				9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */,
+				9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */,
 				9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */,
 				9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */,
 				9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */,
