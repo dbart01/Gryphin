@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A0ECD241E3FE37A00D63B8B /* Swift.ClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0ECD231E3FE37A00D63B8B /* Swift.ClassTests.swift */; };
 		9A27555B1E3E4A6F00F3FD4A /* TypedFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27555A1E3E4A6F00F3FD4A /* TypedFieldTests.swift */; };
 		9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27555C1E3E4C9F00F3FD4A /* InlineFragmentTests.swift */; };
 		9A27555F1E3E57F500F3FD4A /* ParameterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27555E1E3E57F500F3FD4A /* ParameterTests.swift */; };
@@ -64,9 +65,9 @@
 		9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
 		9AD022051E3BA495005C49F8 /* ConcreteGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */; };
 		9AD022081E3BB7FD005C49F8 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01661E2EC295004062EE /* APIModels.swift */; };
-		9AD6AA6F1E364FDC00BF909C /* APISchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01671E2EC295004062EE /* APISchema.swift */; };
 		9AD0220F1E3F66E0005C49F8 /* Swift.AnnotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */; };
 		9AD022111E3F680F005C49F8 /* Swift.LinesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */; };
+		9AD6AA6F1E364FDC00BF909C /* APISchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF01671E2EC295004062EE /* APISchema.swift */; };
 		9AD6AA741E36575200BF909C /* ModelSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA731E36575200BF909C /* ModelSerializationTests.swift */; };
 		9AD6AA761E3657A200BF909C /* queryComprehensive.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA751E3657A200BF909C /* queryComprehensive.json */; };
 		9AD6AA891E3795FC00BF909C /* queryNode.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA881E3795FC00BF909C /* queryNode.json */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A0ECD231E3FE37A00D63B8B /* Swift.ClassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.ClassTests.swift; sourceTree = "<group>"; };
 		9A27555A1E3E4A6F00F3FD4A /* TypedFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedFieldTests.swift; sourceTree = "<group>"; };
 		9A27555C1E3E4C9F00F3FD4A /* InlineFragmentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineFragmentTests.swift; sourceTree = "<group>"; };
 		9A27555E1E3E57F500F3FD4A /* ParameterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterTests.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				9A2755631E3E5CB500F3FD4A /* Swift.ContainerTests.swift */,
 				9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */,
 				9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */,
+				9A0ECD231E3FE37A00D63B8B /* Swift.ClassTests.swift */,
 			);
 			name = "Code Generation";
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				9A27555F1E3E57F500F3FD4A /* ParameterTests.swift in Sources */,
 				9A9A6A5D1E0ECA55008754A4 /* FieldTests.swift in Sources */,
 				9AD0220F1E3F66E0005C49F8 /* Swift.AnnotationTests.swift in Sources */,
+				9A0ECD241E3FE37A00D63B8B /* Swift.ClassTests.swift in Sources */,
 				9A2755621E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift in Sources */,
 				9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */,
 				9A9A6A601E0ECA55008754A4 /* SchemaTests.swift in Sources */,
