@@ -12,7 +12,7 @@ import XCTest
 class SwiftVisibilityTests: XCTestCase {
     
     // ----------------------------------
-    //  MARK: - Init -
+    //  MARK: - Values -
     //
     func testValues() {
         XCTAssertEqual(Swift.Visibility.private.rawValue,     "private")
