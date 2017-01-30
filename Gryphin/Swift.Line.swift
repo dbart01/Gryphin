@@ -12,8 +12,8 @@ extension Swift {
     final class Line: Containable, ExpressibleByStringLiteral {
         
         typealias StringLiteralType                  = String
-        typealias ExtendedGraphemeClusterLiteralType = String
-        typealias UnicodeScalarLiteralType           = String
+        typealias ExtendedGraphemeClusterLiteralType = Character
+        typealias UnicodeScalarLiteralType           = UnicodeScalar
         
         var parent: Containing?
         
@@ -59,11 +59,11 @@ extension Swift {
         }
         
         init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
-            self.content = value
+            self.content = String(value)
         }
         
         init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
-            self.content = value
+            self.content = String(value)
         }
         
         // ----------------------------------
