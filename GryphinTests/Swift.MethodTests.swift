@@ -50,16 +50,20 @@ class SwiftMethodTests: XCTestCase {
     }
     
     func testMethodCompleteStringRepresentation() {
-        let method    = self.completeMethod().method
-        let container = Swift.Container()
-        container.add(child: method)
+        let method       = self.completeMethod().method
+        
+        let container    = Swift.Container()
+        let subcontainer = Swift.Container()
+        
+        container.add(child: subcontainer)
+        subcontainer.add(child: method)
         
         XCTAssertEqual(method.stringRepresentation, "" ~
-            "/// A method that renders" ~
-            "@discardableResult" ~
-            "public func render(image: Image) -> Void {" ~
-            "    let array = [String]()" ~
-            "}" ~
+            "    /// A method that renders" ~
+            "    @discardableResult" ~
+            "    public func render(image: Image) -> Void {" ~
+            "        let array = [String]()" ~
+            "    }" ~
             ""
         )
     }

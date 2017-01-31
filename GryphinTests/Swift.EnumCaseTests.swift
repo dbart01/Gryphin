@@ -15,11 +15,17 @@ class SwiftEnumCaseTests: XCTestCase {
     //  MARK: - StringRepresentable -
     //
     func testDefaultCase() {
-        let enumCase = Swift.EnumCase(name: "dog")
+        let enumCase     = Swift.EnumCase(name: "dog")
+        
+        let container    = Swift.Container()
+        let subcontainer = Swift.Container()
+        
+        container.add(child: subcontainer)
+        subcontainer.add(child: enumCase)
         
         XCTAssertNotNil(enumCase)
         XCTAssertEqual(enumCase.stringRepresentation, "" ~
-            "case dog" ~
+            "    case dog" ~
             ""
         )
     }

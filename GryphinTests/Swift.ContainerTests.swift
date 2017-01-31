@@ -36,5 +36,14 @@ class SwiftContainerTests: XCTestCase {
             "line2" ~
             "line3"
         )
+        
+        let superContainer = Swift.Container()
+        superContainer.add(child: container)
+        
+        XCTAssertEqual(container.stringRepresentation, "" ~
+            "    line1" ~
+            "    line2" ~
+            "    line3"
+        )
     }
 }

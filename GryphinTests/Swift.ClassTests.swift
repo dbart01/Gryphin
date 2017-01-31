@@ -15,7 +15,6 @@ class SwiftClassTests: XCTestCase {
     //  MARK: - Init -
     //
     func testClassInitComplete() {
-        let container  = Swift.Container()
         let modelClass = Swift.Class(
             visibility:   .none,
             kind:         .class(.final),
@@ -33,17 +32,21 @@ class SwiftClassTests: XCTestCase {
             ]
         )
         
-        container.add(child: modelClass)
+        let container    = Swift.Container()
+        let subcontainer = Swift.Container()
+        
+        container.add(child: subcontainer)
+        subcontainer.add(child: modelClass)
         
         XCTAssertNotNil(modelClass)
         XCTAssertEqual(modelClass.stringRepresentation, "" ~
-            "/// This is a model subclass" ~
-            "final class Model: Supermodel {" ~
+            "    /// This is a model subclass" ~
+            "    final class Model: Supermodel {" ~
             "" ~
-            "    init() {" ~
-            "        // initialize" ~
+            "        init() {" ~
+            "            // initialize" ~
+            "        }" ~
             "    }" ~
-            "}" ~
             ""
         )
     }

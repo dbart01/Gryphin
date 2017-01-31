@@ -114,21 +114,24 @@ class SwiftPropertyTests: XCTestCase {
     //  MARK: - StringRepresentation -
     //
     func testCompleteStringRepresentation() {
-        let property  = self.completePropertyWithAccessors()
-        let container = Swift.Container()
+        let property     = self.completePropertyWithAccessors()
         
-        container.add(child: property)
+        let container    = Swift.Container()
+        let subcontainer = Swift.Container()
+        
+        container.add(child: subcontainer)
+        subcontainer.add(child: property)
         
         XCTAssertEqual(property.stringRepresentation, "" ~
-            "/// This is a date accessor" ~
-            "public override var date: Date {" ~
-            "    get {" ~
-            "        return Date()" ~
+            "    /// This is a date accessor" ~
+            "    public override var date: Date {" ~
+            "        get {" ~
+            "            return Date()" ~
+            "        }" ~
+            "        set {" ~
+            "            _date = newValue" ~
+            "        }" ~
             "    }" ~
-            "    set {" ~
-            "        _date = newValue" ~
-            "    }" ~
-            "}" ~
             ""
         )
     }
