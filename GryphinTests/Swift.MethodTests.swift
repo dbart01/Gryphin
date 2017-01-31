@@ -120,7 +120,7 @@ class SwiftMethodTests: XCTestCase {
     }
     
     private func completeMethod() -> (method: Swift.Method, parameter: Swift.Method.Parameter) {
-        let parameter = Swift.Method.Parameter(name: "image", type: .normal("Image"))
+        let parameter = Swift.Method.Parameter(name: "image", type: "Image")
         let method    = Swift.Method(
             visibility:  .public,
             name:        .func("render"),
@@ -186,13 +186,13 @@ class SwiftMethodTests: XCTestCase {
         let param = Swift.Method.Parameter(
             unnamed: false,
             name:    "image",
-            type:    .normal("Image"),
+            type:    "Image",
             default: .value("Image()")
         )
         
         XCTAssertEqual(param.unnamed,  false)
         XCTAssertEqual(param.name,     "image")
-        XCTAssertEqual(param.type,     .normal("Image"))
+        XCTAssertEqual(param.type,     "Image")
         XCTAssertEqual(param.default!, Swift.Method.Parameter.Default.value("Image()"))
     }
     
@@ -200,7 +200,7 @@ class SwiftMethodTests: XCTestCase {
         let param1 = Swift.Method.Parameter(
             unnamed: false,
             name:    "image",
-            type:    .normal("Image"),
+            type:    "Image",
             default: .value("Image()")
         )
         
@@ -211,7 +211,7 @@ class SwiftMethodTests: XCTestCase {
         let param2 = Swift.Method.Parameter(
             unnamed: true,
             name:    "character",
-            type:    .normal("Character"),
+            type:    "Character",
             default: nil
         )
         
@@ -222,7 +222,7 @@ class SwiftMethodTests: XCTestCase {
         let param3 = Swift.Method.Parameter(
             unnamed: true,
             name:    "animal",
-            type:    .normal("Animal?"),
+            type:    "Animal?",
             default: .nil
         )
         

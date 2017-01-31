@@ -319,7 +319,7 @@ extension Swift {
                     let parameter = Method.Parameter(
                         unnamed: true,
                         name:    closure.name,
-                        type:    .normal(closure.type)
+                        type:    closure.type
                     )
                     
                     let method = Method(
@@ -430,7 +430,7 @@ extension Swift {
                     initParams += Method.Parameter(
                         unnamed: false,
                         name:    field.name,
-                        type:    .normal(field.type.recursiveQueryInputType(unmodified: field.type.hasScalar)),
+                        type:    field.type.recursiveQueryInputType(unmodified: field.type.hasScalar),
                         default: field.type.isTopLevelNullable ? .nil : nil
                     )
                 }
@@ -611,7 +611,7 @@ extension Swift {
                             Method.Parameter(
                                 unnamed: true,
                                 name:    "alias",
-                                type:    .normal("String")
+                                type:    "String"
                             )
                         ],
                         body:  [
@@ -669,7 +669,7 @@ extension Swift {
                 visibility: .none,
                 name:       .init(.required, true),
                 parameters: [
-                    Method.Parameter(name: "json", type: .normal("JSON")),
+                    Method.Parameter(name: "json", type: "JSON"),
                 ],
                 body: initBody
             )
@@ -692,7 +692,7 @@ extension Swift {
                 visibility: .none,
                 name:       .init(.required, true),
                 parameters: [
-                    Method.Parameter(name: "json", type: .normal("JSON")),
+                    Method.Parameter(name: "json", type: "JSON"),
                 ],
                 body: initBody
             )
@@ -732,7 +732,7 @@ extension Swift {
                     Method.Parameter(
                         unnamed: true,
                         name: closure.name,
-                        type: .normal(closure.type)
+                        type: closure.type
                     )
                 ],
                 body:        [
@@ -827,7 +827,7 @@ extension Swift {
                 parameters += Method.Parameter(
                     unnamed: true,
                     name:    closure.name,
-                    type:    .normal(closure.type)
+                    type:    closure.type
                 )
             }
             
@@ -1182,7 +1182,7 @@ extension Schema.Argument {
         
         return Swift.Method.Parameter(
             name:    self.name,
-            type:    .normal(typeString),
+            type:    typeString,
             default: defaultValue
         )
     }

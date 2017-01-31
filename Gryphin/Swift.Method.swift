@@ -45,47 +45,14 @@ extension Swift {
             var string = ""
             
             /* ---------------------------------
-             ** Construct the method parameters
-             ** and the generics constraints.
+             ** Construct the method parameters.
              */
-            var genericsString    = ""
-            var parameterString   = ""
-            var whereClauseString = ""
-            
+            var parameterString = ""
             if let parameters = self.parameters {
                 
-                /* ----------------------------------------
-                 ** Build all the parameter regardless of
-                 ** whether they are normal or generic.
-                 */
                 parameterString = parameters.map {
                     $0.stringRepresentation
                 }.joined(separator: ", ")
-
-                /* -----------------------------------------
-                 ** Construct aliases and constraints if any
-                 ** of the parameters are generic.
-                 */
-                var aliases:     [String] = []
-                var constraints: [String] = []
-                
-                let _ = parameters.forEach {
-                    if case .constrained(let genericConstraint) = $0.type {
-                        aliases.append(genericConstraint.alias)
-                        
-                        genericConstraint.constraints.forEach {
-                            constraints.append("\(genericConstraint.alias): \($0)")
-                        }
-                    }
-                }
-                
-                if !aliases.isEmpty {
-                    let constraintsString = constraints.joined(separator: ", ")
-                    let aliasesString     = aliases.joined(separator: ", ")
-                    
-                    genericsString        = "<\(aliasesString)>"
-                    whereClauseString     = " where \(constraintsString)"
-                }
             }
             
             /* ---------------------------------
@@ -107,7 +74,7 @@ extension Swift {
             
             string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
-            string += "\(self.indent)\(visibility)\(self.name.string)\(genericsString)(\(parameterString))\(returnType)\(whereClauseString)"
+            string += "\(self.indent)\(visibility)\(self.name.string)(\(parameterString))\(returnType)"
             
             /* ----------------------------------------
              ** Only append body and opening / closing
@@ -187,39 +154,15 @@ extension Swift.Method {
             }
         }
         
-        enum ValueType: Equatable {
-            case normal(String)
-            case constrained(GenericConstraint)
-        }
-        
-        struct GenericConstraint: Equatable {
-            let alias:       String
-            let type:        String
-            let constraints: [String]
-            
-            // ----------------------------------
-            //  MARK: - Init -
-            //
-            init(alias: String, constraints: [String], typeUsing: (String) -> String) {
-                self.init(alias: alias, type: typeUsing(alias), constraints: constraints)
-            }
-            
-            init(alias: String, type: String? = nil, constraints: [String]) {
-                self.alias       = alias
-                self.type        = type ?? alias
-                self.constraints = constraints
-            }
-        }
-        
         let unnamed:   Bool
         let name:      String
-        let type:      ValueType
+        let type:      String
         let `default`: Default?
         
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(unnamed: Bool = false, name: String, type: ValueType, default: Default? = nil) {
+        init(unnamed: Bool = false, name: String, type: String, default: Default? = nil) {
             self.unnamed = unnamed
             self.name    = name
             self.type    = type
@@ -233,19 +176,7 @@ extension Swift.Method {
             let unnamed    = self.unnamed ? "_ " : ""
             let assignment = self.default != nil ? " = \(self.default!.stringRepresentation)" : ""
             
-            /* -----------------------------------
-             ** Composite the type to use for this
-             ** parameter.
-             */
-            let type: String
-            switch self.type {
-            case .normal(let typeName):
-                type = typeName
-            case .constrained(let constraint):
-                type = constraint.type
-            }
-            
-            return "\(unnamed)\(self.name): \(type)\(assignment)"
+            return "\(unnamed)\(self.name): \(self.type)\(assignment)"
         }
     }
 }
@@ -253,27 +184,6 @@ extension Swift.Method {
 extension Swift.Method.Parameter.Default {
     static func ==(lhs: Swift.Method.Parameter.Default, rhs: Swift.Method.Parameter.Default) -> Bool {
         return lhs.stringRepresentation == rhs.stringRepresentation
-    }
-}
-
-extension Swift.Method.Parameter.GenericConstraint {
-    static func ==(lhs: Swift.Method.Parameter.GenericConstraint, rhs: Swift.Method.Parameter.GenericConstraint) -> Bool {
-        return lhs.type     == rhs.type &&
-            lhs.alias       == rhs.alias &&
-            lhs.constraints == rhs.constraints
-    }
-}
-
-extension Swift.Method.Parameter.ValueType {
-    static func ==(lhs: Swift.Method.Parameter.ValueType, rhs: Swift.Method.Parameter.ValueType) -> Bool {
-        switch (lhs, rhs) {
-        case (.normal(let lName), .normal(let rName)) where lName == rName:
-            return true
-        case (.constrained(let lConstraint), .constrained(let rConstraint)) where lConstraint == rConstraint:
-            return true
-        default:
-            return false
-        }
     }
 }
 
