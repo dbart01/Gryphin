@@ -9,7 +9,7 @@
 import Foundation
 
 extension Swift {
-    final class Line: Containable, ExpressibleByStringLiteral {
+    final class Line: Containable, ExpressibleByStringLiteral, Equatable {
         
         typealias StringLiteralType                  = String
         typealias ExtendedGraphemeClusterLiteralType = Character
@@ -72,6 +72,12 @@ extension Swift {
         var stringRepresentation: String {
             return "\(self.indent)\(self.content)"
         }
+    }
+}
+
+extension Swift.Line {
+    static func ==(lhs: Swift.Line, rhs: Swift.Line) -> Bool {
+        return lhs.content == rhs.content
     }
 }
 

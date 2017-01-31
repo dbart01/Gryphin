@@ -12,7 +12,7 @@ import XCTest
 class SwiftEnumCaseTests: XCTestCase {
 
     // ----------------------------------
-    //  MARK: - Init -
+    //  MARK: - StringRepresentable -
     //
     func testDefaultCase() {
         let enumCase = Swift.EnumCase(name: "dog")

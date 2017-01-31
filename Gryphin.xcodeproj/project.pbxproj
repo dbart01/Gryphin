@@ -29,6 +29,7 @@
 		9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88790B1E2E4718007FB44F /* GraphModel.swift */; };
 		9A8DAAD01E1712960032CC6F /* Swift.EnumCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */; };
 		9A972A1E1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */; };
+		9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
 		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
@@ -107,6 +108,7 @@
 		9A88790B1E2E4718007FB44F /* GraphModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphModel.swift; sourceTree = "<group>"; };
 		9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.EnumCase.swift; sourceTree = "<group>"; };
 		9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.EnumCaseTests.swift; sourceTree = "<group>"; };
+		9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.MethodTests.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
 		9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Alias.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */,
 				9A0ECD231E3FE37A00D63B8B /* Swift.ClassTests.swift */,
 				9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */,
+				9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */,
 			);
 			name = "Code Generation";
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				9A27555B1E3E4A6F00F3FD4A /* TypedFieldTests.swift in Sources */,
 				9AD6AA741E36575200BF909C /* ModelSerializationTests.swift in Sources */,
 				9A8878D21E2588CC007FB44F /* ContainerTypeTests.swift in Sources */,
+				9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,7 @@
 import Foundation
 
 extension Swift {
-    final class Method: Container {
+    final class Method: Container, Equatable {
         
         let visibility:  Visibility
         let name:        Name
@@ -84,7 +84,7 @@ extension Swift {
                     let aliasesString     = aliases.joined(separator: ", ")
                     
                     genericsString        = "<\(aliasesString)>"
-                    whereClauseString     = "where \(constraintsString) "
+                    whereClauseString     = " where \(constraintsString)"
                 }
             }
             
@@ -100,14 +100,14 @@ extension Swift {
              */
             var returnType = ""
             if let type = self.returnType, !type.isEmpty {
-                returnType = "-> \(type) "
+                returnType = " -> \(type)"
             }
             
             let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
             
             string += self.comments.commentStringIndentedBy(self.indent)
             string += annotations
-            string += "\(self.indent)\(visibility)\(self.name.string)\(genericsString)(\(parameterString)) \(returnType)\(whereClauseString)"
+            string += "\(self.indent)\(visibility)\(self.name.string)\(genericsString)(\(parameterString))\(returnType)\(whereClauseString)"
             
             /* ----------------------------------------
              ** Only append body and opening / closing
@@ -115,7 +115,7 @@ extension Swift {
              ** we'll treat this like a declaration.
              */
             if !self.children.isEmpty {
-                string += "{\n"
+                string += " {\n"
                 string += "\(super.stringRepresentation)\n"
                 string += "\(self.indent)}\n"
             } else {
@@ -131,7 +131,7 @@ extension Swift {
 //  MARK: - Name -
 //
 extension Swift.Method {
-    enum Name {
+    enum Name: Equatable {
         case `init`(InitializerType, Bool)
         case `func`(String)
         
@@ -156,13 +156,26 @@ extension Swift.Method {
     }
 }
 
+extension Swift.Method.Name {
+    static func ==(lhs: Swift.Method.Name, rhs: Swift.Method.Name) -> Bool {
+        switch (lhs, rhs) {
+        case (.init(let lType, let lFailable), .init(let rType, let rFailable)) where lType == rType && lFailable == rFailable:
+            return true
+        case (.func(let lName), .func(let rName)) where lName == rName:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 // ----------------------------------
 //  MARK: - Parameter -
 //
 extension Swift.Method {
-    struct Parameter: StringRepresentable {
+    struct Parameter: StringRepresentable, Equatable {
         
-        enum Default: StringRepresentable {
+        enum Default: StringRepresentable, Equatable {
             case `nil`
             case value(String)
             
@@ -174,12 +187,12 @@ extension Swift.Method {
             }
         }
         
-        enum ValueType {
+        enum ValueType: Equatable {
             case normal(String)
             case constrained(GenericConstraint)
         }
         
-        struct GenericConstraint {
+        struct GenericConstraint: Equatable {
             let alias:       String
             let type:        String
             let constraints: [String]
@@ -237,6 +250,52 @@ extension Swift.Method {
     }
 }
 
-func +=(lhs: Swift.Method, rhs: Swift.Line) {
-    lhs.add(child: rhs)
+extension Swift.Method.Parameter.Default {
+    static func ==(lhs: Swift.Method.Parameter.Default, rhs: Swift.Method.Parameter.Default) -> Bool {
+        return lhs.stringRepresentation == rhs.stringRepresentation
+    }
+}
+
+extension Swift.Method.Parameter.GenericConstraint {
+    static func ==(lhs: Swift.Method.Parameter.GenericConstraint, rhs: Swift.Method.Parameter.GenericConstraint) -> Bool {
+        return lhs.type     == rhs.type &&
+            lhs.alias       == rhs.alias &&
+            lhs.constraints == rhs.constraints
+    }
+}
+
+extension Swift.Method.Parameter.ValueType {
+    static func ==(lhs: Swift.Method.Parameter.ValueType, rhs: Swift.Method.Parameter.ValueType) -> Bool {
+        switch (lhs, rhs) {
+        case (.normal(let lName), .normal(let rName)) where lName == rName:
+            return true
+        case (.constrained(let lConstraint), .constrained(let rConstraint)) where lConstraint == rConstraint:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
+extension Swift.Method.Parameter {
+    static func ==(lhs: Swift.Method.Parameter, rhs: Swift.Method.Parameter) -> Bool {
+        return lhs.unnamed == rhs.unnamed &&
+            lhs.name       == rhs.name &&
+            lhs.type       == rhs.type &&
+            lhs.default?.stringRepresentation ?? "" == rhs.default?.stringRepresentation ?? ""
+    }
+}
+
+extension Swift.Method {
+    static func +=(lhs: Swift.Method, rhs: Swift.Line) {
+        lhs.add(child: rhs)
+    }
+    
+    static func ==(lhs: Swift.Method, rhs: Swift.Method) -> Bool {
+        return lhs.visibility     == rhs.visibility &&
+            lhs.name              == rhs.name &&
+            lhs.returnType  ?? "" == rhs.returnType  ?? "" &&
+            lhs.parameters  ?? [] == rhs.parameters  ?? [] &&
+            lhs.annotations ?? [] == rhs.annotations ?? []
+    }
 }
