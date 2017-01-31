@@ -14,6 +14,7 @@ extension Swift {
         let kind:        Kind
         let visibility:  Visibility
         let override:    Bool
+        let mutable:     Bool
         let name:        String
         let returnType:  String
         
@@ -22,11 +23,14 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(kind: Kind = .instance, visibility: Visibility = .internal, override: Bool = false, name: String, returnType: String, accessors: [Accessor]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
+        init(kind: Kind = .instance, visibility: Visibility = .internal, override: Bool = false, mutable: Bool = true, name: String, returnType: String, accessors: [Accessor]? = nil, body: [Line]? = nil, comments: [Line]? = nil) {
+            
+            precondition((!mutable && accessors == nil && body == nil) || mutable, "A mutable property cannot have accessors or a body.")
             
             self.kind       = kind
             self.override   = override
             self.visibility = visibility
+            self.mutable    = mutable
             self.name       = name
             self.returnType = returnType
             self.comments   = comments ?? []
@@ -53,10 +57,11 @@ extension Swift {
             
             let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
             let override   = self.override ? "override " : ""
+            let mutability = self.mutable ? "var " : "let "
             let kind       = self.kind == .instance ? "" : "\(self.kind.rawValue) "
             
             string += self.comments.commentStringIndentedBy(self.indent)
-            string += "\(self.indent)\(visibility)\(kind)\(override)var \(self.name): \(self.returnType) "
+            string += "\(self.indent)\(visibility)\(kind)\(override)\(mutability)\(self.name): \(self.returnType)"
             
             /* ----------------------------------------
              ** Only append body and opening / closing
@@ -64,7 +69,7 @@ extension Swift {
              ** we'll treat this like a declaration.
              */
             if !self.children.isEmpty {
-                string += "{\n"
+                string += " {\n"
                 string += "\(super.stringRepresentation)\n"
                 string += "\(self.indent)}\n"
             } else {
@@ -72,7 +77,6 @@ extension Swift {
             }
             
             return string
-
         }
     }
 }
