@@ -34,6 +34,7 @@
 		9A972A341E40EE56007F7B0B /* Swift.PropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A331E40EE56007F7B0B /* Swift.PropertyTests.swift */; };
 		9A972A361E4134F1007F7B0B /* Swift.AliasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A351E4134F1007F7B0B /* Swift.AliasTests.swift */; };
 		9A972A391E413A05007F7B0B /* Schema.KindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A381E413A05007F7B0B /* Schema.KindTests.swift */; };
+		9A972A3B1E4209DF007F7B0B /* Schema.ObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
 		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
@@ -117,6 +118,7 @@
 		9A972A331E40EE56007F7B0B /* Swift.PropertyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.PropertyTests.swift; sourceTree = "<group>"; };
 		9A972A351E4134F1007F7B0B /* Swift.AliasTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.AliasTests.swift; sourceTree = "<group>"; };
 		9A972A381E413A05007F7B0B /* Schema.KindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.KindTests.swift; sourceTree = "<group>"; };
+		9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.ObjectTests.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
 		9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Alias.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 			children = (
 				9A972A381E413A05007F7B0B /* Schema.KindTests.swift */,
 				9A27556C1E41763600F3FD4A /* Schema.ObjectTypeTests.swift */,
+				9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */,
 				9A27556D1E41763600F3FD4A /* Schema.ObjectTypeTests.swift in Sources */,
 				9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */,
+				9A972A3B1E4209DF007F7B0B /* Schema.ObjectTests.swift in Sources */,
 				9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */,
 				9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */,
 				9A972A391E413A05007F7B0B /* Schema.KindTests.swift in Sources */,
