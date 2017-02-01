@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias JSON = [String : Any]
+typealias JSON = [String : Any?]
 
 protocol JsonCreatable {
     init(json: JSON)
