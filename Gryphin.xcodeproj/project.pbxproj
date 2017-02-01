@@ -68,7 +68,6 @@
 		9A9A6A5C1E0ECA55008754A4 /* String+Newline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A561E0ECA55008754A4 /* String+Newline.swift */; };
 		9A9A6A5D1E0ECA55008754A4 /* FieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A571E0ECA55008754A4 /* FieldTests.swift */; };
 		9A9A6A611E0ECA55008754A4 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A9A6A5B1E0ECA55008754A4 /* schema.json */; };
-		9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */; };
 		9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
 		9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
 		9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
@@ -552,7 +551,6 @@
 				9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */,
 				9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */,
 				9A8DAAD01E1712960032CC6F /* Swift.EnumCase.swift in Sources */,
-				9A9A6A631E0ED345008754A4 /* Schema.Directive.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
 				9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */,
 				9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */,

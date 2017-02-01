@@ -64,10 +64,9 @@ extension Swift {
         //
         func generate() -> (schema: Container, models: Container) {
             
-            let schemaData     = self.schemaJSON[SchemaKey.data]  as! JSON
-            let jsonSchema     = schemaData[SchemaKey.schema]     as! JSON
-            let jsonTypes      = jsonSchema[SchemaKey.types]      as! [JSON]
-            let jsonDirectives = jsonSchema[SchemaKey.directives] as! [JSON]
+            let schemaData     = self.schemaJSON[SchemaKey.data] as! JSON
+            let jsonSchema     = schemaData[SchemaKey.schema]    as! JSON
+            let jsonTypes      = jsonSchema[SchemaKey.types]     as! [JSON]
             
             let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
             let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
@@ -149,13 +148,6 @@ extension Swift {
                 case .nonNull:
                     break
                 }
-            }
-            
-            /* ----------------------------
-             ** Parse the schema directives
-             */
-            let directives = jsonDirectives.map {
-                Schema.Directive(json: $0)
             }
             
             return (schemaContainer, modelsContainer)
