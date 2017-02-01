@@ -37,6 +37,7 @@
 		9A972A3B1E4209DF007F7B0B /* Schema.ObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */; };
 		9A972A3D1E4219C7007F7B0B /* Schema.EnumValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3C1E4219C7007F7B0B /* Schema.EnumValueTests.swift */; };
 		9A972A3F1E421B06007F7B0B /* Schema.FieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3E1E421B06007F7B0B /* Schema.FieldTests.swift */; };
+		9A972A411E421E72007F7B0B /* Schema.InputFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A401E421E72007F7B0B /* Schema.InputFieldTests.swift */; };
 		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
 		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
 		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
@@ -119,6 +120,7 @@
 		9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.ObjectTests.swift; sourceTree = "<group>"; };
 		9A972A3C1E4219C7007F7B0B /* Schema.EnumValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValueTests.swift; sourceTree = "<group>"; };
 		9A972A3E1E421B06007F7B0B /* Schema.FieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.FieldTests.swift; sourceTree = "<group>"; };
+		9A972A401E421E72007F7B0B /* Schema.InputFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.InputFieldTests.swift; sourceTree = "<group>"; };
 		9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.EnumValue.swift; sourceTree = "<group>"; };
 		9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Generator.swift; sourceTree = "<group>"; };
 		9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Alias.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				9A972A3A1E4209DF007F7B0B /* Schema.ObjectTests.swift */,
 				9A972A3C1E4219C7007F7B0B /* Schema.EnumValueTests.swift */,
 				9A972A3E1E421B06007F7B0B /* Schema.FieldTests.swift */,
+				9A972A401E421E72007F7B0B /* Schema.InputFieldTests.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				9A27556D1E41763600F3FD4A /* Schema.ObjectTypeTests.swift in Sources */,
 				9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */,
 				9A972A3B1E4209DF007F7B0B /* Schema.ObjectTests.swift in Sources */,
+				9A972A411E421E72007F7B0B /* Schema.InputFieldTests.swift in Sources */,
 				9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */,
 				9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */,
 				9A972A391E413A05007F7B0B /* Schema.KindTests.swift in Sources */,
