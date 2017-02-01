@@ -13,8 +13,8 @@ extension Schema {
         
         let name:         String
         let description:  String?
-        let type:         ObjectType
         let defaultValue: String?
+        let type:         ObjectType
         
         // ----------------------------------
         //  MARK: - Init -
@@ -22,8 +22,8 @@ extension Schema {
         init(json: JSON) {
             self.name         = json["name"]                  as! String
             self.description  = json["description"]           as? String
-            self.type         = ObjectType(json: json["type"] as! JSON)
             self.defaultValue = json["defaultValue"]          as? String
+            self.type         = ObjectType(json: json["type"] as! JSON)
         }
     }
 }
