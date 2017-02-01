@@ -24,7 +24,7 @@ extension Schema {
         //  MARK: - Init -
         //
         init(json: JSON) {
-            self.kind          = Kind(string: json["kind"] as! String)
+            self.kind          = Kind(string: json["kind"] as! String)!
             self.name          = json["name"]              as! String
             self.description   = json["description"]       as? String
             

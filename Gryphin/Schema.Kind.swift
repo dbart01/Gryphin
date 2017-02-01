@@ -19,7 +19,7 @@ extension Schema {
         case list
         case nonNull
         
-        init(string: String) {
+        init?(string: String) {
             switch string {
             case "SCALAR":       self = .scalar
             case "OBJECT":       self = .object
@@ -30,12 +30,12 @@ extension Schema {
             case "LIST":         self = .list
             case "NON_NULL":     self = .nonNull
             default:
-                fatalError("Failed to parse `Kind` string. Invalid input: '\(string)'.")
+                return nil
             }
         }
         
         static func collectionWith(strings: [String]) -> [Kind] {
-            return strings.map {
+            return strings.flatMap {
                 Kind(string: $0)
             }
         }

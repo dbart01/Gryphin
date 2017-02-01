@@ -60,7 +60,7 @@ extension Schema {
         //  MARK: - Init -
         //
         init(json: JSON) {
-            self.kind         = Kind(string: json["kind"]       as! String)
+            self.kind         = Kind(string: json["kind"]       as! String)!
             self.possibleName = json["name"]                    as? String
             self.ofType       = ObjectType(json: json["ofType"] as? JSON)
         }
