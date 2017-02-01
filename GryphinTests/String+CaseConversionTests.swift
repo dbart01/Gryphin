@@ -11,7 +11,7 @@ import XCTest
 
 class String_CaseConversionTests: XCTestCase {
 
-    func testSnakeToCamelCaseConversion() {
+    func testSnakeToCamel() {
         
         XCTAssertEqual("SNAKE_CASE".snakeToCamel, "snakeCase")
         XCTAssertEqual("snake_case".snakeToCamel, "snakeCase")
@@ -21,6 +21,10 @@ class String_CaseConversionTests: XCTestCase {
         XCTAssertEqual("SNAKE".snakeToCamel, "snake")
         XCTAssertEqual("snake".snakeToCamel, "snake")
         XCTAssertEqual("sNaKe".snakeToCamel, "snake")
+    }
+    
+    func testSnakeToCamelNil() {
+        XCTAssertNil("".snakeToCamel)
     }
     
     func testLowerCasedFirst() {

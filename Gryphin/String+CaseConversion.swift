@@ -16,11 +16,6 @@ extension String {
         }
         
         let components = self.components(separatedBy: "_")
-        
-        guard !components.isEmpty else {
-            return nil
-        }
-        
         if components.count > 1 {
             var capitalized = components.map {
                 $0.capitalized
@@ -28,9 +23,9 @@ extension String {
             capitalized[0] = capitalized[0].lowercased()
             
             return capitalized.joined()
-        } else {
-            return self.lowercased()
         }
+        
+        return self.lowercased()
     }
     
     var lowercasedFirst: String {
@@ -39,11 +34,5 @@ extension String {
         let last  = self.substring(from: index)
         
         return "\(first.lowercased())\(last)"
-    }
-}
-
-private extension UInt8 {
-    var character: Character {
-        return Character(UnicodeScalar(self))
     }
 }
