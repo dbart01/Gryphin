@@ -22,6 +22,51 @@ class ContainingTests: XCTestCase {
     }
     
     // ----------------------------------
+    //  MARK: - Indentation -
+    //
+    func testAbsoluteIndentation() {
+        let container = TestContainer()
+        XCTAssertEqual(container.tabWidth, 4)
+        XCTAssertEqual(container.indentFor(distanceToRoot: 1), "    ")
+        XCTAssertEqual(container.indentFor(distanceToRoot: 2), "        ")
+        XCTAssertEqual(container.indentFor(distanceToRoot: 3), "            ")
+    }
+    
+    func testIndentation() {
+        let container1 = TestContainer()
+        
+        XCTAssertEqual(container1.indent, "")
+        XCTAssertEqual(container1.distanceToRoot, 0)
+        
+        let container2 = TestContainer()
+        container2.add(child: container1)
+        
+        XCTAssertEqual(container1.indent, "")
+        XCTAssertEqual(container1.distanceToRoot, 1)
+        
+        let container3 = TestContainer()
+        container3.add(child: container2)
+        
+        XCTAssertEqual(container2.indent, "")
+        XCTAssertEqual(container2.distanceToRoot, 1)
+        
+        XCTAssertEqual(container1.indent, "    ")
+        XCTAssertEqual(container1.distanceToRoot, 2)
+        
+        let container4 = TestContainer()
+        container4.add(child: container3)
+        
+        XCTAssertEqual(container3.indent, "")
+        XCTAssertEqual(container3.distanceToRoot, 1)
+        
+        XCTAssertEqual(container2.indent, "    ")
+        XCTAssertEqual(container2.distanceToRoot, 2)
+        
+        XCTAssertEqual(container1.indent, "        ")
+        XCTAssertEqual(container1.distanceToRoot, 3)
+    }
+    
+    // ----------------------------------
     //  MARK: - Operations -
     //
     func testAdding() {
@@ -131,6 +176,9 @@ class ContainingTests: XCTestCase {
     }
 }
 
+// ----------------------------------
+//  MARK: - TestContainer -
+//
 private class TestContainer: Containing {
     
     var parent:   Containing?
