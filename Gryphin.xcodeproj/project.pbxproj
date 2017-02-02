@@ -78,6 +78,7 @@
 		9AD6AA761E3657A200BF909C /* queryComprehensive.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA751E3657A200BF909C /* queryComprehensive.json */; };
 		9AD6AA891E3795FC00BF909C /* queryNode.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA881E3795FC00BF909C /* queryNode.json */; };
 		9AD6AA8C1E37BA0400BF909C /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
+		9ADAD0A61E436FCF008AC561 /* GraphQLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +171,7 @@
 		9AD6AA751E3657A200BF909C /* queryComprehensive.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryComprehensive.json; sourceTree = "<group>"; };
 		9AD6AA881E3795FC00BF909C /* queryNode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryNode.json; sourceTree = "<group>"; };
 		9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQL.swift; sourceTree = "<group>"; };
+		9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				9A6D3E5E1E42883D004135BF /* JsonCreatableTests.swift */,
+				9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				9A6D3E5F1E42883D004135BF /* JsonCreatableTests.swift in Sources */,
 				9A972A3B1E4209DF007F7B0B /* Schema.ObjectTests.swift in Sources */,
 				9A972A411E421E72007F7B0B /* Schema.InputFieldTests.swift in Sources */,
+				9ADAD0A61E436FCF008AC561 /* GraphQLTests.swift in Sources */,
 				9A6D3E5A1E4285AC004135BF /* Schema.ArgumentTests.swift in Sources */,
 				9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */,
 				9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */,
