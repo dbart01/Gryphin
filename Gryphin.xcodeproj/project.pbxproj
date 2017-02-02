@@ -79,6 +79,7 @@
 		9AD6AA891E3795FC00BF909C /* queryNode.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA881E3795FC00BF909C /* queryNode.json */; };
 		9AD6AA8C1E37BA0400BF909C /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
 		9ADAD0A61E436FCF008AC561 /* GraphQLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */; };
+		9ADAD0A81E43713C008AC561 /* ContainingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD0A71E43713C008AC561 /* ContainingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 		9AD6AA881E3795FC00BF909C /* queryNode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryNode.json; sourceTree = "<group>"; };
 		9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQL.swift; sourceTree = "<group>"; };
 		9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLTests.swift; sourceTree = "<group>"; };
+		9ADAD0A71E43713C008AC561 /* ContainingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 		9A2755601E3E5BE600F3FD4A /* Code Generation */ = {
 			isa = PBXGroup;
 			children = (
+				9ADAD0A71E43713C008AC561 /* ContainingTests.swift */,
 				9A2755611E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift */,
 				9A2755631E3E5CB500F3FD4A /* Swift.ContainerTests.swift */,
 				9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */,
@@ -583,6 +586,7 @@
 				9A0ECD241E3FE37A00D63B8B /* Swift.ClassTests.swift in Sources */,
 				9A2755621E3E5C0E00F3FD4A /* Swift.VisibilityTests.swift in Sources */,
 				9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */,
+				9ADAD0A81E43713C008AC561 /* ContainingTests.swift in Sources */,
 				9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */,
 				9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */,
 				9A27556D1E41763600F3FD4A /* Schema.ObjectTypeTests.swift in Sources */,
