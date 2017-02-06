@@ -22,6 +22,7 @@
 		9A6D3E5A1E4285AC004135BF /* Schema.ArgumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E591E4285AC004135BF /* Schema.ArgumentTests.swift */; };
 		9A6D3E5F1E42883D004135BF /* JsonCreatableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E5E1E42883D004135BF /* JsonCreatableTests.swift */; };
 		9A6D3E621E44ACA0004135BF /* GraphModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E611E44ACA0004135BF /* GraphModelTests.swift */; };
+		9A6D3E711E491D0F004135BF /* ConcreteGraphModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E701E491D0F004135BF /* ConcreteGraphModelTests.swift */; };
 		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
 		9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
 		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
@@ -109,6 +110,7 @@
 		9A6D3E591E4285AC004135BF /* Schema.ArgumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.ArgumentTests.swift; sourceTree = "<group>"; };
 		9A6D3E5E1E42883D004135BF /* JsonCreatableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCreatableTests.swift; sourceTree = "<group>"; };
 		9A6D3E611E44ACA0004135BF /* GraphModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphModelTests.swift; sourceTree = "<group>"; };
+		9A6D3E701E491D0F004135BF /* ConcreteGraphModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteGraphModelTests.swift; sourceTree = "<group>"; };
 		9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.InputField.swift; sourceTree = "<group>"; };
 		9A7F3C9C1E196F91000D4455 /* Nameable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nameable.swift; sourceTree = "<group>"; };
 		9A7F3C9E1E196FBA000D4455 /* Describeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Describeable.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				9A6D3E611E44ACA0004135BF /* GraphModelTests.swift */,
+				9A6D3E701E491D0F004135BF /* ConcreteGraphModelTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				9A972A391E413A05007F7B0B /* Schema.KindTests.swift in Sources */,
 				9A972A1E1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift in Sources */,
 				9A972A361E4134F1007F7B0B /* Swift.AliasTests.swift in Sources */,
+				9A6D3E711E491D0F004135BF /* ConcreteGraphModelTests.swift in Sources */,
 				9A9A6A5C1E0ECA55008754A4 /* String+Newline.swift in Sources */,
 				9A27555B1E3E4A6F00F3FD4A /* TypedFieldTests.swift in Sources */,
 				9A8878D21E2588CC007FB44F /* ContainerTypeTests.swift in Sources */,
