@@ -593,7 +593,6 @@ extension Swift {
                 for field in fields where !field.type.hasScalar && !field.type.isCollection {
                     
                     let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
-                    let tryString = field.type.isTopLevelNullable ? "" : "try! "
                         
                     swiftClass += Method(
                         visibility: .none,
@@ -607,7 +606,7 @@ extension Swift {
                             )
                         ],
                         body:  [
-                            Line(content: "return \(tryString)self.aliasedWith(alias)"),
+                            Line(content: "return try! self.aliasedWith(alias)"),
                         ],
                         comments: field.descriptionComments()
                     )

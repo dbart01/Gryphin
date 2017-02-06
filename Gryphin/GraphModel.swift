@@ -12,12 +12,14 @@ enum ModelError: Error {
     case KeyNotFound
     case TypeConversionFailed
     case AliasNotFound
+    case TypeNameNotProvider
+    case InconsistentSchema
 }
 
 class GraphModel {
     
-    private var values:  JSON = [:]
-    private var aliases: JSON = [:]
+    private var values:  JSON            = [:]
+    private var aliases: [String: JSON?] = [:]
     
     class var typeName: String {
         fatalError("Subclasses must override `typeName`.")
@@ -27,7 +29,8 @@ class GraphModel {
     //  MARK: - Init -
     //
     required init?(json: JSON) {
-        if let typeName = json[GraphQL.Key.typeName] as? String, typeName != type(of: self).typeName {
+        if let typeName = json[GraphQL.Key.typeName],
+            (typeName as? String) ?? "" != type(of: self).typeName {
             return nil
         }
         
@@ -45,7 +48,7 @@ class GraphModel {
     // ----------------------------------
     //  MARK: - Subscript -
     //
-    func hasValueFor(key: String) -> Bool {
+    func hasValueFor(_ key: String) -> Bool {
         return self.values[key] != nil
     }
     
@@ -78,24 +81,33 @@ class GraphModel {
     // ----------------------------------
     //  MARK: - Alias Management -
     //
-    func aliasedWith<T: GraphModel>(_ key: String) -> T? {
-        if let aliasJson = self.aliases[key.aliasPrefixed] as? JSON {
-            return T(json: aliasJson)
+    func hasAliasFor(_ key: String) -> Bool {
+        return self.aliases[key.aliasPrefixed] != nil
+    }
+    
+    func aliasedWith<T: GraphModel>(_ key: String) throws -> T? {
+        guard let value = self.aliases[key.aliasPrefixed] else {
+            throw ModelError.AliasNotFound
         }
-        return nil
+        
+        guard let json = value else {
+            return nil
+        }
+        
+        return T(json: json)
     }
     
     func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
-        if let value: T = self.aliasedWith(key) {
-            return value
+        guard let model: T = try self.aliasedWith(key) else {
+            throw ModelError.InconsistentSchema
         }
         
-        throw ModelError.AliasNotFound
+        return model
     }
     
     private func parseAliasesFrom(_ json: JSON) {
         for (key, value) in json where key.hasAliasPrefix {
-            self.aliases[key] = value
+            self.aliases[key] = (value as? JSON)
         }
     }
 }
@@ -110,12 +122,8 @@ extension Array where Element: GraphModel {
     }
     
     static func from(_ json: [JSON]) -> [Element] {
-        var container = [Element]()
-        for jsonValue in json {
-            if let element = Element(json: jsonValue) {
-                container.append(element)
-            }
+        return json.flatMap {
+            Element(json: $0)
         }
-        return container
     }
 }
