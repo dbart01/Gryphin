@@ -31,7 +31,7 @@ extension ReferenceType {
         if Environment.prettyPrint {
             return "\n"
         }
-        return ""
+        return " "
     }
     
     var _space: String {

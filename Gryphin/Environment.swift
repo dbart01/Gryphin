@@ -11,11 +11,16 @@ import Foundation
 class Environment {
     
     enum Key: String {
-        case prettyPrint = "com.gryphin.prettyPrint"
+        case prettyPrint  = "com.gryphin.prettyPrint"
+        case networkDebug = "com.gryphin.networkDebug"
     }
     
     static var prettyPrint: Bool {
         return Environment.shared[.prettyPrint] != nil
+    }
+    
+    static var networkDebug: Bool {
+        return Environment.shared[.networkDebug] != nil
     }
     
     // ----------------------------------

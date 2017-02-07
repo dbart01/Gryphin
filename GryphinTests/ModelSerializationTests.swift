@@ -24,7 +24,7 @@ class ModelSerializationTests: XCTestCase {
             print("Description: \(description)")
         }
         
-        print(query.repository!.owner)
+        print(query.repository!.owner.organization!.login)
     }
     
     func testNodeWithID() {
