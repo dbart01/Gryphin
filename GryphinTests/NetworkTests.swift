@@ -46,7 +46,7 @@ class NetworkTests: XCTestCase {
             if let mutation = mutation {
                 DispatchQueue.main.async {
                     
-                    let projectID = mutation.createProject!.project.id
+                    let projectID = mutation.createProject.project.id
                     print("Successfully created project with ID: \(projectID)")
                     
                     let previousProject = QDeleteProjectInput(clientMutationId: "unique-string", projectId: projectID)
@@ -61,7 +61,7 @@ class NetworkTests: XCTestCase {
                     let task = self.session.graphMutationTask(with: deleteMutation, to: self.apiURL) { (mutation, response, error) in
                         
                         if let mutation = mutation {
-                            print("Successfully deleted project with ID: \(mutation.deleteProject!.owner.repository?.id)")
+                            print("Successfully deleted project with ID: \(mutation.deleteProject.owner.repository.id)")
                         }
                         
                         e.fulfill()

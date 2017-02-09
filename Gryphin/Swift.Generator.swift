@@ -516,7 +516,7 @@ extension Swift {
                     swiftClass += Property(
                         visibility: .none,
                         name:       possibleType.name.lowercasedFirst,
-                        returnType: possibleType.modelTypeName.nullable,
+                        returnType: possibleType.modelTypeName.implicitNullable,
                         accessors:  [
                             Property.Accessor(kind: .get, body: [
                                 Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercasedFirst)\")")
@@ -1044,6 +1044,10 @@ extension String {
     var nullable: String {
         return "\(self)?"
     }
+    
+    var implicitNullable: String {
+        return "\(self)!"
+    }
 }
 
 // ----------------------------------
@@ -1080,12 +1084,12 @@ extension Schema.ObjectType {
     
     func recursiveQueryInputType(unmodified: Bool) -> String {
         let type = self.recursiveType(queryKind: .query, unmodified: unmodified, ignoreNull: true)
-        return self.isTopLevelNullable ? type.nullable : type
+        return self.isTopLevelNullable ? type.implicitNullable : type
     }
     
     func recursiveModelInputType(unmodified: Bool) -> String {
         let type = self.recursiveType(queryKind: .model, unmodified: unmodified, ignoreNull: true)
-        return self.isTopLevelNullable ? type.nullable : type
+        return self.isTopLevelNullable ? type.implicitNullable : type
     }
     
     func recursiveQueryType(unmodified: Bool) -> String {
@@ -1105,12 +1109,14 @@ extension Schema.ObjectType {
     }
     
     func recursiveType(queryKind: RecursiveKind, concrete: Bool? = nil, unmodified: Bool = false, ignoreNull: Bool = false) -> String {
-        return self.recursiveType(queryKind: queryKind, nonNull: false, concrete: concrete ?? self.isAbstract, unmodified: unmodified, ignoreNull: ignoreNull)
+        return self.recursiveType(queryKind: queryKind, nonNull: false, withinList: false, concrete: concrete ?? self.isAbstract, unmodified: unmodified, ignoreNull: ignoreNull)
     }
     
-    private func recursiveType(queryKind: RecursiveKind, nonNull: Bool, concrete: Bool, unmodified: Bool, ignoreNull: Bool) -> String {
-        let isNonNull = self.kind == .nonNull
-        let childType = self.ofType?.recursiveType(queryKind: queryKind, nonNull: isNonNull, concrete: concrete, unmodified: unmodified, ignoreNull: ignoreNull) ?? ""
+    private func recursiveType(queryKind: RecursiveKind, nonNull: Bool, withinList: Bool, concrete: Bool, unmodified: Bool, ignoreNull: Bool, level: Int = 0) -> String {
+        
+        let isNonNull    = self.kind == .nonNull
+        let isWithinList = withinList || self.kind == .list // Persist flag through recursion
+        let childType    = self.ofType?.recursiveType(queryKind: queryKind, nonNull: isNonNull, withinList: isWithinList, concrete: concrete, unmodified: unmodified, ignoreNull: ignoreNull, level: level + 1) ?? ""
         
         switch self.kind {
         case .enum:       fallthrough
@@ -1130,7 +1136,8 @@ extension Schema.ObjectType {
             if nonNull || ignoreNull {
                 return unmodified ? self.name.mapped : modifiedType()
             } else {
-                return unmodified ? self.name.mapped.nullable : modifiedType().nullable
+                let type = unmodified ? self.name.mapped : modifiedType()
+                return isWithinList ? type.nullable : type.implicitNullable
             }
             
         case .list:
@@ -1138,7 +1145,7 @@ extension Schema.ObjectType {
             if nonNull || ignoreNull {
                 return "[\(childType)]"
             } else {
-                return "[\(childType)]".nullable
+                return "[\(childType)]".implicitNullable
             }
             
         case .nonNull:
