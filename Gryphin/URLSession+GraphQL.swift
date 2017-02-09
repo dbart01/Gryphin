@@ -25,7 +25,7 @@ extension URLSession {
     // ----------------------------------
     //  MARK: - Mutation -
     //
-    func graphMutationTask(with mutation: QMutation, url: URL, completionHandler: @escaping (Mutation?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
+    func graphMutationTask(with mutation: QMutation, to url: URL, completionHandler: @escaping (Mutation?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
         return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)
     }
     
