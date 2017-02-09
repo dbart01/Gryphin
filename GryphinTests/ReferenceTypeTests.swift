@@ -29,7 +29,7 @@ class ReferenceTypeTests: XCTestCase {
         
         let reference = TestReference(name: "test")
         
-        XCTAssertEqual(reference._newline, "")
+        XCTAssertEqual(reference._newline, " ")
         XCTAssertEqual(reference._space, "")
         XCTAssertEqual(reference._indent, "")
     }
