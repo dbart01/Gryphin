@@ -15,6 +15,11 @@ extension Swift {
             case invalidFormat
         }
         
+        struct File {
+            var name:      String
+            var container: Container
+        }
+        
         let schemaJSON: JSON
         
         private let standardScalars: Set<String> = [
@@ -64,7 +69,7 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Generation -
         //
-        func generate() -> (schema: Container, models: Container) {
+        func generate() -> [File] {
             
             let schemaData     = self.schemaJSON[SchemaKey.data] as! JSON
             let jsonSchema     = schemaData[SchemaKey.schema]    as! JSON
@@ -73,8 +78,11 @@ extension Swift {
             let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
             let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
             
-            let schemaContainer = Container()
-            let modelsContainer = Container()
+            var scalarsFile = File(name: "Scalars", container: Container())
+            var enumsFile   = File(name: "Enums",   container: Container())
+            let queriesFile = File(name: "Queries", container: Container())
+            let modelsFile  = File(name: "Models",  container: Container())
+            var inputsFile  = File(name: "Inputs",  container: Container())
             
             /* -----------------------------
              ** Parse the schema types first
@@ -118,32 +126,32 @@ extension Swift {
                     default: break
                     }
                     
-                    schemaContainer += objectClass
-                    modelsContainer += self.generate(objectModel: type)
+                    queriesFile.container += objectClass
+                    modelsFile.container += self.generate(objectModel: type)
                     
                 case .interface:
-                    schemaContainer += self.generate(interface: type, parsedTypes: generatedTypes)
-                    schemaContainer += self.generate(concreteInterface: type)
+                    queriesFile.container += self.generate(interface: type, parsedTypes: generatedTypes)
+                    queriesFile.container += self.generate(concreteInterface: type)
                     
                     // TODO: generate(interfaceModel: type)
-                    modelsContainer += self.generate(concreteInterfaceModel: type)
+                    modelsFile.container += self.generate(concreteInterfaceModel: type)
                     
                 case .enum:
-                    schemaContainer += self.generate(enum: type)
+                    enumsFile.container += self.generate(enum: type)
                     
                 case .inputObject:
-                    schemaContainer += self.generate(inputObject: type)
+                    inputsFile.container += self.generate(inputObject: type)
                     
                 case .scalar:
                     if let alias = self.generate(scalar: type) {
-                        schemaContainer += alias
+                        scalarsFile.container += alias
                     }
                     
                 case .union:
-                    schemaContainer += self.generate(union: type)
-                    schemaContainer += self.generate(concreteInterface: type)
+                    queriesFile.container += self.generate(union: type)
+                    queriesFile.container += self.generate(concreteInterface: type)
                     
-                    modelsContainer += self.generate(concreteInterfaceModel: type)
+                    modelsFile.container  += self.generate(concreteInterfaceModel: type)
                     
                 case .list:
                     break
@@ -152,7 +160,13 @@ extension Swift {
                 }
             }
             
-            return (schemaContainer, modelsContainer)
+            return [
+                scalarsFile,
+                enumsFile,
+                queriesFile,
+                modelsFile,
+                inputsFile,
+            ]
         }
         
         // ----------------------------------
@@ -961,7 +975,7 @@ extension Swift {
 // ----------------------------------
 //  MARK: - Extensions -
 //
-extension Array {
+private extension Array {
     
     func keyedUsing(block: (Element) -> String) -> [String : Element] {
         var dictionary: [String : Element] = [:]
@@ -972,18 +986,10 @@ extension Array {
     }
 }
 
-func +=<T>(lhs: inout [T], rhs: T) {
-    lhs.append(rhs)
-}
-
-func +=<T>(lhs: inout [T], rhs: [T]) {
-    lhs.append(contentsOf: rhs)
-}
-
 // ----------------------------------
 //  MARK: - Schema Type Extensions -
 //
-extension Schema.Object {
+private extension Schema.Object {
     
     func descriptionComments() -> [Swift.Line] {
         var commentLines = Swift.Line.linesWith(requiredContent: self.description ?? "")
@@ -1027,7 +1033,7 @@ extension Schema.Object {
 // ----------------------------------
 //  MARK: - String Extension -
 //
-extension String {
+private extension String {
     
     private static var __TypeMap: [String : String] = [
         "String"  : "String",
@@ -1055,7 +1061,7 @@ extension String {
 // ----------------------------------
 //  MARK: - Nameable Extension -
 //
-extension Nameable {
+private extension Nameable {
     
     var queryConcreteTypeName: String {
         return "QConcrete\(self.name.mapped)"
@@ -1077,7 +1083,7 @@ extension Nameable {
 // ----------------------------------
 //  MARK: - ObjectType Extension -
 //
-extension Schema.ObjectType {
+private extension Schema.ObjectType {
     
     enum RecursiveKind {
         case query
@@ -1159,7 +1165,7 @@ extension Schema.ObjectType {
 // ----------------------------------
 //  MARK: - Describeable Extension -
 //
-extension Describeable {
+private extension Describeable {
     
     func descriptionComments() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
@@ -1169,7 +1175,7 @@ extension Describeable {
 // ----------------------------------
 //  MARK: - Argument Extension -
 //
-extension Schema.Argument {
+private extension Schema.Argument {
     
     func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
         
@@ -1191,7 +1197,7 @@ extension Schema.Argument {
 // ----------------------------------
 //  MARK: - Field Extension -
 //
-extension Schema.Field {
+private extension Schema.Field {
     
     func parameterDocComments() -> [Swift.Line] {
         var comments: [Swift.Line] = []
