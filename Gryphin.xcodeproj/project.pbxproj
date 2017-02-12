@@ -28,16 +28,12 @@
 		9A6D3E711E491D0F004135BF /* ConcreteGraphModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E701E491D0F004135BF /* ConcreteGraphModelTests.swift */; };
 		9A6D3E741E4922A0004135BF /* URLSession+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E731E4922A0004135BF /* URLSession+GraphQL.swift */; };
 		9A6D3E761E49F723004135BF /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E751E49F723004135BF /* NetworkTests.swift */; };
-		9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
-		9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
-		9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
 		9A8878D01E258585007FB44F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
 		9A8878D21E2588CC007FB44F /* ContainerTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878D11E2588CC007FB44F /* ContainerTypeTests.swift */; };
 		9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878F81E2CF344007FB44F /* InputTypeTests.swift */; };
 		9A8878FB1E2CF682007FB44F /* ValueTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878FA1E2CF682007FB44F /* ValueTypeTests.swift */; };
 		9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8879031E2D4D0D007FB44F /* TypedField.swift */; };
 		9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88790B1E2E4718007FB44F /* GraphModel.swift */; };
-		9A8DAAD01E1712960032CC6F /* Swift.EnumCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */; };
 		9A9070A51E4A716400248DBF /* URLRequest+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */; };
 		9A972A1E1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */; };
 		9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */; };
@@ -48,27 +44,9 @@
 		9A972A3D1E4219C7007F7B0B /* Schema.EnumValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3C1E4219C7007F7B0B /* Schema.EnumValueTests.swift */; };
 		9A972A3F1E421B06007F7B0B /* Schema.FieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A3E1E421B06007F7B0B /* Schema.FieldTests.swift */; };
 		9A972A411E421E72007F7B0B /* Schema.InputFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A401E421E72007F7B0B /* Schema.InputFieldTests.swift */; };
-		9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
-		9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
-		9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
-		9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33A1E159E5100B2AD52 /* Containable.swift */; };
-		9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */; };
-		9A98A33F1E15F2A700B2AD52 /* Swift.Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */; };
-		9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3401E15F3F800B2AD52 /* Swift.Annotation.swift */; };
 		9A9A6A171E0EC9C6008754A4 /* Gryphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */; };
 		9A9A6A1E1E0EC9C6008754A4 /* Gryphin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A6A101E0EC9C6008754A4 /* Gryphin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
-		9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A281E0EC9E2008754A4 /* Schema.swift */; };
-		9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A291E0EC9E2008754A4 /* Schema.Kind.swift */; };
-		9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2A1E0EC9E2008754A4 /* Schema.ObjectType.swift */; };
-		9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2B1E0EC9E2008754A4 /* Schema.Object.swift */; };
-		9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */; };
-		9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */; };
-		9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */; };
-		9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Containing.swift */; };
-		9A9A6A421E0EC9F8008754A4 /* Swift.Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */; };
-		9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */; };
-		9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */; };
 		9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A461E0ECA33008754A4 /* ValueType.swift */; };
 		9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A471E0ECA33008754A4 /* ReferenceType.swift */; };
 		9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A481E0ECA33008754A4 /* ContainerType.swift */; };
@@ -76,9 +54,6 @@
 		9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */; };
 		9A9A6A5C1E0ECA55008754A4 /* String+Newline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A561E0ECA55008754A4 /* String+Newline.swift */; };
 		9A9A6A5D1E0ECA55008754A4 /* FieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A571E0ECA55008754A4 /* FieldTests.swift */; };
-		9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
-		9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
-		9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
 		9AD022051E3BA495005C49F8 /* ConcreteGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */; };
 		9AD0220F1E3F66E0005C49F8 /* Swift.AnnotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */; };
 		9AD022111E3F680F005C49F8 /* Swift.LinesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */; };
@@ -442,8 +417,6 @@
 				9A9A6A101E0EC9C6008754A4 /* Gryphin.h */,
 				9A27B03B1E24728300AFBDA6 /* Extensions */,
 				9A8879071E2D5DD9007FB44F /* Shared */,
-				9A9A6A351E0EC9E5008754A4 /* Schema */,
-				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
 				9A9A6A451E0EC9FA008754A4 /* Query Generation */,
 				9A8879021E2D40A2007FB44F /* Models */,
 				9A6D3E721E492287004135BF /* Network */,
@@ -486,7 +459,7 @@
 				9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */,
 				9A9A6A621E0ED345008754A4 /* Schema.Directive.swift */,
 			);
-			name = Schema;
+			path = Schema;
 			sourceTree = "<group>";
 		};
 		9A9A6A361E0EC9EB008754A4 /* Code Generation */ = {
@@ -507,7 +480,7 @@
 				9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */,
 				9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */,
 			);
-			name = "Code Generation";
+			path = "Code Generation";
 			sourceTree = "<group>";
 		};
 		9A9A6A451E0EC9FA008754A4 /* Query Generation */ = {
@@ -537,6 +510,8 @@
 		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
 			isa = PBXGroup;
 			children = (
+				9A9A6A351E0EC9E5008754A4 /* Schema */,
+				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
 				9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */,
 				9A36AEDD1E4DF3B700DA0201 /* main.swift */,
 			);
@@ -710,53 +685,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A9A6A2F1E0EC9E2008754A4 /* Schema.swift in Sources */,
-				9A9A6A301E0EC9E2008754A4 /* Schema.Kind.swift in Sources */,
-				9A9A6A331E0EC9E2008754A4 /* Schema.Field.swift in Sources */,
 				9A47206D1E286588002A2B64 /* InputType.swift in Sources */,
 				9A6D3E741E4922A0004135BF /* URLSession+GraphQL.swift in Sources */,
-				9A7F3C9B1E196E4F000D4455 /* Schema.InputField.swift in Sources */,
-				9A7F3C9D1E196F91000D4455 /* Nameable.swift in Sources */,
-				9A9A6A6B1E12D2F6008754A4 /* Swift.Line.swift in Sources */,
-				9A9A6A311E0EC9E2008754A4 /* Schema.ObjectType.swift in Sources */,
 				9ADAD3FC1E50F7B1008AC561 /* Gen$Models.swift in Sources */,
 				9A9070A51E4A716400248DBF /* URLRequest+GraphQL.swift in Sources */,
 				9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */,
-				9AA48FBF1E227D410028F044 /* Typeable.swift in Sources */,
 				9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */,
 				9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */,
-				9A9A6A341E0EC9E2008754A4 /* Schema.Argument.swift in Sources */,
 				9A27B03D1E24728E00AFBDA6 /* String+CaseConversion.swift in Sources */,
 				9AD022051E3BA495005C49F8 /* ConcreteGraphModel.swift in Sources */,
 				9A8878D01E258585007FB44F /* Environment.swift in Sources */,
-				9A7F3C9F1E196FBA000D4455 /* Describeable.swift in Sources */,
-				9A9A6A421E0EC9F8008754A4 /* Swift.Visibility.swift in Sources */,
 				9A9A6A521E0ECA33008754A4 /* Field.swift in Sources */,
-				9A9A6A321E0EC9E2008754A4 /* Schema.Object.swift in Sources */,
 				9A8879041E2D4D0D007FB44F /* TypedField.swift in Sources */,
-				9A9A6A671E12CAC1008754A4 /* Swift.swift in Sources */,
 				9ADAD3FB1E50F7B1008AC561 /* Gen$Inputs.swift in Sources */,
-				9A98A33C1E159FD200B2AD52 /* Swift.Container.swift in Sources */,
 				9ADAD3FE1E50F7B1008AC561 /* Gen$Scalars.swift in Sources */,
 				9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */,
-				9A9A6A431E0EC9F8008754A4 /* Swift.Class.swift in Sources */,
-				9A9A6A3E1E0EC9F8008754A4 /* StringRepresentable.swift in Sources */,
-				9A98A3391E159B8000B2AD52 /* Swift.Alias.swift in Sources */,
 				9AD6AA8C1E37BA0400BF909C /* GraphQL.swift in Sources */,
-				9A98A33F1E15F2A700B2AD52 /* Swift.Property.swift in Sources */,
-				9A98A3301E140B7C00B2AD52 /* Schema.EnumValue.swift in Sources */,
 				9A9A6A4E1E0ECA33008754A4 /* ValueType.swift in Sources */,
-				9A98A33B1E159E5100B2AD52 /* Containable.swift in Sources */,
-				9A9A6A441E0EC9F8008754A4 /* Swift.Method.swift in Sources */,
 				9ADAD3E81E50F2CE008AC561 /* Collection+Append.swift in Sources */,
-				9A9A6A3F1E0EC9F8008754A4 /* Containing.swift in Sources */,
 				9ADAD3FA1E50F7B1008AC561 /* Gen$Enums.swift in Sources */,
 				9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */,
-				9A8DAAD01E1712960032CC6F /* Swift.EnumCase.swift in Sources */,
 				9ADAD3FD1E50F7B1008AC561 /* Gen$Queries.swift in Sources */,
 				9A9A6A4F1E0ECA33008754A4 /* ReferenceType.swift in Sources */,
-				9A98A3411E15F3F800B2AD52 /* Swift.Annotation.swift in Sources */,
-				9A98A3321E140EAB00B2AD52 /* Swift.Generator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
