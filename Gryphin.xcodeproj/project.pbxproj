@@ -17,6 +17,9 @@
 		9A27B0371E231AF100AFBDA6 /* InlineFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */; };
 		9A27B03D1E24728E00AFBDA6 /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
 		9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */; };
+		9A36AEDC1E4DF2F900DA0201 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */; };
+		9A36AEDE1E4DF3B700DA0201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36AEDD1E4DF3B700DA0201 /* main.swift */; };
+		9A36AEE01E4DF52F00DA0201 /* GryphinGenerate in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9AD5FF731E4D214B0062070B /* GryphinGenerate */; };
 		9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206A1E28573A002A2B64 /* ReferenceTypeTests.swift */; };
 		9A47206D1E286588002A2B64 /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206C1E286588002A2B64 /* InputType.swift */; };
 		9A6D3E5A1E4285AC004135BF /* Schema.ArgumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E591E4285AC004135BF /* Schema.ArgumentTests.swift */; };
@@ -80,6 +83,35 @@
 		9AD022051E3BA495005C49F8 /* ConcreteGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */; };
 		9AD0220F1E3F66E0005C49F8 /* Swift.AnnotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */; };
 		9AD022111E3F680F005C49F8 /* Swift.LinesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */; };
+		9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
+		9AD5FF7D1E4D21AF0062070B /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
+		9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
+		9AD5FF7F1E4D21AF0062070B /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
+		9AD5FF801E4D21AF0062070B /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
+		9AD5FF811E4D21AF0062070B /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
+		9AD5FF821E4D21AF0062070B /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A281E0EC9E2008754A4 /* Schema.swift */; };
+		9AD5FF831E4D21AF0062070B /* Schema.Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A291E0EC9E2008754A4 /* Schema.Kind.swift */; };
+		9AD5FF841E4D21AF0062070B /* Schema.ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2A1E0EC9E2008754A4 /* Schema.ObjectType.swift */; };
+		9AD5FF851E4D21AF0062070B /* Schema.Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2B1E0EC9E2008754A4 /* Schema.Object.swift */; };
+		9AD5FF861E4D21AF0062070B /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
+		9AD5FF871E4D21AF0062070B /* Schema.Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */; };
+		9AD5FF881E4D21AF0062070B /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
+		9AD5FF891E4D21AF0062070B /* Schema.Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */; };
+		9AD5FF8A1E4D21B30062070B /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */; };
+		9AD5FF8B1E4D21B30062070B /* Containable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33A1E159E5100B2AD52 /* Containable.swift */; };
+		9AD5FF8C1E4D21B30062070B /* Containing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Containing.swift */; };
+		9AD5FF8D1E4D21B30062070B /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
+		9AD5FF8E1E4D21B30062070B /* Swift.Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */; };
+		9AD5FF8F1E4D21B30062070B /* Swift.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */; };
+		9AD5FF901E4D21B30062070B /* Swift.Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3401E15F3F800B2AD52 /* Swift.Annotation.swift */; };
+		9AD5FF911E4D21B30062070B /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
+		9AD5FF921E4D21B30062070B /* Swift.Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */; };
+		9AD5FF931E4D21B30062070B /* Swift.EnumCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */; };
+		9AD5FF941E4D21B30062070B /* Swift.Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */; };
+		9AD5FF951E4D21B30062070B /* Swift.Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */; };
+		9AD5FF961E4D21B30062070B /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
+		9AD5FF971E4D21B30062070B /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
+		9AD5FF981E4D21C40062070B /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
 		9AD6AA761E3657A200BF909C /* queryComprehensive.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA751E3657A200BF909C /* queryComprehensive.json */; };
 		9AD6AA891E3795FC00BF909C /* queryNode.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA881E3795FC00BF909C /* queryNode.json */; };
 		9AD6AA8C1E37BA0400BF909C /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
@@ -95,7 +127,36 @@
 			remoteGlobalIDString = 9A9A6A0C1E0EC9C6008754A4;
 			remoteInfo = Gryphin;
 		};
+		9AD5FF7A1E4D215B0062070B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A9A6A041E0EC9C6008754A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AD5FF721E4D214B0062070B;
+			remoteInfo = GryphinGenerate;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9A36AEDF1E4DF4CA00DA0201 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /tmp;
+			dstSubfolderSpec = 0;
+			files = (
+				9A36AEE01E4DF52F00DA0201 /* GryphinGenerate in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AD5FF711E4D214B0062070B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9A0ECD231E3FE37A00D63B8B /* Swift.ClassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.ClassTests.swift; sourceTree = "<group>"; };
@@ -108,6 +169,8 @@
 		9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineFragment.swift; sourceTree = "<group>"; };
 		9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CaseConversion.swift"; sourceTree = "<group>"; };
 		9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CaseConversionTests.swift"; sourceTree = "<group>"; };
+		9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arguments.swift; sourceTree = "<group>"; };
+		9A36AEDD1E4DF3B700DA0201 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A47206A1E28573A002A2B64 /* ReferenceTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceTypeTests.swift; sourceTree = "<group>"; };
 		9A47206C1E286588002A2B64 /* InputType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputType.swift; sourceTree = "<group>"; };
 		9A6D3E591E4285AC004135BF /* Schema.ArgumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.ArgumentTests.swift; sourceTree = "<group>"; };
@@ -178,6 +241,7 @@
 		9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteGraphModel.swift; sourceTree = "<group>"; };
 		9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.AnnotationTests.swift; sourceTree = "<group>"; };
 		9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.LinesTests.swift; sourceTree = "<group>"; };
+		9AD5FF731E4D214B0062070B /* GryphinGenerate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GryphinGenerate; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AD6AA731E36575200BF909C /* ModelSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSerializationTests.swift; sourceTree = "<group>"; };
 		9AD6AA751E3657A200BF909C /* queryComprehensive.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryComprehensive.json; sourceTree = "<group>"; };
 		9AD6AA881E3795FC00BF909C /* queryNode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryNode.json; sourceTree = "<group>"; };
@@ -199,6 +263,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9A6A171E0EC9C6008754A4 /* Gryphin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AD5FF701E4D214B0062070B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +409,7 @@
 			children = (
 				9A9A6A0F1E0EC9C6008754A4 /* Gryphin */,
 				9A9A6A1A1E0EC9C6008754A4 /* GryphinTests */,
+				9AD5FF741E4D214B0062070B /* GryphinGenerate */,
 				9A9A6A0E1E0EC9C6008754A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -347,6 +419,7 @@
 			children = (
 				9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */,
 				9A9A6A161E0EC9C6008754A4 /* GryphinTests.xctest */,
+				9AD5FF731E4D214B0062070B /* GryphinGenerate */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,6 +522,15 @@
 			name = Generated;
 			sourceTree = "<group>";
 		};
+		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
+			isa = PBXGroup;
+			children = (
+				9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */,
+				9A36AEDD1E4DF3B700DA0201 /* main.swift */,
+			);
+			path = GryphinGenerate;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -467,6 +549,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A9A6A211E0EC9C6008754A4 /* Build configuration list for PBXNativeTarget "Gryphin" */;
 			buildPhases = (
+				9A36AEDF1E4DF4CA00DA0201 /* CopyFiles */,
+				9A36AEE11E4DF58200DA0201 /* ShellScript */,
 				9A9A6A081E0EC9C6008754A4 /* Sources */,
 				9A9A6A091E0EC9C6008754A4 /* Frameworks */,
 				9A9A6A0A1E0EC9C6008754A4 /* Headers */,
@@ -475,6 +559,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AD5FF7B1E4D215B0062070B /* PBXTargetDependency */,
 			);
 			name = Gryphin;
 			productName = Gryphin;
@@ -499,6 +584,23 @@
 			productReference = 9A9A6A161E0EC9C6008754A4 /* GryphinTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9AD5FF721E4D214B0062070B /* GryphinGenerate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AD5FF791E4D214B0062070B /* Build configuration list for PBXNativeTarget "GryphinGenerate" */;
+			buildPhases = (
+				9AD5FF6F1E4D214B0062070B /* Sources */,
+				9AD5FF701E4D214B0062070B /* Frameworks */,
+				9AD5FF711E4D214B0062070B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GryphinGenerate;
+			productName = GryphinGenerate;
+			productReference = 9AD5FF731E4D214B0062070B /* GryphinGenerate */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -518,6 +620,11 @@
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
+					9AD5FF721E4D214B0062070B = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = MK88G5Q6ZN;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 9A9A6A071E0EC9C6008754A4 /* Build configuration list for PBXProject "Gryphin" */;
@@ -534,6 +641,7 @@
 			targets = (
 				9A9A6A0C1E0EC9C6008754A4 /* Gryphin */,
 				9A9A6A151E0EC9C6008754A4 /* GryphinTests */,
+				9AD5FF721E4D214B0062070B /* GryphinGenerate */,
 			);
 		};
 /* End PBXProject section */
@@ -557,6 +665,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A36AEE11E4DF58200DA0201 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/${PRODUCT_NAME}/scripts/gen\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9A9A6A081E0EC9C6008754A4 /* Sources */ = {
@@ -646,6 +770,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AD5FF6F1E4D214B0062070B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AD5FF841E4D21AF0062070B /* Schema.ObjectType.swift in Sources */,
+				9AD5FF881E4D21AF0062070B /* Schema.InputField.swift in Sources */,
+				9AD5FF851E4D21AF0062070B /* Schema.Object.swift in Sources */,
+				9AD5FF871E4D21AF0062070B /* Schema.Field.swift in Sources */,
+				9AD5FF821E4D21AF0062070B /* Schema.swift in Sources */,
+				9AD5FF831E4D21AF0062070B /* Schema.Kind.swift in Sources */,
+				9AD5FF7D1E4D21AF0062070B /* JsonCreatable.swift in Sources */,
+				9AD5FF8C1E4D21B30062070B /* Containing.swift in Sources */,
+				9AD5FF8F1E4D21B30062070B /* Swift.Container.swift in Sources */,
+				9AD5FF941E4D21B30062070B /* Swift.Method.swift in Sources */,
+				9A36AEDC1E4DF2F900DA0201 /* Arguments.swift in Sources */,
+				9AD5FF8B1E4D21B30062070B /* Containable.swift in Sources */,
+				9A36AEDE1E4DF3B700DA0201 /* main.swift in Sources */,
+				9AD5FF911E4D21B30062070B /* Swift.Line.swift in Sources */,
+				9AD5FF8A1E4D21B30062070B /* StringRepresentable.swift in Sources */,
+				9AD5FF7F1E4D21AF0062070B /* Nameable.swift in Sources */,
+				9AD5FF921E4D21B30062070B /* Swift.Class.swift in Sources */,
+				9AD5FF8D1E4D21B30062070B /* Swift.swift in Sources */,
+				9AD5FF8E1E4D21B30062070B /* Swift.Visibility.swift in Sources */,
+				9AD5FF861E4D21AF0062070B /* Schema.EnumValue.swift in Sources */,
+				9AD5FF901E4D21B30062070B /* Swift.Annotation.swift in Sources */,
+				9AD5FF811E4D21AF0062070B /* Describeable.swift in Sources */,
+				9AD5FF961E4D21B30062070B /* Swift.Alias.swift in Sources */,
+				9AD5FF951E4D21B30062070B /* Swift.Property.swift in Sources */,
+				9AD5FF891E4D21AF0062070B /* Schema.Argument.swift in Sources */,
+				9AD5FF981E4D21C40062070B /* String+CaseConversion.swift in Sources */,
+				9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */,
+				9AD5FF931E4D21B30062070B /* Swift.EnumCase.swift in Sources */,
+				9AD5FF971E4D21B30062070B /* Swift.Generator.swift in Sources */,
+				9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */,
+				9AD5FF801E4D21AF0062070B /* Typeable.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -653,6 +815,11 @@
 			isa = PBXTargetDependency;
 			target = 9A9A6A0C1E0EC9C6008754A4 /* Gryphin */;
 			targetProxy = 9A9A6A181E0EC9C6008754A4 /* PBXContainerItemProxy */;
+		};
+		9AD5FF7B1E4D215B0062070B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9AD5FF721E4D214B0062070B /* GryphinGenerate */;
+			targetProxy = 9AD5FF7A1E4D215B0062070B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -691,6 +858,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"SCHEMA_PATH=$(SCHEMA_PATH)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -822,6 +990,24 @@
 			};
 			name = Release;
 		};
+		9AD5FF771E4D214B0062070B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = MK88G5Q6ZN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		9AD5FF781E4D214B0062070B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = MK88G5Q6ZN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -848,6 +1034,15 @@
 			buildConfigurations = (
 				9A9A6A251E0EC9C6008754A4 /* Debug */,
 				9A9A6A261E0EC9C6008754A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9AD5FF791E4D214B0062070B /* Build configuration list for PBXNativeTarget "GryphinGenerate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9AD5FF771E4D214B0062070B /* Debug */,
+				9AD5FF781E4D214B0062070B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

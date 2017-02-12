@@ -15,7 +15,6 @@ extension Swift {
             case invalidFormat
         }
         
-        let schemaURL:  URL
         let schemaJSON: JSON
         
         private let standardScalars: Set<String> = [
@@ -47,8 +46,11 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(withSchemaAt url: URL) throws {
-            self.schemaURL  = url
+        init(withSchema schema: JSON) {
+            self.schemaJSON = schema
+        }
+        
+        convenience init(withSchemaAt url: URL) throws {
             let data = try Data(contentsOf: url)
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             
@@ -56,7 +58,7 @@ extension Swift {
                 throw GeneratorError.invalidFormat
             }
             
-            self.schemaJSON = schemaJSON
+            self.init(withSchema: schemaJSON)
         }
         
         // ----------------------------------
