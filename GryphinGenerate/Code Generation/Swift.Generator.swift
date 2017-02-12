@@ -78,11 +78,11 @@ extension Swift {
             let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
             let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
             
-            var scalarsFile = File(name: "Scalars", container: Container())
-            var enumsFile   = File(name: "Enums",   container: Container())
+            let scalarsFile = File(name: "Scalars", container: Container())
+            let enumsFile   = File(name: "Enums",   container: Container())
             let queriesFile = File(name: "Queries", container: Container())
             let modelsFile  = File(name: "Models",  container: Container())
-            var inputsFile  = File(name: "Inputs",  container: Container())
+            let inputsFile  = File(name: "Inputs",  container: Container())
             
             /* -----------------------------
              ** Parse the schema types first
