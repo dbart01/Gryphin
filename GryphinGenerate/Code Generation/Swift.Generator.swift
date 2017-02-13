@@ -975,7 +975,7 @@ extension Swift {
 // ----------------------------------
 //  MARK: - Extensions -
 //
-private extension Array {
+fileprivate extension Array {
     
     func keyedUsing(block: (Element) -> String) -> [String : Element] {
         var dictionary: [String : Element] = [:]
@@ -989,7 +989,7 @@ private extension Array {
 // ----------------------------------
 //  MARK: - Schema Type Extensions -
 //
-private extension Schema.Object {
+fileprivate extension Schema.Object {
     
     func descriptionComments() -> [Swift.Line] {
         var commentLines = Swift.Line.linesWith(requiredContent: self.description ?? "")
@@ -1033,7 +1033,7 @@ private extension Schema.Object {
 // ----------------------------------
 //  MARK: - String Extension -
 //
-private extension String {
+fileprivate extension String {
     
     private static var __TypeMap: [String : String] = [
         "String"  : "String",
@@ -1061,7 +1061,7 @@ private extension String {
 // ----------------------------------
 //  MARK: - Nameable Extension -
 //
-private extension Nameable {
+fileprivate extension Nameable {
     
     var queryConcreteTypeName: String {
         return "QConcrete\(self.name.mapped)"
@@ -1083,7 +1083,7 @@ private extension Nameable {
 // ----------------------------------
 //  MARK: - ObjectType Extension -
 //
-private extension Schema.ObjectType {
+fileprivate extension Schema.ObjectType {
     
     enum RecursiveKind {
         case query
@@ -1165,7 +1165,7 @@ private extension Schema.ObjectType {
 // ----------------------------------
 //  MARK: - Describeable Extension -
 //
-private extension Describeable {
+fileprivate extension Describeable {
     
     func descriptionComments() -> [Swift.Line] {
         return Swift.Line.linesWith(requiredContent: self.description ?? "No documentation available for `\(self.name)`")
@@ -1175,7 +1175,7 @@ private extension Describeable {
 // ----------------------------------
 //  MARK: - Argument Extension -
 //
-private extension Schema.Argument {
+fileprivate extension Schema.Argument {
     
     func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
         
@@ -1197,7 +1197,7 @@ private extension Schema.Argument {
 // ----------------------------------
 //  MARK: - Field Extension -
 //
-private extension Schema.Field {
+fileprivate extension Schema.Field {
     
     func parameterDocComments() -> [Swift.Line] {
         var comments: [Swift.Line] = []
