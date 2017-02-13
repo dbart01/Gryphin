@@ -424,8 +424,8 @@
 				9A27B03B1E24728300AFBDA6 /* Extensions */,
 				9A8879071E2D5DD9007FB44F /* Shared */,
 				9A9A6A0F1E0EC9C6008754A4 /* Gryphin */,
-				9A9A6A1A1E0EC9C6008754A4 /* GryphinTests */,
 				9AD5FF741E4D214B0062070B /* GryphinGenerate */,
+				9A9A6A1A1E0EC9C6008754A4 /* GryphinTests */,
 				9A9A6A0E1E0EC9C6008754A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -664,8 +664,8 @@
 			projectRoot = "";
 			targets = (
 				9A9A6A0C1E0EC9C6008754A4 /* Gryphin */,
-				9A9A6A151E0EC9C6008754A4 /* GryphinTests */,
 				9AD5FF721E4D214B0062070B /* GryphinGenerate */,
+				9A9A6A151E0EC9C6008754A4 /* GryphinTests */,
 			);
 		};
 /* End PBXProject section */
