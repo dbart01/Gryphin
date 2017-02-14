@@ -75,7 +75,12 @@
          <EnvironmentVariable
             key = "com.gryphin.prettyPrint"
             value = ""
-            isEnabled = "YES">
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "com.gryphin.networkDebug"
+            value = ""
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

@@ -54,8 +54,6 @@ public extension URLSession {
                 error = .network(code: err.code, domain: err.domain, description: err.localizedDescription)
             }
             
-            networkDebug(data)
-            
             if let data = data,
                 let object = try? JSONSerialization.jsonObject(with: data, options: []),
                 let json = object as? JSON {

@@ -91,11 +91,11 @@ public class GraphModel: CustomDebugStringConvertible {
     // ----------------------------------
     //  MARK: - Alias Management -
     //
-    public func hasAliasFor(_ key: String) -> Bool {
+    func hasAliasFor(_ key: String) -> Bool {
         return self.aliases[key.aliasPrefixed] != nil
     }
     
-    public func aliasedWith<T: GraphModel>(_ key: String) throws -> T? {
+    func aliasedWith<T: GraphModel>(_ key: String) throws -> T? {
         guard let value = self.aliases[key.aliasPrefixed] else {
             throw ModelError.AliasNotFound
         }
@@ -107,7 +107,7 @@ public class GraphModel: CustomDebugStringConvertible {
         return T(json: json)
     }
     
-    public func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
+    func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
         guard let model: T = try self.aliasedWith(key) else {
             throw ModelError.InconsistentSchema
         }
