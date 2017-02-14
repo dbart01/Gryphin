@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A9A6A0C1E0EC9C6008754A4"
+               BlueprintIdentifier = "9AD26F9A1E5258D7002DC70F"
                BuildableName = "Gryphin.framework"
-               BlueprintName = "Gryphin"
+               BlueprintName = "Gryphin-iOS"
+               ReferencedContainer = "container:Gryphin.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9A9A6A151E0EC9C6008754A4"
+               BuildableName = "GryphinTests.xctest"
+               BlueprintName = "GryphinTests"
                ReferencedContainer = "container:Gryphin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,26 +40,15 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A9A6A151E0EC9C6008754A4"
-               BuildableName = "GryphinTests.xctest"
-               BlueprintName = "GryphinTests"
-               ReferencedContainer = "container:Gryphin.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A9A6A0C1E0EC9C6008754A4"
+            BlueprintIdentifier = "9AD26F9A1E5258D7002DC70F"
             BuildableName = "Gryphin.framework"
-            BlueprintName = "Gryphin"
+            BlueprintName = "Gryphin-iOS"
             ReferencedContainer = "container:Gryphin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,19 +68,12 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A9A6A0C1E0EC9C6008754A4"
+            BlueprintIdentifier = "9AD26F9A1E5258D7002DC70F"
             BuildableName = "Gryphin.framework"
-            BlueprintName = "Gryphin"
+            BlueprintName = "Gryphin-iOS"
             ReferencedContainer = "container:Gryphin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "com.gryphin.prettyPrint"
-            value = ""
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -90,9 +86,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A9A6A0C1E0EC9C6008754A4"
+            BlueprintIdentifier = "9AD26F9A1E5258D7002DC70F"
             BuildableName = "Gryphin.framework"
-            BlueprintName = "Gryphin"
+            BlueprintName = "Gryphin-iOS"
             ReferencedContainer = "container:Gryphin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

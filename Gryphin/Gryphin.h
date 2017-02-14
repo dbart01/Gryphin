@@ -6,7 +6,7 @@
 //  Copyright © 2016 Dima Bart. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Gryphin.
 FOUNDATION_EXPORT double GryphinVersionNumber;

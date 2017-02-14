@@ -18,7 +18,6 @@
 		9A27B03D1E24728E00AFBDA6 /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
 		9A27B03F1E24753300AFBDA6 /* String+CaseConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03E1E24753300AFBDA6 /* String+CaseConversionTests.swift */; };
 		9A36AEDC1E4DF2F900DA0201 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */; };
-		9A36AEE01E4DF52F00DA0201 /* GryphinGenerate in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9AD5FF731E4D214B0062070B /* GryphinGenerate */; };
 		9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206A1E28573A002A2B64 /* ReferenceTypeTests.swift */; };
 		9A47206D1E286588002A2B64 /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206C1E286588002A2B64 /* InputType.swift */; };
 		9A56D4B91E51EA84008A37C5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36AEDD1E4DF3B700DA0201 /* main.swift */; };
@@ -107,6 +106,54 @@
 		9AD26F901E51ED1E002DC70F /* Swift.Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */; };
 		9AD26F911E51ED1E002DC70F /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
 		9AD26F921E51ED1E002DC70F /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
+		9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9C1E196F91000D4455 /* Nameable.swift */; };
+		9AD26FA21E5258D7002DC70F /* Typeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA48FBE1E227D410028F044 /* Typeable.swift */; };
+		9AD26FA31E5258D7002DC70F /* Describeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9E1E196FBA000D4455 /* Describeable.swift */; };
+		9AD26FA41E5258D7002DC70F /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A281E0EC9E2008754A4 /* Schema.swift */; };
+		9AD26FA51E5258D7002DC70F /* Schema.Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A291E0EC9E2008754A4 /* Schema.Kind.swift */; };
+		9AD26FA61E5258D7002DC70F /* Schema.ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2A1E0EC9E2008754A4 /* Schema.ObjectType.swift */; };
+		9AD26FA71E5258D7002DC70F /* Schema.Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2B1E0EC9E2008754A4 /* Schema.Object.swift */; };
+		9AD26FA81E5258D7002DC70F /* Schema.EnumValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A32F1E140B7C00B2AD52 /* Schema.EnumValue.swift */; };
+		9AD26FA91E5258D7002DC70F /* Schema.Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2C1E0EC9E2008754A4 /* Schema.Field.swift */; };
+		9AD26FAA1E5258D7002DC70F /* Schema.InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F3C9A1E196E4F000D4455 /* Schema.InputField.swift */; };
+		9AD26FAB1E5258D7002DC70F /* Schema.Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A2D1E0EC9E2008754A4 /* Schema.Argument.swift */; };
+		9AD26FAC1E5258D7002DC70F /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A371E0EC9F8008754A4 /* StringRepresentable.swift */; };
+		9AD26FAD1E5258D7002DC70F /* Containable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33A1E159E5100B2AD52 /* Containable.swift */; };
+		9AD26FAE1E5258D7002DC70F /* Containing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A381E0EC9F8008754A4 /* Containing.swift */; };
+		9AD26FAF1E5258D7002DC70F /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A661E12CAC1008754A4 /* Swift.swift */; };
+		9AD26FB01E5258D7002DC70F /* Swift.Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3B1E0EC9F8008754A4 /* Swift.Visibility.swift */; };
+		9AD26FB11E5258D7002DC70F /* Swift.Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3A1E0EC9F8008754A4 /* Swift.Container.swift */; };
+		9AD26FB21E5258D7002DC70F /* Swift.Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3401E15F3F800B2AD52 /* Swift.Annotation.swift */; };
+		9AD26FB31E5258D7002DC70F /* Swift.Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */; };
+		9AD26FB41E5258D7002DC70F /* Swift.Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3C1E0EC9F8008754A4 /* Swift.Class.swift */; };
+		9AD26FB51E5258D7002DC70F /* Swift.EnumCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */; };
+		9AD26FB61E5258D7002DC70F /* Swift.Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A3D1E0EC9F8008754A4 /* Swift.Method.swift */; };
+		9AD26FB71E5258D7002DC70F /* Swift.Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A33E1E15F2A700B2AD52 /* Swift.Property.swift */; };
+		9AD26FB81E5258D7002DC70F /* Swift.Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3381E159B8000B2AD52 /* Swift.Alias.swift */; };
+		9AD26FB91E5258D7002DC70F /* Swift.Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98A3311E140EAB00B2AD52 /* Swift.Generator.swift */; };
+		9AD26FBA1E5258D7002DC70F /* InputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A47206C1E286588002A2B64 /* InputType.swift */; };
+		9AD26FBB1E5258D7002DC70F /* URLSession+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E731E4922A0004135BF /* URLSession+GraphQL.swift */; };
+		9AD26FBC1E5258D7002DC70F /* URLRequest+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */; };
+		9AD26FBD1E5258D7002DC70F /* ContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A481E0ECA33008754A4 /* ContainerType.swift */; };
+		9AD26FBE1E5258D7002DC70F /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
+		9AD26FBF1E5258D7002DC70F /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */; };
+		9AD26FC01E5258D7002DC70F /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
+		9AD26FC11E5258D7002DC70F /* ConcreteGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */; };
+		9AD26FC21E5258D7002DC70F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
+		9AD26FC31E5258D7002DC70F /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A4A1E0ECA33008754A4 /* Field.swift */; };
+		9AD26FC41E5258D7002DC70F /* TypedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8879031E2D4D0D007FB44F /* TypedField.swift */; };
+		9AD26FC51E5258D7002DC70F /* InlineFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */; };
+		9AD26FC61E5258D7002DC70F /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
+		9AD26FC71E5258D7002DC70F /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A461E0ECA33008754A4 /* ValueType.swift */; };
+		9AD26FC81E5258D7002DC70F /* Collection+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */; };
+		9AD26FC91E5258D7002DC70F /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88790B1E2E4718007FB44F /* GraphModel.swift */; };
+		9AD26FCA1E5258D7002DC70F /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A471E0ECA33008754A4 /* ReferenceType.swift */; };
+		9AD26FCB1E5258D7002DC70F /* Gen$Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F61E50F7B1008AC561 /* Gen$Inputs.swift */; };
+		9AD26FCC1E5258D7002DC70F /* Gen$Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F91E50F7B1008AC561 /* Gen$Scalars.swift */; };
+		9AD26FCD1E5258D7002DC70F /* Gen$Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F51E50F7B1008AC561 /* Gen$Enums.swift */; };
+		9AD26FCE1E5258D7002DC70F /* Gen$Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F81E50F7B1008AC561 /* Gen$Queries.swift */; };
+		9AD26FCF1E5258D7002DC70F /* Gen$Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F71E50F7B1008AC561 /* Gen$Models.swift */; };
+		9AD26FD21E5258D7002DC70F /* Gryphin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A6A101E0EC9C6008754A4 /* Gryphin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
 		9AD5FF7D1E4D21AF0062070B /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
 		9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
@@ -123,6 +170,7 @@
 		9ADAD3FC1E50F7B1008AC561 /* Gen$Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F71E50F7B1008AC561 /* Gen$Models.swift */; };
 		9ADAD3FD1E50F7B1008AC561 /* Gen$Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F81E50F7B1008AC561 /* Gen$Queries.swift */; };
 		9ADAD3FE1E50F7B1008AC561 /* Gen$Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3F91E50F7B1008AC561 /* Gen$Scalars.swift */; };
+		9ADAD4521E533793008AC561 /* GryphinGenerate in Copy Generator to /tmp */ = {isa = PBXBuildFile; fileRef = 9AD5FF731E4D214B0062070B /* GryphinGenerate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,27 +188,26 @@
 			remoteGlobalIDString = 9AD5FF721E4D214B0062070B;
 			remoteInfo = GryphinGenerate;
 		};
+		9ADAD4531E5337BD008AC561 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A9A6A041E0EC9C6008754A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AD5FF721E4D214B0062070B;
+			remoteInfo = GryphinGenerate;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9A36AEDF1E4DF4CA00DA0201 /* CopyFiles */ = {
+		9AD5FF711E4D214B0062070B /* Copy Generator to /tmp */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = /tmp;
 			dstSubfolderSpec = 0;
 			files = (
-				9A36AEE01E4DF52F00DA0201 /* GryphinGenerate in CopyFiles */,
+				9ADAD4521E533793008AC561 /* GryphinGenerate in Copy Generator to /tmp */,
 			);
+			name = "Copy Generator to /tmp";
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9AD5FF711E4D214B0062070B /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -213,7 +260,7 @@
 		9A98A3401E15F3F800B2AD52 /* Swift.Annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Annotation.swift; sourceTree = "<group>"; };
 		9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gryphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A6A101E0EC9C6008754A4 /* Gryphin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gryphin.h; sourceTree = "<group>"; };
-		9A9A6A111E0EC9C6008754A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A9A6A111E0EC9C6008754A4 /* Info-MacOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-MacOS.plist"; sourceTree = "<group>"; };
 		9A9A6A161E0EC9C6008754A4 /* GryphinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GryphinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A6A1D1E0EC9C6008754A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCreatable.swift; sourceTree = "<group>"; };
@@ -246,6 +293,8 @@
 		9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteGraphModel.swift; sourceTree = "<group>"; };
 		9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.AnnotationTests.swift; sourceTree = "<group>"; };
 		9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.LinesTests.swift; sourceTree = "<group>"; };
+		9AD26FD71E5258D7002DC70F /* Gryphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gryphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AD26FD81E5258D7002DC70F /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		9AD5FF731E4D214B0062070B /* GryphinGenerate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GryphinGenerate; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AD6AA731E36575200BF909C /* ModelSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSerializationTests.swift; sourceTree = "<group>"; };
 		9AD6AA751E3657A200BF909C /* queryComprehensive.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = queryComprehensive.json; sourceTree = "<group>"; };
@@ -274,6 +323,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9A6A171E0EC9C6008754A4 /* Gryphin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AD26FD01E5258D7002DC70F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +492,7 @@
 				9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */,
 				9A9A6A161E0EC9C6008754A4 /* GryphinTests.xctest */,
 				9AD5FF731E4D214B0062070B /* GryphinGenerate */,
+				9AD26FD71E5258D7002DC70F /* Gryphin.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -447,7 +504,8 @@
 				9A9A6A451E0EC9FA008754A4 /* Query Generation */,
 				9A8879021E2D40A2007FB44F /* Models */,
 				9A6D3E721E492287004135BF /* Network */,
-				9A9A6A111E0EC9C6008754A4 /* Info.plist */,
+				9A9A6A111E0EC9C6008754A4 /* Info-MacOS.plist */,
+				9AD26FD81E5258D7002DC70F /* Info-iOS.plist */,
 			);
 			path = Gryphin;
 			sourceTree = "<group>";
@@ -566,15 +624,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AD26FD11E5258D7002DC70F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AD26FD21E5258D7002DC70F /* Gryphin.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A9A6A0C1E0EC9C6008754A4 /* Gryphin */ = {
+		9A9A6A0C1E0EC9C6008754A4 /* Gryphin-MacOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A9A6A211E0EC9C6008754A4 /* Build configuration list for PBXNativeTarget "Gryphin" */;
+			buildConfigurationList = 9A9A6A211E0EC9C6008754A4 /* Build configuration list for PBXNativeTarget "Gryphin-MacOS" */;
 			buildPhases = (
-				9A36AEDF1E4DF4CA00DA0201 /* CopyFiles */,
-				9A36AEE11E4DF58200DA0201 /* ShellScript */,
+				9A36AEE11E4DF58200DA0201 /* Generate Schema */,
 				9A9A6A081E0EC9C6008754A4 /* Sources */,
 				9A9A6A091E0EC9C6008754A4 /* Frameworks */,
 				9A9A6A0A1E0EC9C6008754A4 /* Headers */,
@@ -585,7 +650,7 @@
 			dependencies = (
 				9AD26F511E51ECDB002DC70F /* PBXTargetDependency */,
 			);
-			name = Gryphin;
+			name = "Gryphin-MacOS";
 			productName = Gryphin;
 			productReference = 9A9A6A0D1E0EC9C6008754A4 /* Gryphin.framework */;
 			productType = "com.apple.product-type.framework";
@@ -608,13 +673,33 @@
 			productReference = 9A9A6A161E0EC9C6008754A4 /* GryphinTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9AD26F9A1E5258D7002DC70F /* Gryphin-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AD26FD41E5258D7002DC70F /* Build configuration list for PBXNativeTarget "Gryphin-iOS" */;
+			buildPhases = (
+				9AD26F9F1E5258D7002DC70F /* Generate Schema */,
+				9AD26FA01E5258D7002DC70F /* Sources */,
+				9AD26FD01E5258D7002DC70F /* Frameworks */,
+				9AD26FD11E5258D7002DC70F /* Headers */,
+				9AD26FD31E5258D7002DC70F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9ADAD4541E5337BD008AC561 /* PBXTargetDependency */,
+			);
+			name = "Gryphin-iOS";
+			productName = Gryphin;
+			productReference = 9AD26FD71E5258D7002DC70F /* Gryphin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		9AD5FF721E4D214B0062070B /* GryphinGenerate */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9AD5FF791E4D214B0062070B /* Build configuration list for PBXNativeTarget "GryphinGenerate" */;
 			buildPhases = (
 				9AD5FF6F1E4D214B0062070B /* Sources */,
 				9AD5FF701E4D214B0062070B /* Frameworks */,
-				9AD5FF711E4D214B0062070B /* CopyFiles */,
+				9AD5FF711E4D214B0062070B /* Copy Generator to /tmp */,
 			);
 			buildRules = (
 			);
@@ -663,7 +748,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9A9A6A0C1E0EC9C6008754A4 /* Gryphin */,
+				9A9A6A0C1E0EC9C6008754A4 /* Gryphin-MacOS */,
+				9AD26F9A1E5258D7002DC70F /* Gryphin-iOS */,
 				9AD5FF721E4D214B0062070B /* GryphinGenerate */,
 				9A9A6A151E0EC9C6008754A4 /* GryphinTests */,
 			);
@@ -687,16 +773,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AD26FD31E5258D7002DC70F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9A36AEE11E4DF58200DA0201 /* ShellScript */ = {
+		9A36AEE11E4DF58200DA0201 /* Generate Schema */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Generate Schema";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/gen\"";
+		};
+		9AD26F9F1E5258D7002DC70F /* Generate Schema */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Schema";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -799,6 +907,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AD26FA01E5258D7002DC70F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */,
+				9AD26FA21E5258D7002DC70F /* Typeable.swift in Sources */,
+				9AD26FA31E5258D7002DC70F /* Describeable.swift in Sources */,
+				9AD26FA41E5258D7002DC70F /* Schema.swift in Sources */,
+				9AD26FA51E5258D7002DC70F /* Schema.Kind.swift in Sources */,
+				9AD26FA61E5258D7002DC70F /* Schema.ObjectType.swift in Sources */,
+				9AD26FA71E5258D7002DC70F /* Schema.Object.swift in Sources */,
+				9AD26FA81E5258D7002DC70F /* Schema.EnumValue.swift in Sources */,
+				9AD26FA91E5258D7002DC70F /* Schema.Field.swift in Sources */,
+				9AD26FAA1E5258D7002DC70F /* Schema.InputField.swift in Sources */,
+				9AD26FAB1E5258D7002DC70F /* Schema.Argument.swift in Sources */,
+				9AD26FAC1E5258D7002DC70F /* StringRepresentable.swift in Sources */,
+				9AD26FAD1E5258D7002DC70F /* Containable.swift in Sources */,
+				9AD26FAE1E5258D7002DC70F /* Containing.swift in Sources */,
+				9AD26FAF1E5258D7002DC70F /* Swift.swift in Sources */,
+				9AD26FB01E5258D7002DC70F /* Swift.Visibility.swift in Sources */,
+				9AD26FB11E5258D7002DC70F /* Swift.Container.swift in Sources */,
+				9AD26FB21E5258D7002DC70F /* Swift.Annotation.swift in Sources */,
+				9AD26FB31E5258D7002DC70F /* Swift.Line.swift in Sources */,
+				9AD26FB41E5258D7002DC70F /* Swift.Class.swift in Sources */,
+				9AD26FB51E5258D7002DC70F /* Swift.EnumCase.swift in Sources */,
+				9AD26FB61E5258D7002DC70F /* Swift.Method.swift in Sources */,
+				9AD26FB71E5258D7002DC70F /* Swift.Property.swift in Sources */,
+				9AD26FB81E5258D7002DC70F /* Swift.Alias.swift in Sources */,
+				9AD26FB91E5258D7002DC70F /* Swift.Generator.swift in Sources */,
+				9AD26FBA1E5258D7002DC70F /* InputType.swift in Sources */,
+				9AD26FBB1E5258D7002DC70F /* URLSession+GraphQL.swift in Sources */,
+				9AD26FBC1E5258D7002DC70F /* URLRequest+GraphQL.swift in Sources */,
+				9AD26FBD1E5258D7002DC70F /* ContainerType.swift in Sources */,
+				9AD26FBE1E5258D7002DC70F /* JsonCreatable.swift in Sources */,
+				9AD26FBF1E5258D7002DC70F /* Parameter.swift in Sources */,
+				9AD26FC01E5258D7002DC70F /* String+CaseConversion.swift in Sources */,
+				9AD26FC11E5258D7002DC70F /* ConcreteGraphModel.swift in Sources */,
+				9AD26FC21E5258D7002DC70F /* Environment.swift in Sources */,
+				9AD26FC31E5258D7002DC70F /* Field.swift in Sources */,
+				9AD26FC41E5258D7002DC70F /* TypedField.swift in Sources */,
+				9AD26FC51E5258D7002DC70F /* InlineFragment.swift in Sources */,
+				9AD26FC61E5258D7002DC70F /* GraphQL.swift in Sources */,
+				9AD26FC71E5258D7002DC70F /* ValueType.swift in Sources */,
+				9AD26FC81E5258D7002DC70F /* Collection+Append.swift in Sources */,
+				9AD26FC91E5258D7002DC70F /* GraphModel.swift in Sources */,
+				9AD26FCA1E5258D7002DC70F /* ReferenceType.swift in Sources */,
+				9AD26FCB1E5258D7002DC70F /* Gen$Inputs.swift in Sources */,
+				9AD26FCC1E5258D7002DC70F /* Gen$Scalars.swift in Sources */,
+				9AD26FCD1E5258D7002DC70F /* Gen$Enums.swift in Sources */,
+				9AD26FCE1E5258D7002DC70F /* Gen$Queries.swift in Sources */,
+				9AD26FCF1E5258D7002DC70F /* Gen$Models.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9AD5FF6F1E4D214B0062070B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -843,13 +1005,18 @@
 /* Begin PBXTargetDependency section */
 		9A9A6A191E0EC9C6008754A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9A9A6A0C1E0EC9C6008754A4 /* Gryphin */;
+			target = 9A9A6A0C1E0EC9C6008754A4 /* Gryphin-MacOS */;
 			targetProxy = 9A9A6A181E0EC9C6008754A4 /* PBXContainerItemProxy */;
 		};
 		9AD26F511E51ECDB002DC70F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9AD5FF721E4D214B0062070B /* GryphinGenerate */;
 			targetProxy = 9AD26F501E51ECDB002DC70F /* PBXContainerItemProxy */;
+		};
+		9ADAD4541E5337BD008AC561 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9AD5FF721E4D214B0062070B /* GryphinGenerate */;
+			targetProxy = 9ADAD4531E5337BD008AC561 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -961,11 +1128,12 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Gryphin/Info.plist;
+				INFOPLIST_FILE = "Gryphin/Info-MacOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dimabart.Gryphin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Gryphin;
+				PRODUCT_NAME = Gryphin;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -981,11 +1149,12 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Gryphin/Info.plist;
+				INFOPLIST_FILE = "Gryphin/Info-MacOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dimabart.Gryphin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = Gryphin;
+				PRODUCT_NAME = Gryphin;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -1020,6 +1189,50 @@
 			};
 			name = Release;
 		};
+		9AD26FD51E5258D7002DC70F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Gryphin/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimabart.Gryphin;
+				PRODUCT_MODULE_NAME = Gryphin;
+				PRODUCT_NAME = Gryphin;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		9AD26FD61E5258D7002DC70F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Gryphin/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimabart.Gryphin;
+				PRODUCT_MODULE_NAME = Gryphin;
+				PRODUCT_NAME = Gryphin;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		9AD5FF771E4D214B0062070B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1050,7 +1263,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A9A6A211E0EC9C6008754A4 /* Build configuration list for PBXNativeTarget "Gryphin" */ = {
+		9A9A6A211E0EC9C6008754A4 /* Build configuration list for PBXNativeTarget "Gryphin-MacOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A9A6A221E0EC9C6008754A4 /* Debug */,
@@ -1064,6 +1277,15 @@
 			buildConfigurations = (
 				9A9A6A251E0EC9C6008754A4 /* Debug */,
 				9A9A6A261E0EC9C6008754A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9AD26FD41E5258D7002DC70F /* Build configuration list for PBXNativeTarget "Gryphin-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9AD26FD51E5258D7002DC70F /* Debug */,
+				9AD26FD61E5258D7002DC70F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
