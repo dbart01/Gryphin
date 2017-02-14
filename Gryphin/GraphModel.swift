@@ -16,7 +16,7 @@ enum ModelError: Error {
     case InconsistentSchema
 }
 
-public class GraphModel {
+public class GraphModel: CustomDebugStringConvertible {
     
     private var values:  JSON            = [:]
     private var aliases: [String: JSON?] = [:]
@@ -43,6 +43,16 @@ public class GraphModel {
         }
         
         self.init(json: json)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Debug -
+    //
+    public var debugDescription: String {
+        return [
+            "value": self.values,
+            "aliases": self.aliases,
+        ].debugDescription
     }
     
     // ----------------------------------
