@@ -16,7 +16,7 @@ enum ModelError: Error {
     case InconsistentSchema
 }
 
-class GraphModel {
+public class GraphModel {
     
     private var values:  JSON            = [:]
     private var aliases: [String: JSON?] = [:]
@@ -28,7 +28,7 @@ class GraphModel {
     // ----------------------------------
     //  MARK: - Init -
     //
-    required init?(json: JSON) {
+    public required init?(json: JSON) {
         if let typeName = json[GraphQL.Key.typeName],
             (typeName as? String) ?? "" != type(of: self).typeName {
             return nil
@@ -37,7 +37,7 @@ class GraphModel {
         self.parseAliasesFrom(json)
     }
     
-    convenience init?(json: JSON?) {
+    public convenience init?(json: JSON?) {
         guard let json = json else {
             return nil
         }
@@ -81,11 +81,11 @@ class GraphModel {
     // ----------------------------------
     //  MARK: - Alias Management -
     //
-    func hasAliasFor(_ key: String) -> Bool {
+    public func hasAliasFor(_ key: String) -> Bool {
         return self.aliases[key.aliasPrefixed] != nil
     }
     
-    func aliasedWith<T: GraphModel>(_ key: String) throws -> T? {
+    public func aliasedWith<T: GraphModel>(_ key: String) throws -> T? {
         guard let value = self.aliases[key.aliasPrefixed] else {
             throw ModelError.AliasNotFound
         }
@@ -97,7 +97,7 @@ class GraphModel {
         return T(json: json)
     }
     
-    func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
+    public func aliasedWith<T: GraphModel>(_ key: String) throws -> T {
         guard let model: T = try self.aliasedWith(key) else {
             throw ModelError.InconsistentSchema
         }

@@ -8,12 +8,12 @@
 
 import Foundation
 
-class TypedField: Field {
+public class TypedField: Field {
 
     // ----------------------------------
     //  MARK: - Init -
     //
-    override init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
+    public override init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
         var modifiedChildren: [ReferenceType] = children ?? []
         
         /* ------------------------------------

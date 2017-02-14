@@ -22,8 +22,8 @@ class SwiftAliasTests: XCTestCase {
         XCTAssertEqual(alias.forType, "String")
     }
     
-    func testStringRepresentation() {
-        let alias = Swift.Alias(name: "SuperString", forType: "String")
+    func testStringRepresentationDefault() {
+        let alias = Swift.Alias(visibility: .none, name: "SuperString", forType: "String")
         
         let container    = Swift.Container()
         let subcontainer = Swift.Container()
@@ -33,6 +33,21 @@ class SwiftAliasTests: XCTestCase {
         
         XCTAssertEqual(alias.stringRepresentation, "" ~
             "    typealias SuperString = String" ~
+            ""
+        )
+    }
+    
+    func testStringRepresentationPublic() {
+        let alias = Swift.Alias(visibility: .public, name: "SuperString", forType: "String")
+        
+        let container    = Swift.Container()
+        let subcontainer = Swift.Container()
+        
+        container.add(child: subcontainer)
+        subcontainer.add(child: alias)
+        
+        XCTAssertEqual(alias.stringRepresentation, "" ~
+            "    public typealias SuperString = String" ~
             ""
         )
     }

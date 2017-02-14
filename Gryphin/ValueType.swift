@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ValueType {
+public protocol ValueType {
     var _stringRepresentation: String { get }
 }
 
@@ -21,7 +21,7 @@ extension ValueType {
     }
 }
 
-func ==<T: ValueType>(lhs: T, rhs: T) -> Bool {
+public func ==<T: ValueType>(lhs: T, rhs: T) -> Bool {
     return lhs._stringRepresentation == rhs._stringRepresentation
 }
 
@@ -29,37 +29,37 @@ func ==<T: ValueType>(lhs: T, rhs: T) -> Bool {
 //  MARK: - Foundation -
 //
 extension String: ValueType {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\"\(self)\""
     }
 }
 
 extension Int: ValueType {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\(self)"
     }
 }
 
 extension Float: ValueType {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\(self)"
     }
 }
 
 extension Double: ValueType {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\(self)"
     }
 }
 
 extension Bool: ValueType {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return self ? "true" : "false"
     }
 }
 
 extension RawRepresentable where RawValue == String {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\(self.rawValue)"
     }
 }

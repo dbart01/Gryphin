@@ -176,7 +176,7 @@ extension Swift {
             precondition(object.kind == .enum)
             
             let enumClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .enum,
                 name:         object.name,
                 inheritances: ["String"],
@@ -206,8 +206,9 @@ extension Swift {
             }
             
             return Alias(
-                name:    scalar.name,
-                forType: "String"
+                visibility: .public,
+                name:       scalar.name,
+                forType:    "String"
             )
         }
         
@@ -222,7 +223,7 @@ extension Swift {
              ** also have a concrete class of similar name
              */
             let swiftInterface = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .protocol,
                 name:         interface.queryTypeName,
                 inheritances: interface.inheritances(),
@@ -273,7 +274,7 @@ extension Swift {
                         
                         if !objectFields.isEmpty {
                             let swiftExtension = Class(
-                                visibility: .none,
+                                visibility: .public,
                                 kind:       .extension,
                                 name:       possibleType.queryTypeName,
                                 comments:   [
@@ -304,7 +305,7 @@ extension Swift {
              ** an abstract protocol type.
              */
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .class(.final),
                 name:         concreteInterface.queryConcreteTypeName,
                 inheritances: ["TypedField", concreteInterface.queryTypeName],
@@ -331,7 +332,7 @@ extension Swift {
                     )
                     
                     let method = Method(
-                        visibility: .none,
+                        visibility: .public,
                         name:        .func("fragmentOn\(fieldName)"),
                         returnType:  swiftClass.name,
                         parameters:  [parameter],
@@ -360,7 +361,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .protocol,
                 name:         union.queryTypeName,
                 inheritances: union.inheritances(),
@@ -393,7 +394,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .class(.final),
                 name:         object.queryTypeName,
                 inheritances: object.inheritances(from: [self.fieldClassName()]),
@@ -416,7 +417,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .struct,
                 name:         inputObject.queryTypeName,
                 inheritances: inputObject.inheritances(from: [self.inputClassName()]),
@@ -449,7 +450,7 @@ extension Swift {
                 }
                 
                 swiftClass += Method(
-                    visibility: .none,
+                    visibility: .public,
                     name:       .init(.none, false),
                     parameters: initParams,
                     body:       initBody,
@@ -496,7 +497,7 @@ extension Swift {
                 body += "return parameters"
                 
                 swiftClass += Method(
-                    visibility:  .none,
+                    visibility:  .public,
                     name:        .func("_representationParameters"),
                     returnType:  "[Parameter]",
                     body:        body,
@@ -515,7 +516,7 @@ extension Swift {
             precondition(concreteInterface.kind == .interface || concreteInterface.kind == .union)
             
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .class(.final),
                 name:         concreteInterface.modelConcreteTypeName,
                 inheritances: [self.modelConcreteClassName()],
@@ -530,7 +531,7 @@ extension Swift {
                 for possibleType in possibleTypes {
                     
                     swiftClass += Property(
-                        visibility: .none,
+                        visibility: .public,
                         name:       possibleType.name.lowercasedFirst,
                         returnType: possibleType.modelTypeName.implicitNullable,
                         accessors:  [
@@ -563,7 +564,7 @@ extension Swift {
              ** this object.
              */
             let swiftClass = Class(
-                visibility:   .none,
+                visibility:   .public,
                 kind:         .class(.final),
                 name:         object.modelTypeName,
                 inheritances: [self.modelClassName()],
@@ -583,7 +584,7 @@ extension Swift {
                     let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
                     
                     swiftClass += Property(
-                        visibility: .none,
+                        visibility: .public,
                         name:       field.name,
                         returnType: field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
                         accessors:  [
@@ -611,7 +612,7 @@ extension Swift {
                     let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
                         
                     swiftClass += Method(
-                        visibility: .none,
+                        visibility: .public,
                         name:       .func(field.name),
                         returnType: fieldType,
                         parameters: [
@@ -638,7 +639,7 @@ extension Swift {
         private func generate(typeNamePropertyWith name: String) -> Property {
             return Property(
                 kind:       .static,
-                visibility: .none,
+                visibility: .public,
                 override:   true,
                 name:       "typeName",
                 returnType: "String",
@@ -673,7 +674,7 @@ extension Swift {
             }
             
             return Method(
-                visibility: .none,
+                visibility: .public,
                 name:       .init(.required, true),
                 parameters: [
                     Method.Parameter(name: "json", type: "JSON"),
@@ -696,7 +697,7 @@ extension Swift {
             }
             
             return Method(
-                visibility: .none,
+                visibility: .public,
                 name:       .init(.required, true),
                 parameters: [
                     Method.Parameter(name: "json", type: "JSON"),
@@ -733,7 +734,7 @@ extension Swift {
             let closure = self.closureNameWith(type: type)
             
             return Method(
-                visibility:  .none,
+                visibility:  .public,
                 name:        .init(.convenience, false),
                 parameters:  [
                     Method.Parameter(
@@ -754,7 +755,7 @@ extension Swift {
         
         private func generate(inputPropertyFor field: Schema.InputField) -> Property {
             return Property(
-                visibility: .none,
+                visibility: .public,
                 name:       field.name,
                 returnType: field.type.recursiveQueryInputType(unmodified: field.type.hasScalar),
                 comments:   field.descriptionComments()
@@ -803,7 +804,7 @@ extension Swift {
             }
             
             return Property(
-                visibility: .none,
+                visibility: isInterface ? .none : .public,
                 name:       field.name,
                 returnType: isInterface ? "Self" : type,
                 body:       body,
@@ -844,7 +845,7 @@ extension Swift {
             }
             
             return Method(
-                visibility:  .none,
+                visibility:  isInterface ? .none : .public,
                 name:        .func(field.name),
                 returnType:  isInterface ? "Self" : type,
                 parameters:  parameters,

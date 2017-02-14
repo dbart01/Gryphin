@@ -8,24 +8,24 @@
 
 import Foundation
 
-enum GraphError {
+public enum GraphError {
     case network(code: Int, domain: String, description: String)
     case serialization(description: String)
 }
 
-extension URLSession {
+public extension URLSession {
     
     // ----------------------------------
     //  MARK: - Query -
     //
-    func graphQueryTask(with query: QQuery, to url: URL, completionHandler: @escaping (Query?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
+    public func graphQueryTask(with query: QQuery, to url: URL, completionHandler: @escaping (Query?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
         return self.graphTask(with: query, to: url, completionHandler: completionHandler)
     }
     
     // ----------------------------------
     //  MARK: - Mutation -
     //
-    func graphMutationTask(with mutation: QMutation, to url: URL, completionHandler: @escaping (Mutation?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
+    public func graphMutationTask(with mutation: QMutation, to url: URL, completionHandler: @escaping (Mutation?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
         return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)
     }
     

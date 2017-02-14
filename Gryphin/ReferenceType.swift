@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol ReferenceType: class, ValueType {
+public protocol ReferenceType: class, ValueType {
     var _name:   String         { get }
     var _parent: ContainerType? { get set }
 }
 
-func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
+public func ==(lhs: ReferenceType, rhs: ReferenceType) -> Bool {
     return lhs === rhs
 }
 

@@ -13,22 +13,26 @@ extension Swift {
         
         var parent: Containing?
         
-        let name:    String
-        let forType: String
+        let visibility:  Visibility
+        let name:        String
+        let forType:     String
         
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(name: String, forType: String) {
-            self.name    = name
-            self.forType = forType
+        init(visibility: Visibility = .internal, name: String, forType: String) {
+            self.visibility = visibility
+            self.name       = name
+            self.forType    = forType
         }
         
         // ----------------------------------
         //  MARK: - String Representation -
         //
         var stringRepresentation: String {
-            return "\(self.indent)typealias \(self.name) = \(self.forType)\n"
+            let visibility = self.visibility == .none ? "" : "\(self.visibility.rawValue) "
+            
+            return "\(self.indent)\(visibility)typealias \(self.name) = \(self.forType)\n"
         }
     }
 }

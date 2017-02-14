@@ -12,21 +12,21 @@ enum FieldError: Error {
     case InvalidSyntax(String)
 }
 
-class Field: ContainerType {
+public class Field: ContainerType {
     
-    var _name:       String
-    var _alias:      String?
-    var _parameters: [Parameter]
+    public var _name:       String
+    public var _alias:      String?
+    public var _parameters: [Parameter]
     
-    var _parent:     ContainerType?
-    var _children:  [ReferenceType] = []
+    public var _parent:     ContainerType?
+    public var _children:  [ReferenceType] = []
     
     private var enquedAlias: String?
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
+    public init(name: String, alias: String? = nil, parameters: [Parameter] = [], children: [ReferenceType]? = nil) {
         self._name       = name
         self._alias      = alias?.aliasPrefixed
         self._parameters = parameters
@@ -39,7 +39,7 @@ class Field: ContainerType {
     // ----------------------------------
     //  MARK: - Alias -
     //
-    func alias(_ alias: String) -> Self {
+    public func alias(_ alias: String) -> Self {
         self.enquedAlias = alias.aliasPrefixed
         return self
     }
@@ -61,7 +61,7 @@ class Field: ContainerType {
     // ----------------------------------
     //  MARK: - Children -
     //
-    func _add(children: [ReferenceType]) throws {
+    public func _add(children: [ReferenceType]) throws {
         if !children.isEmpty {
             
             if let child = children.first {
@@ -80,7 +80,7 @@ class Field: ContainerType {
 //  MARK: - ValueType -
 //
 extension Field {
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         var representation: String
         
         if let alias = self._alias {

@@ -8,16 +8,16 @@
 
 import Foundation
 
-class ConcreteGraphModel: GraphModel {
+public class ConcreteGraphModel: GraphModel {
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    required init?(json: JSON) {
+    public required init?(json: JSON) {
         super.init(json: [:])
     }
     
-    convenience init?(json: JSON?) {
+    public convenience init?(json: JSON?) {
         guard let json = json else {
             return nil
         }

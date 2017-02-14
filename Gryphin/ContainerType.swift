@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ContainerType: class, ReferenceType {
+public protocol ContainerType: class, ReferenceType {
     var _children:   [ReferenceType]  { get set }
     var _parameters: [Parameter]      { get }
     
@@ -34,6 +34,6 @@ extension ContainerType {
     }
 }
 
-func ==(lhs: ContainerType, rhs: ContainerType) -> Bool {
+public func ==(lhs: ContainerType, rhs: ContainerType) -> Bool {
     return lhs === rhs
 }

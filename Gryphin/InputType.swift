@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol InputType: ValueType {
+public protocol InputType: ValueType {
     func _representationParameters() -> [Parameter]
 }
 
 extension InputType {
     
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         let parameters = self._representationParameters().map {
             $0._stringRepresentation
         }.joined(separator: ", ")

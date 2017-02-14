@@ -8,20 +8,20 @@
 
 import Foundation
 
-typealias JSON = [String : Any?]
+public typealias JSON = [String : Any?]
 
-protocol JsonCreatable {
+public protocol JsonCreatable {
     init(json: JSON)
 }
 
-extension JsonCreatable {
+public extension JsonCreatable {
     
     /* ----------------------------------------
      ** Provide a failable initializer for all
      ** JsonCreatable types that return nil if
      ** the JSON object is nil.
      */
-    init?(json: JSON?) {
+    public init?(json: JSON?) {
         guard let json = json else {
             return nil
         }

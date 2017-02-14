@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Parameter: ValueType {
+public struct Parameter: ValueType {
     
     fileprivate let _name:  String
     fileprivate let _value: String
@@ -46,7 +46,7 @@ struct Parameter: ValueType {
     // ----------------------------------
     //  MARK: - ValueType -
     //
-    var _stringRepresentation: String {
+    public var _stringRepresentation: String {
         return "\(self._name): \(self._value)"
     }
 }
@@ -56,6 +56,6 @@ struct Parameter: ValueType {
 //
 extension Parameter: Equatable {}
 
-func ==(lhs: Parameter, rhs: Parameter) -> Bool {
+public func ==(lhs: Parameter, rhs: Parameter) -> Bool {
     return lhs._name == rhs._name && lhs._value._stringRepresentation == rhs._value._stringRepresentation
 }
