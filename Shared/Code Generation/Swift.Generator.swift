@@ -584,10 +584,11 @@ extension Swift {
                     let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
                     
                     swiftClass += Property(
-                        visibility: .public,
-                        name:       field.name,
-                        returnType: field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
-                        accessors:  [
+                        visibility:  .public,
+                        name:        field.name,
+                        returnType:  field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
+                        annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
+                        accessors:   [
                             Property.Accessor(kind: .get, body: [
                                 Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
                             ]),
@@ -622,6 +623,7 @@ extension Swift {
                                 type:    "String"
                             )
                         ],
+                        annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
                         body:  [
                             Line(content: "return try! self.aliasedWith(alias)"),
                         ],
@@ -776,7 +778,7 @@ extension Swift {
                  ** than a method with a `buildOn` parameter.
                  */
                 if field.type.hasScalar && field.arguments.isEmpty {
-                    containers += self.generate(propertyFor: field, ofType: name, isInterface: isInterface)
+                    containers += self.generate(propertyFor: field, ofType: name, isInterface: isInterface, isDeprecated: field.isDeprecated)
                 } else {
                     containers += self.generate(methodFor: field, ofType: name, isInterface: isInterface, buildable: !field.type.hasScalar)
                 }
@@ -785,7 +787,7 @@ extension Swift {
             return containers
         }
         
-        private func generate<T>(propertyFor field: T, ofType type: String, isInterface: Bool) -> Property where T: Typeable, T: Describeable {
+        private func generate<T>(propertyFor field: T, ofType type: String, isInterface: Bool, isDeprecated: Bool = false) -> Property where T: Typeable, T: Describeable {
             
             let isScalar = field.type.hasScalar
             
@@ -803,12 +805,22 @@ extension Swift {
                 comments += Line(content: " - Value Type: `\(field.type.recursiveQueryType(unmodified: field.type.hasScalar))`")
             }
             
+            /* ---------------------------------
+             ** Mark deprecated fields that will
+             ** be removed in future schemas.
+             */
+            var annotations: [Annotation] = []
+            if isDeprecated {
+                annotations += self.deprecationAnnotation()
+            }
+            
             return Property(
-                visibility: isInterface ? .none : .public,
-                name:       field.name,
-                returnType: isInterface ? "Self" : type,
-                body:       body,
-                comments:   comments
+                visibility:  isInterface ? .none : .public,
+                name:        field.name,
+                returnType:  isInterface ? "Self" : type,
+                annotations: annotations,
+                body:        body,
+                comments:    comments
             )
         }
         
@@ -844,12 +856,27 @@ extension Swift {
                 body = self.subfieldBodyWith(name: field.name, type: fieldType, buildable: buildable, isObject: !field.type.hasScalar, arguments: field.arguments)
             }
             
+            /* ---------------------------------
+             ** Mark deprecated fields that will
+             ** be removed in future schemas.
+             */
+            var annotations: [Annotation] = [
+                .discardableResult
+            ]
+            
+            if field.isDeprecated {
+                annotations += .available([
+                    .init(platform: .any),
+                    .init(name: .deprecated)
+                ])
+            }
+            
             return Method(
                 visibility:  isInterface ? .none : .public,
                 name:        .func(field.name),
                 returnType:  isInterface ? "Self" : type,
                 parameters:  parameters,
-                annotations: [.discardableResult],
+                annotations: annotations,
                 body:        body,
                 comments:    field.parameterDocComments()
             )
@@ -969,6 +996,16 @@ extension Swift {
             
             
             return lines
+        }
+        
+        // ----------------------------------
+        //  MARK: - Deprecations -
+        //
+        private func deprecationAnnotation() -> Annotation {
+            return .available([
+                .init(platform: .any),
+                .init(name: .deprecated)
+            ])
         }
     }
 }

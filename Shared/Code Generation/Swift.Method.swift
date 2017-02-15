@@ -59,7 +59,7 @@ extension Swift {
              ** Construct the method annotations
              */
             let annotations = self.annotations?.map {
-                "\(self.indent)\($0.rawValue)\n"
+                "\(self.indent)\($0.stringRepresentation)\n"
             }.joined(separator: "") ?? ""
             
             /* ---------------------------------
