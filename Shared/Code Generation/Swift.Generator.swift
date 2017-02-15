@@ -580,24 +580,7 @@ extension Swift {
                  ** model object.
                  */
                 for field in fields {
-                    
-                    let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
-                    
-                    swiftClass += Property(
-                        visibility:  .public,
-                        name:        field.name,
-                        returnType:  field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
-                        annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
-                        accessors:   [
-                            Property.Accessor(kind: .get, body: [
-                                Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
-                            ]),
-                            Property.Accessor(kind: .set, body: [
-                                Line(content: "self.set(newValue, for: \"\(field.name)\")")
-                            ]),
-                        ],
-                        comments: field.descriptionComments()
-                    )
+                    swiftClass += self.generate(modelPropertyFor: field)
                 }
                 
                 swiftClass += self.generate(initializerWith: fields)
@@ -609,26 +592,7 @@ extension Swift {
                  ** only applies to non-scalars, tho.
                  */
                 for field in fields where !field.type.hasScalar && !field.type.isCollection {
-                    
-                    let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
-                        
-                    swiftClass += Method(
-                        visibility: .public,
-                        name:       .func(field.name),
-                        returnType: fieldType,
-                        parameters: [
-                            Method.Parameter(
-                                unnamed: true,
-                                name:    "alias",
-                                type:    "String"
-                            )
-                        ],
-                        annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
-                        body:  [
-                            Line(content: "return try! self.aliasedWith(alias)"),
-                        ],
-                        comments: field.descriptionComments()
-                    )
+                    swiftClass += self.generate(modelMethodFor: field)
                 }
             }
             
@@ -727,6 +691,48 @@ extension Swift {
             } else {
                 return Line(content: "self.set(json.v(\"\(name)\"), for: \"\(name)\")")
             }
+        }
+        
+        private func generate(modelPropertyFor field: Schema.Field) -> Property {
+            let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
+            
+            return Property(
+                visibility:  .public,
+                name:        field.name,
+                returnType:  field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
+                annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
+                accessors:   [
+                    Property.Accessor(kind: .get, body: [
+                        Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
+                        ]),
+                    Property.Accessor(kind: .set, body: [
+                        Line(content: "self.set(newValue, for: \"\(field.name)\")")
+                        ]),
+                    ],
+                comments: field.descriptionComments()
+            )
+        }
+        
+        private func generate(modelMethodFor field: Schema.Field) -> Method {
+            let fieldType = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
+            
+            return Method(
+                visibility: .public,
+                name:       .func(field.name),
+                returnType: fieldType,
+                parameters: [
+                    Method.Parameter(
+                        unnamed: true,
+                        name:    "alias",
+                        type:    "String"
+                    )
+                ],
+                annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
+                body:  [
+                    Line(content: "return try! self.aliasedWith(alias)"),
+                    ],
+                comments: field.descriptionComments()
+            )
         }
         
         // ----------------------------------
