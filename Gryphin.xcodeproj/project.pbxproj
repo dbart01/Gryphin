@@ -393,7 +393,7 @@
 				9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */,
 				9A6D3E731E4922A0004135BF /* URLSession+GraphQL.swift */,
 			);
-			name = Network;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		9A8878BB1E253AB9007FB44F /* Extensions */ = {
@@ -444,7 +444,7 @@
 				9A88790B1E2E4718007FB44F /* GraphModel.swift */,
 				9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9A8879071E2D5DD9007FB44F /* Shared */ = {
@@ -580,7 +580,7 @@
 				9A27B0361E231AF100AFBDA6 /* InlineFragment.swift */,
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
 			);
-			name = "Query Generation";
+			path = "Query Generation";
 			sourceTree = "<group>";
 		};
 		9AAF01601E2EC148004062EE /* Generated */ = {
