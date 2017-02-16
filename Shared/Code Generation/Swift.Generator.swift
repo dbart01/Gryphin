@@ -527,6 +527,24 @@ extension Swift {
             
             swiftClass += self.generate(typeNamePropertyWith: concreteInterface.name)
             
+            /* ----------------------------------------
+             ** A concrete interface has some fields.
+             ** These fields are shared among all types
+             ** that implement this interface. We want
+             ** to provide access to these as well.
+             */
+            if let fields = concreteInterface.fields {
+                
+                for field in fields {
+                    swiftClass += self.generate(modelPropertyFor: field)
+                }
+            }
+            
+            /* ------------------------------------------
+             ** A concrete interface model is really just
+             ** a proxy that provides typed access to it's
+             ** children. These are the possible types.
+             */
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
                     
@@ -547,10 +565,9 @@ extension Swift {
                         ]
                     )
                 }
-                
-                swiftClass += self.generate(initializerWith: possibleTypes)
             }
             
+            swiftClass += self.generate(initializerWith: concreteInterface.fields, types: concreteInterface.possibleTypes)
             
             return swiftClass
         }
@@ -583,7 +600,7 @@ extension Swift {
                     swiftClass += self.generate(modelPropertyFor: field)
                 }
                 
-                swiftClass += self.generate(initializerWith: fields)
+                swiftClass += self.generate(initializerWith: fields, types: nil)
                 
                 /* ----------------------------------
                  ** Generate the alias accessors that
@@ -615,51 +632,52 @@ extension Swift {
             )
         }
         
-        private func generate(initializerWith fields: [Schema.Field]) -> Method {
+        private func generate(initializerWith fields: [Schema.Field]?, types: [Schema.ObjectType]?) -> Method {
             var initBody: [Line] = []
             
             initBody += "super.init(json: json)"
             
-            let scalarFields = fields.filter { $0.type.hasScalar }
-            if !scalarFields.isEmpty {
-                initBody += ""
+            /* ----------------------------------------
+             ** Iterate overall all the provided fields
+             ** and generate scalar / object assignments.
+             */
+            if let fields = fields, !fields.isEmpty {
+                let scalarFields = fields.filter { $0.type.hasScalar }
+                if !scalarFields.isEmpty {
+                    initBody += ""
+                    
+                    for field in scalarFields {
+                        initBody += self.generate(propertyAssignmentNamed: field.name, isFragment: false)
+                    }
+                }
                 
-                for field in scalarFields {
-                    initBody += self.generate(propertyAssignmentNamed: field.name, isFragment: false)
+                let objectFields = fields.filter { !$0.type.hasScalar }
+                if !objectFields.isEmpty {
+                    initBody += ""
+                    
+                    for field in objectFields {
+                        let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
+                        initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isFragment: false, isCollection: field.type.isCollection)
+                    }
                 }
             }
             
-            let objectFields = fields.filter { !$0.type.hasScalar }
-            if !objectFields.isEmpty {
-                initBody += ""
-                
-                for field in objectFields {
-                    let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
-                    initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isFragment: false, isCollection: field.type.isCollection)
-                }
-            }
-            
-            return Method(
-                visibility: .public,
-                name:       .init(.required, true),
-                parameters: [
-                    Method.Parameter(name: "json", type: "JSON"),
-                ],
-                body: initBody
-            )
-        }
-        
-        private func generate(initializerWith types: [Schema.ObjectType]) -> Method {
-            var initBody: [Line] = []
-            initBody += "super.init(json: json)"
             initBody += ""
             
-            for type in types {
-                
-                precondition(!type.hasScalar) // These should always be possible object types
-                
-                let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
-                initBody += self.generate(propertyAssignmentNamed: type.name.lowercasedFirst, type: name, isFragment: true, isCollection: type.isCollection)
+            /* ----------------------------------------
+             ** Iterarate over all possible types and
+             ** generate a passthrough assignment. A
+             ** passthrough is when we pass the `json`
+             ** straight into the object initializer
+             ** without accessing any of the children.
+             */
+            if let types = types, !types.isEmpty {
+                for type in types {
+                    precondition(!type.hasScalar) // These should always be possible object types
+                    
+                    let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
+                    initBody += self.generate(propertyAssignmentNamed: type.name.lowercasedFirst, type: name, isFragment: true, isCollection: type.isCollection)
+                }
             }
             
             return Method(
