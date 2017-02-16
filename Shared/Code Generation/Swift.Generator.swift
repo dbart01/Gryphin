@@ -718,7 +718,7 @@ extension Swift {
                 visibility:  .public,
                 name:        field.name,
                 returnType:  field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
-                annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
+                annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
                 accessors:   [
                     Property.Accessor(kind: .get, body: [
                         Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
@@ -745,7 +745,7 @@ extension Swift {
                         type:    "String"
                     )
                 ],
-                annotations: field.isDeprecated ? [self.deprecationAnnotation()] : nil,
+                annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
                 body:  [
                     Line(content: "return try! self.aliasedWith(alias)"),
                     ],
@@ -802,7 +802,7 @@ extension Swift {
                  ** than a method with a `buildOn` parameter.
                  */
                 if field.type.hasScalar && field.arguments.isEmpty {
-                    containers += self.generate(propertyFor: field, ofType: name, isInterface: isInterface, isDeprecated: field.isDeprecated)
+                    containers += self.generate(propertyFor: field, ofType: name, isInterface: isInterface, isDeprecated: field.isDeprecated, deprecationReason: field.deprecationReason)
                 } else {
                     containers += self.generate(methodFor: field, ofType: name, isInterface: isInterface, buildable: !field.type.hasScalar)
                 }
@@ -811,7 +811,7 @@ extension Swift {
             return containers
         }
         
-        private func generate<T>(propertyFor field: T, ofType type: String, isInterface: Bool, isDeprecated: Bool = false) -> Property where T: Typeable, T: Describeable {
+        private func generate<T>(propertyFor field: T, ofType type: String, isInterface: Bool, isDeprecated: Bool = false, deprecationReason: String? = nil) -> Property where T: Typeable, T: Describeable {
             
             let isScalar = field.type.hasScalar
             
@@ -835,7 +835,7 @@ extension Swift {
              */
             var annotations: [Annotation] = []
             if isDeprecated {
-                annotations += self.deprecationAnnotation()
+                annotations += self.deprecationAnnotationWith(deprecationReason)
             }
             
             return Property(
@@ -1025,11 +1025,17 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Deprecations -
         //
-        private func deprecationAnnotation() -> Annotation {
-            return .available([
+        private func deprecationAnnotationWith(_ message: String?) -> Annotation {
+            var parameters: [Annotation.Parameter] = [
                 .init(platform: .any),
                 .init(name: .deprecated)
-            ])
+            ]
+            
+            if let message = message, !message.isEmpty {
+                parameters += .init(name: .message, value: .quoted(message))
+            }
+            
+            return .available(parameters)
         }
     }
 }
