@@ -446,7 +446,6 @@ extension Swift {
                 var initParams: [Method.Parameter] = []
                 for field in fields {
                     initParams += Method.Parameter(
-                        alias:   "_",
                         name:    field.name,
                         type:    field.type.recursiveQueryInputType(unmodified: field.type.hasScalar),
                         default: field.type.isTopLevelNullable ? .nil : nil
