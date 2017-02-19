@@ -14,25 +14,11 @@ public enum GraphError {
 }
 
 public extension URLSession {
-    
-    // ----------------------------------
-    //  MARK: - Query -
-    //
-    public func graphQueryTask(with query: QQuery, to url: URL, completionHandler: @escaping (Query?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
-        return self.graphTask(with: query, to: url, completionHandler: completionHandler)
-    }
-    
-    // ----------------------------------
-    //  MARK: - Mutation -
-    //
-    public func graphMutationTask(with mutation: QMutation, to url: URL, completionHandler: @escaping (Mutation?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
-        return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)
-    }
-    
+        
     // ----------------------------------
     //  MARK: - Network -
     //
-    private func graphTask<Q: Field, R: GraphModel>(with query: Q, to url: URL, completionHandler: @escaping (R?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
+    func graphTask<Q: Field, R: GraphModel>(with query: Q, to url: URL, completionHandler: @escaping (R?, HTTPURLResponse?, GraphError?) -> Void) -> URLSessionDataTask {
         
         networkDebug(query._stringRepresentation)
         

@@ -27,6 +27,7 @@ extension Swift {
             "Boolean",
             "Float",
             "String",
+            "URL",
             
             // "ID",
             
@@ -75,14 +76,15 @@ extension Swift {
             let jsonSchema     = schemaData[SchemaKey.schema]    as! JSON
             let jsonTypes      = jsonSchema[SchemaKey.types]     as! [JSON]
             
-            let queryType      = (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String
-            let mutationType   = (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String
+            let queryType      = TypeName(name: (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String)
+            let mutationType   = TypeName(name: (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String)
             
             let scalarsFile = File(name: "Scalars", container: Container())
             let enumsFile   = File(name: "Enums",   container: Container())
             let queriesFile = File(name: "Queries", container: Container())
             let modelsFile  = File(name: "Models",  container: Container())
             let inputsFile  = File(name: "Inputs",  container: Container())
+            let networkFile = File(name: "Network", container: Container())
             
             /* -----------------------------
              ** Parse the schema types first
@@ -119,9 +121,9 @@ extension Swift {
                      ** and Mutation types.
                      */
                     switch type.name {
-                    case queryType:
+                    case queryType.name:
                         objectClass.prepend(child: self.generate(initNamed: "query", type: objectClass.name))
-                    case mutationType:
+                    case mutationType.name:
                         objectClass.prepend(child: self.generate(initNamed: "mutation", type: objectClass.name))
                     default: break
                     }
@@ -160,12 +162,19 @@ extension Swift {
                 }
             }
             
+            /* ----------------------------------------
+             ** Generate networking extension that will
+             ** provide typed queries and responses.
+             */
+            networkFile.container += self.generate(networkExtensionsWith: queryType, mutationType: mutationType)
+            
             return [
                 scalarsFile,
                 enumsFile,
                 queriesFile,
                 modelsFile,
                 inputsFile,
+                networkFile,
             ]
         }
         
@@ -326,9 +335,9 @@ extension Swift {
                     
                     let closure   = self.closureNameWith(type: typeName)
                     let parameter = Method.Parameter(
-                        unnamed: true,
-                        name:    closure.name,
-                        type:    closure.type
+                        alias: "_",
+                        name:  closure.name,
+                        type:  closure.type
                     )
                     
                     let method = Method(
@@ -437,7 +446,7 @@ extension Swift {
                 var initParams: [Method.Parameter] = []
                 for field in fields {
                     initParams += Method.Parameter(
-                        unnamed: false,
+                        alias:   "_",
                         name:    field.name,
                         type:    field.type.recursiveQueryInputType(unmodified: field.type.hasScalar),
                         default: field.type.isTopLevelNullable ? .nil : nil
@@ -506,6 +515,69 @@ extension Swift {
             }
             
             return swiftClass
+        }
+        
+        private func generate(networkExtensionsWith queryType: TypeName, mutationType: TypeName) -> Class {
+            let swiftExtension = Class(
+                visibility:   .public,
+                kind:         .extension,
+                name:         "URLSession",
+                comments:     [
+                    "Auto-generated extension for typed networking models."
+                ]
+            )
+            
+            swiftExtension += Method(
+                visibility: .public,
+                name:       .func("graphQueryTask"),
+                returnType: "URLSessionDataTask",
+                parameters: [
+                    Method.Parameter(
+                        alias: "with",
+                        name:  "query",
+                        type:  queryType.queryTypeName
+                    ),
+                    Method.Parameter(
+                        alias: "to",
+                        name:  "url",
+                        type:  "URL"
+                    ),
+                    Method.Parameter(
+                        name:  "completionHandler",
+                        type:  "@escaping (\(queryType.name)?, HTTPURLResponse?, GraphError?) -> Void"
+                    )
+                ],
+                body: [
+                    "return self.graphTask(with: query, to: url, completionHandler: completionHandler)"
+                ]
+            )
+            
+            swiftExtension += Method(
+                visibility: .public,
+                name:       .func("graphMutationTask"),
+                returnType: "URLSessionDataTask",
+                parameters: [
+                    Method.Parameter(
+                        alias: "with",
+                        name:  "mutation",
+                        type:  mutationType.queryTypeName
+                    ),
+                    Method.Parameter(
+                        alias: "to",
+                        name:  "url",
+                        type:  "URL"
+                    ),
+                    Method.Parameter(
+                        name:  "completionHandler",
+                        type:  "@escaping (\(mutationType.name)?, HTTPURLResponse?, GraphError?) -> Void"
+                    )
+                ],
+                body: [
+                    "return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)"
+                ]
+            )
+            
+            return swiftExtension
         }
         
         // ----------------------------------
@@ -740,9 +812,9 @@ extension Swift {
                 returnType: fieldType,
                 parameters: [
                     Method.Parameter(
-                        unnamed: true,
-                        name:    "alias",
-                        type:    "String"
+                        alias: "_",
+                        name:  "alias",
+                        type:  "String"
                     )
                 ],
                 annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
@@ -764,9 +836,9 @@ extension Swift {
                 name:        .init(.convenience, false),
                 parameters:  [
                     Method.Parameter(
-                        unnamed: true,
-                        name: closure.name,
-                        type: closure.type
+                        alias: "_",
+                        name:  closure.name,
+                        type:  closure.type
                     )
                 ],
                 body:        [
@@ -869,9 +941,9 @@ extension Swift {
                 let closure = self.closureNameWith(type: fieldType)
                 
                 parameters += Method.Parameter(
-                    unnamed: true,
-                    name:    closure.name,
-                    type:    closure.type
+                    alias: "_",
+                    name:  closure.name,
+                    type:  closure.type
                 )
             }
             
@@ -1146,6 +1218,10 @@ fileprivate extension Nameable {
     var modelTypeName: String {
         return "\(self.name.mapped)"
     }
+}
+
+fileprivate struct TypeName: Nameable {
+    let name: String
 }
 
 // ----------------------------------

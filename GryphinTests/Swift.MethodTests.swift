@@ -188,13 +188,13 @@ class SwiftMethodTests: XCTestCase {
     //
     func testParameterInit() {
         let param = Swift.Method.Parameter(
-            unnamed: false,
+            alias:   "_",
             name:    "image",
             type:    "Image",
             default: .value("Image()")
         )
         
-        XCTAssertEqual(param.unnamed,  false)
+        XCTAssertEqual(param.alias,    "_")
         XCTAssertEqual(param.name,     "image")
         XCTAssertEqual(param.type,     "Image")
         XCTAssertEqual(param.default!, Swift.Method.Parameter.Default.value("Image()"))
@@ -202,36 +202,36 @@ class SwiftMethodTests: XCTestCase {
     
     func testParameterStringRepresentation() {
         let param1 = Swift.Method.Parameter(
-            unnamed: false,
+            alias:   "_",
             name:    "image",
             type:    "Image",
             default: .value("Image()")
         )
         
         XCTAssertEqual(param1.stringRepresentation, "" ~
-            "image: Image = Image()"
+            "_ image: Image = Image()"
         )
         
         let param2 = Swift.Method.Parameter(
-            unnamed: true,
+            alias:   nil,
             name:    "character",
             type:    "Character",
             default: nil
         )
         
         XCTAssertEqual(param2.stringRepresentation, "" ~
-            "_ character: Character"
+            "character: Character"
         )
         
         let param3 = Swift.Method.Parameter(
-            unnamed: true,
+            alias:   "to",
             name:    "animal",
             type:    "Animal?",
             default: .nil
         )
         
         XCTAssertEqual(param3.stringRepresentation, "" ~
-            "_ animal: Animal? = nil"
+            "to animal: Animal? = nil"
         )
     }
 }

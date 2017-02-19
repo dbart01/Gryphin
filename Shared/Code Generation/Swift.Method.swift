@@ -154,7 +154,7 @@ extension Swift.Method {
             }
         }
         
-        let unnamed:   Bool
+        let alias:     String
         let name:      String
         let type:      String
         let `default`: Default?
@@ -162,8 +162,8 @@ extension Swift.Method {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(unnamed: Bool = false, name: String, type: String, default: Default? = nil) {
-            self.unnamed = unnamed
+        init(alias: String? = nil, name: String, type: String, default: Default? = nil) {
+            self.alias   = alias ?? ""
             self.name    = name
             self.type    = type
             self.default = `default`
@@ -173,10 +173,10 @@ extension Swift.Method {
         //  MARK: - String Representation -
         //
         var stringRepresentation: String {
-            let unnamed    = self.unnamed ? "_ " : ""
+            let alias      = self.alias.isEmpty ? "" : "\(self.alias) "
             let assignment = self.default != nil ? " = \(self.default!.stringRepresentation)" : ""
             
-            return "\(unnamed)\(self.name): \(self.type)\(assignment)"
+            return "\(alias)\(self.name): \(self.type)\(assignment)"
         }
     }
 }
@@ -189,9 +189,9 @@ extension Swift.Method.Parameter.Default {
 
 extension Swift.Method.Parameter {
     static func ==(lhs: Swift.Method.Parameter, rhs: Swift.Method.Parameter) -> Bool {
-        return lhs.unnamed == rhs.unnamed &&
-            lhs.name       == rhs.name &&
-            lhs.type       == rhs.type &&
+        return lhs.alias == rhs.alias &&
+            lhs.name     == rhs.name &&
+            lhs.type     == rhs.type &&
             lhs.default?.stringRepresentation ?? "" == rhs.default?.stringRepresentation ?? ""
     }
 }
