@@ -172,6 +172,8 @@
 		9ADAD4AD1E59CA41008AC561 /* Gen$Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4971E588902008AC561 /* Gen$Queries.swift */; };
 		9ADAD4AE1E59CA41008AC561 /* Gen$Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4981E588902008AC561 /* Gen$Scalars.swift */; };
 		9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4921E5888DD008AC561 /* Gen$Network.swift */; };
+		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
+		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -310,6 +312,7 @@
 		9ADAD4961E588902008AC561 /* Gen$Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Models.swift; sourceTree = "<group>"; };
 		9ADAD4971E588902008AC561 /* Gen$Queries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Queries.swift; sourceTree = "<group>"; };
 		9ADAD4981E588902008AC561 /* Gen$Scalars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Scalars.swift; sourceTree = "<group>"; };
+		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +395,7 @@
 		9A6D3E721E492287004135BF /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				9AEF60CA1E5C78150067FA90 /* Errors */,
 				9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */,
 				9A6D3E731E4922A0004135BF /* URLSession+GraphQL.swift */,
 			);
@@ -616,6 +620,14 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		9AEF60CA1E5C78150067FA90 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF60CB1E5C782C0067FA90 /* GraphError.swift */,
+			);
+			name = Errors;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -828,6 +840,7 @@
 				9ADAD4A81E59CA3B008AC561 /* Gen$Scalars.swift in Sources */,
 				9ADAD4A91E59CA3B008AC561 /* Gen$Network.swift in Sources */,
 				9AD26F281E51EC55002DC70F /* Nameable.swift in Sources */,
+				9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */,
 				9AD26F271E51EC53002DC70F /* Typeable.swift in Sources */,
 				9AD26F261E51EC52002DC70F /* Describeable.swift in Sources */,
 				9AD26F251E51EC51002DC70F /* Schema.swift in Sources */,
@@ -921,6 +934,7 @@
 				9ADAD4AE1E59CA41008AC561 /* Gen$Scalars.swift in Sources */,
 				9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */,
 				9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */,
+				9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */,
 				9AD26FA21E5258D7002DC70F /* Typeable.swift in Sources */,
 				9AD26FA31E5258D7002DC70F /* Describeable.swift in Sources */,
 				9AD26FA41E5258D7002DC70F /* Schema.swift in Sources */,

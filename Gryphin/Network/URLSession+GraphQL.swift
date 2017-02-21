@@ -11,6 +11,7 @@ import Foundation
 public enum GraphError {
     case network(code: Int, domain: String, description: String)
     case serialization(description: String)
+    case query(errors: [QueryError])
 }
 
 public extension URLSession {
@@ -44,8 +45,8 @@ public extension URLSession {
                 let object = try? JSONSerialization.jsonObject(with: data, options: []),
                 let json = object as? JSON {
                 
-                if let _ = json["errors"] as? JSON {
-                    // TODO: Handle GraphQL errors
+                if let errorsJson = json["errors"] as? [JSON] {
+                    error = .query(errors: QueryError.collectionWith(requiredJson: errorsJson))
                 }
                     
                 if let data = json["data"] as? JSON {
