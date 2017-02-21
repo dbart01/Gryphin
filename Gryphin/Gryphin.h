@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char GryphinVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Gryphin/PublicHeader.h>
 
-
+#import <Gryphin/CommonDigest.h>
