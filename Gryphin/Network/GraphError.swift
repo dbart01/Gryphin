@@ -11,8 +11,8 @@ import Foundation
 public class QueryError: JsonCreatable {
     
     public struct Location: JsonCreatable {
-        let line:   Int
-        let column: Int
+        public let line:   Int
+        public let column: Int
         
         // ----------------------------------
         //  MARK: - Init -
@@ -31,8 +31,26 @@ public class QueryError: JsonCreatable {
     //  MARK: - Init -
     //
     public required init(json: JSON) {
-        self.message   = (json["message"] as? String) ?? "The error message is not provided."
-        self.fields    = json["fields"]  as? [String]
-        self.locations = Location.collectionWith(optionalJson: json["locations"] as? [JSON])
+        self.message = (json["message"] as? String) ?? "Uknown error"
+        self.fields  = json["fields"]  as? [String]
+        
+        /* ---------------------------------
+         ** Check to see if the error object
+         ** contains `locations`, otherwise
+         ** fallback to a flat location and
+         ** then nil.
+         */
+        if let locations = json["locations"] as? [JSON] {
+            self.locations = Location.collectionWith(optionalJson: locations)
+            
+        } else if json["line"] != nil && json["column"] != nil {
+            
+            self.locations = [
+                Location(json: json),
+            ]
+            
+        } else {
+            self.locations = nil
+        }
     }
 }

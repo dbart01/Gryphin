@@ -174,6 +174,7 @@
 		9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4921E5888DD008AC561 /* Gen$Network.swift */; };
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
+		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -313,6 +314,7 @@
 		9ADAD4971E588902008AC561 /* Gen$Queries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Queries.swift; sourceTree = "<group>"; };
 		9ADAD4981E588902008AC561 /* Gen$Scalars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Scalars.swift; sourceTree = "<group>"; };
 		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
+		9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphErrorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -526,6 +528,7 @@
 				9A2755601E3E5BE600F3FD4A /* Code Generation */,
 				9A8878BC1E253B0A007FB44F /* Query Generation */,
 				9A6D3E601E44AC8F004135BF /* Models */,
+				9AEF60CF1E5CE4FC0067FA90 /* Network */,
 				9A8878BD1E253B64007FB44F /* Schema */,
 				9AD6AA731E36575200BF909C /* ModelSerializationTests.swift */,
 				9A6D3E751E49F723004135BF /* NetworkTests.swift */,
@@ -624,6 +627,22 @@
 			isa = PBXGroup;
 			children = (
 				9AEF60CB1E5C782C0067FA90 /* GraphError.swift */,
+			);
+			name = Errors;
+			sourceTree = "<group>";
+		};
+		9AEF60CF1E5CE4FC0067FA90 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF60D01E5CE50D0067FA90 /* Errors */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		9AEF60D01E5CE50D0067FA90 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */,
 			);
 			name = Errors;
 			sourceTree = "<group>";
@@ -920,6 +939,7 @@
 				9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */,
 				9A972A341E40EE56007F7B0B /* Swift.PropertyTests.swift in Sources */,
 				9A972A3D1E4219C7007F7B0B /* Schema.EnumValueTests.swift in Sources */,
+				9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
