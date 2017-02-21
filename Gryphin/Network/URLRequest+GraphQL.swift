@@ -21,8 +21,8 @@ extension URLRequest {
         request.cachePolicy             = .reloadIgnoringLocalAndRemoteCacheData
         request.httpBody                = try! JSONSerialization.data(withJSONObject: body, options: [])
         
-        request.setValue("application/json",    forHTTPHeaderField: "Accept")
-        request.setValue("application/graphql", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // TODO: Handle JSON serialization errors
         
