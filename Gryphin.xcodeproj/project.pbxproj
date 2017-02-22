@@ -175,6 +175,13 @@
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
+		9AEF60D61E5DB8DA0067FA90 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */; };
+		9AEF60D71E5DB8DA0067FA90 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */; };
+		9AEF60D81E5DB8DA0067FA90 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */; };
+		9AEF60DA1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
+		9AEF60DB1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
+		9AEF60DC1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
+		9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +322,9 @@
 		9ADAD4981E588902008AC561 /* Gen$Scalars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Scalars.swift; sourceTree = "<group>"; };
 		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
 		9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphErrorTests.swift; sourceTree = "<group>"; };
+		9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationCoordinator.swift; sourceTree = "<group>"; };
+		9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,6 +468,7 @@
 		9A8879071E2D5DD9007FB44F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9AEF60D41E5DB8D10067FA90 /* Configuration */,
 				9A9A6A351E0EC9E5008754A4 /* Schema */,
 				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
 				9A8878CF1E258585007FB44F /* Environment.swift */,
@@ -524,6 +535,7 @@
 				9A8878BF1E254214007FB44F /* Utilities */,
 				9A8878BB1E253AB9007FB44F /* Extensions */,
 				9A6D3E5D1E428831004135BF /* Shared */,
+				9AEF60DD1E5DC85B0067FA90 /* Configuration */,
 				9A972A371E4139EA007F7B0B /* Schema */,
 				9A2755601E3E5BE600F3FD4A /* Code Generation */,
 				9A8878BC1E253B0A007FB44F /* Query Generation */,
@@ -645,6 +657,23 @@
 				9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */,
 			);
 			name = Errors;
+			sourceTree = "<group>";
+		};
+		9AEF60D41E5DB8D10067FA90 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */,
+				9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		9AEF60DD1E5DC85B0067FA90 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -858,6 +887,7 @@
 				9ADAD4A71E59CA3B008AC561 /* Gen$Queries.swift in Sources */,
 				9ADAD4A81E59CA3B008AC561 /* Gen$Scalars.swift in Sources */,
 				9ADAD4A91E59CA3B008AC561 /* Gen$Network.swift in Sources */,
+				9AEF60DA1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26F281E51EC55002DC70F /* Nameable.swift in Sources */,
 				9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */,
 				9AD26F271E51EC53002DC70F /* Typeable.swift in Sources */,
@@ -888,6 +918,7 @@
 				9A6D3E741E4922A0004135BF /* URLSession+GraphQL.swift in Sources */,
 				9A9070A51E4A716400248DBF /* URLRequest+GraphQL.swift in Sources */,
 				9A9A6A501E0ECA33008754A4 /* ContainerType.swift in Sources */,
+				9AEF60D61E5DB8DA0067FA90 /* Configuration.swift in Sources */,
 				9A9A6A2E1E0EC9E2008754A4 /* JsonCreatable.swift in Sources */,
 				9A9A6A551E0ECA33008754A4 /* Parameter.swift in Sources */,
 				9A27B03D1E24728E00AFBDA6 /* String+CaseConversion.swift in Sources */,
@@ -919,6 +950,7 @@
 				9ADAD0A81E43713C008AC561 /* ContainingTests.swift in Sources */,
 				9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */,
 				9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */,
+				9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */,
 				9A27556D1E41763600F3FD4A /* Schema.ObjectTypeTests.swift in Sources */,
 				9A8878F91E2CF344007FB44F /* InputTypeTests.swift in Sources */,
 				9A6D3E5F1E42883D004135BF /* JsonCreatableTests.swift in Sources */,
@@ -953,6 +985,7 @@
 				9ADAD4AD1E59CA41008AC561 /* Gen$Queries.swift in Sources */,
 				9ADAD4AE1E59CA41008AC561 /* Gen$Scalars.swift in Sources */,
 				9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */,
+				9AEF60DB1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */,
 				9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */,
 				9AD26FA21E5258D7002DC70F /* Typeable.swift in Sources */,
@@ -983,6 +1016,7 @@
 				9AD26FBB1E5258D7002DC70F /* URLSession+GraphQL.swift in Sources */,
 				9AD26FBC1E5258D7002DC70F /* URLRequest+GraphQL.swift in Sources */,
 				9AD26FBD1E5258D7002DC70F /* ContainerType.swift in Sources */,
+				9AEF60D71E5DB8DA0067FA90 /* Configuration.swift in Sources */,
 				9AD26FBE1E5258D7002DC70F /* JsonCreatable.swift in Sources */,
 				9AD26FBF1E5258D7002DC70F /* Parameter.swift in Sources */,
 				9AD26FC01E5258D7002DC70F /* String+CaseConversion.swift in Sources */,
@@ -1009,6 +1043,7 @@
 				9AD26F6E1E51ED15002DC70F /* Schema.swift in Sources */,
 				9AD26F6F1E51ED15002DC70F /* Schema.Kind.swift in Sources */,
 				9AD26F701E51ED15002DC70F /* Schema.ObjectType.swift in Sources */,
+				9AEF60DC1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26F711E51ED15002DC70F /* Schema.Object.swift in Sources */,
 				9AD26F721E51ED15002DC70F /* Schema.EnumValue.swift in Sources */,
 				9AD26F731E51ED15002DC70F /* Schema.Field.swift in Sources */,
@@ -1024,6 +1059,7 @@
 				9AD26F8C1E51ED1E002DC70F /* Swift.Line.swift in Sources */,
 				9AD26F8D1E51ED1E002DC70F /* Swift.Class.swift in Sources */,
 				9AD26F8E1E51ED1E002DC70F /* Swift.EnumCase.swift in Sources */,
+				9AEF60D81E5DB8DA0067FA90 /* Configuration.swift in Sources */,
 				9AD26F8F1E51ED1E002DC70F /* Swift.Method.swift in Sources */,
 				9AD26F901E51ED1E002DC70F /* Swift.Property.swift in Sources */,
 				9AD26F911E51ED1E002DC70F /* Swift.Alias.swift in Sources */,
