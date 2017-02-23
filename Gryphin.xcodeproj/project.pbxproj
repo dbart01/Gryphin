@@ -184,6 +184,8 @@
 		9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */; };
 		9AEF60E31E5E7B9F0067FA90 /* Executable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E21E5E7B9F0067FA90 /* Executable.swift */; };
 		9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
+		9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
+		9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -620,7 +622,6 @@
 		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
 			isa = PBXGroup;
 			children = (
-				9AEF60E41E5E82320067FA90 /* Errors.swift */,
 				9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */,
 				9AEF60E21E5E7B9F0067FA90 /* Executable.swift */,
 				9A36AEDD1E4DF3B700DA0201 /* main.swift */,
@@ -668,6 +669,7 @@
 		9AEF60D41E5DB8D10067FA90 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				9AEF60E41E5E82320067FA90 /* Errors.swift */,
 				9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */,
 				9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */,
 			);
@@ -907,6 +909,7 @@
 				9AD26F1F1E51EC45002DC70F /* Schema.InputField.swift in Sources */,
 				9AD26F1E1E51EC44002DC70F /* Schema.Argument.swift in Sources */,
 				9AD26F291E51EC5D002DC70F /* StringRepresentable.swift in Sources */,
+				9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */,
 				9AD26F2A1E51EC60002DC70F /* Containable.swift in Sources */,
 				9AD26F2B1E51EC62002DC70F /* Containing.swift in Sources */,
 				9AD26F2C1E51EC64002DC70F /* Swift.swift in Sources */,
@@ -1005,6 +1008,7 @@
 				9AD26FAA1E5258D7002DC70F /* Schema.InputField.swift in Sources */,
 				9AD26FAB1E5258D7002DC70F /* Schema.Argument.swift in Sources */,
 				9AD26FAC1E5258D7002DC70F /* StringRepresentable.swift in Sources */,
+				9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */,
 				9AD26FAD1E5258D7002DC70F /* Containable.swift in Sources */,
 				9AD26FAE1E5258D7002DC70F /* Containing.swift in Sources */,
 				9AD26FAF1E5258D7002DC70F /* Swift.swift in Sources */,
