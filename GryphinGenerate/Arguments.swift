@@ -31,8 +31,8 @@ struct Arguments {
         return self.arguments.count
     }
     
-    var schemaPath: String? {
-        return self.args("-s", "--schema")
+    var rootPath: String? {
+        return self.args("-r", "--root")
     }
     
     var destinationPath: String? {

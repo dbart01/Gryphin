@@ -182,6 +182,8 @@
 		9AEF60DB1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
 		9AEF60DC1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
 		9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */; };
+		9AEF60E31E5E7B9F0067FA90 /* Executable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E21E5E7B9F0067FA90 /* Executable.swift */; };
+		9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,6 +327,8 @@
 		9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationCoordinator.swift; sourceTree = "<group>"; };
 		9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
+		9AEF60E21E5E7B9F0067FA90 /* Executable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Executable.swift; sourceTree = "<group>"; };
+		9AEF60E41E5E82320067FA90 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -616,7 +620,9 @@
 		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
 			isa = PBXGroup;
 			children = (
+				9AEF60E41E5E82320067FA90 /* Errors.swift */,
 				9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */,
+				9AEF60E21E5E7B9F0067FA90 /* Executable.swift */,
 				9A36AEDD1E4DF3B700DA0201 /* main.swift */,
 			);
 			path = GryphinGenerate;
@@ -858,7 +864,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Scripts/gen\"";
+			shellScript = "/tmp/GryphinGenerate --root \"$SRCROOT\" --destination \"${SRCROOT}/Generated\"";
 		};
 		9AD26F9F1E5258D7002DC70F /* Generate Schema */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -872,7 +878,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Scripts/gen\"";
+			shellScript = "/tmp/GryphinGenerate --root \"$SRCROOT\" --destination \"${SRCROOT}/Generated\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1053,6 +1059,7 @@
 				9AD26F861E51ED1E002DC70F /* Containable.swift in Sources */,
 				9AD26F871E51ED1E002DC70F /* Containing.swift in Sources */,
 				9AD26F881E51ED1E002DC70F /* Swift.swift in Sources */,
+				9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */,
 				9AD26F891E51ED1E002DC70F /* Swift.Visibility.swift in Sources */,
 				9AD26F8A1E51ED1E002DC70F /* Swift.Container.swift in Sources */,
 				9AD26F8B1E51ED1E002DC70F /* Swift.Annotation.swift in Sources */,
@@ -1070,6 +1077,7 @@
 				9A36AEDC1E4DF2F900DA0201 /* Arguments.swift in Sources */,
 				9AD5FF981E4D21C40062070B /* String+CaseConversion.swift in Sources */,
 				9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */,
+				9AEF60E31E5E7B9F0067FA90 /* Executable.swift in Sources */,
 				9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

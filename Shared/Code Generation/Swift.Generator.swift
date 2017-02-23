@@ -13,6 +13,7 @@ extension Swift {
         
         enum GeneratorError: Error {
             case invalidFormat
+            case unableToOpenSchema
         }
         
         struct File {
@@ -56,8 +57,7 @@ extension Swift {
             self.schemaJSON = schema
         }
         
-        convenience init(withSchemaAt url: URL) throws {
-            let data = try Data(contentsOf: url)
+        convenience init(withSchemaData data: Data) throws {
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             
             guard let schemaJSON = json as? JSON else {
@@ -65,6 +65,13 @@ extension Swift {
             }
             
             self.init(withSchema: schemaJSON)
+        }
+        
+        convenience init(withSchemaAt url: URL) throws {
+            guard let data = try? Data(contentsOf: url) else {
+                throw GeneratorError.unableToOpenSchema
+            }
+            try self.init(withSchemaData: data)
         }
         
         // ----------------------------------

@@ -42,7 +42,33 @@ public extension JsonCreatable {
     }
 }
 
+enum JsonError: Error {
+    case readFailed
+    case invalidFormat
+    case invalidSchema
+}
+
 extension Dictionary where Value: Any {
+   
+    static func from(data: Data) throws -> Dictionary {
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+            throw JsonError.invalidFormat
+        }
+        
+        guard let schemaJSON = json as? Dictionary else {
+            throw JsonError.invalidSchema
+        }
+        
+        return schemaJSON
+    }
+    
+    static func from(fileAt url: URL) throws -> Dictionary {
+        guard let data = try? Data(contentsOf: url) else {
+            throw JsonError.readFailed
+        }
+        
+        return try self.from(data: data)
+    }
     
     func v<T>(_ key: Key) -> T? {
         return self[key] as? T

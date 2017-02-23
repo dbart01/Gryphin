@@ -8,10 +8,6 @@
 
 import Foundation
 
-enum ConfigurationCoordinatorError: Error {
-    case multipleConfigurations
-}
-
 class ConfigurationCoordinator {
     
     let fileName: String = "gryphin"
@@ -22,7 +18,7 @@ class ConfigurationCoordinator {
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(fromt url: URL) {
+    init(at url: URL) {
         self.rootURL     = url
         self.fileManager = FileManager()
     }
@@ -30,11 +26,11 @@ class ConfigurationCoordinator {
     // ----------------------------------
     //  MARK: - Paths -
     //
-    func findConfiguration() throws -> URL? {
+    func findConfiguration() throws -> URL {
         return try self.traverseFrom(self.rootURL, lookingFor: self.fileName)
     }
     
-    private func traverseFrom(_ url: URL, lookingFor fileName: String) throws -> URL? {
+    private func traverseFrom(_ url: URL, lookingFor fileName: String) throws -> URL {
         var root = url
         repeat {
             
@@ -56,7 +52,7 @@ class ConfigurationCoordinator {
             if !foundFiles.isEmpty {
                 
                 guard foundFiles.count == 1 else {
-                    throw ConfigurationCoordinatorError.multipleConfigurations
+                    throw ConfigurationCoordinatorError.multipleFound
                 }
                 
                 return root.appendingPathComponent(foundFiles[0])
@@ -70,7 +66,7 @@ class ConfigurationCoordinator {
             
         } while !root.path.isEmpty
         
-        return nil
+        throw ConfigurationCoordinatorError.notFound
     }
     
     private func filesAt(_ url: URL) -> [String] {

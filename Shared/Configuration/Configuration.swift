@@ -19,20 +19,20 @@ class Configuration {
     // ----------------------------------
     //  MARK: - Init -
     //
-    required init?(with data: Data) {
+    required init(with data: Data) throws {
         guard !data.isEmpty else {
-            return nil
+            throw ConfigurationError.emptyFile
         }
         
         let string   = String(data: data, encoding: .utf8)!
         self.options = Configuration.parse(string)
     }
     
-    convenience init?(at url: URL) {
+    convenience init(at url: URL) throws {
         if let data = try? Data(contentsOf: url) {
-            self.init(with: data)
+            try self.init(with: data)
         } else {
-            return nil
+            throw ConfigurationError.readFailed
         }
     }
     
