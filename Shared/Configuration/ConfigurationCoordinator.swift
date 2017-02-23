@@ -64,7 +64,7 @@ class ConfigurationCoordinator {
              */
             root = root.deletingLastPathComponent()
             
-        } while !root.path.isEmpty
+        } while root.path.characters.count > 1
         
         throw ConfigurationCoordinatorError.notFound
     }
