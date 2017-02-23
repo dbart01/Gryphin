@@ -10,7 +10,8 @@ import Foundation
 
 class Executable {
 
-    let args = Arguments()
+    let args        = Arguments()
+    let fileManager = FileManager.default
     
     // ----------------------------------
     //  MARK: - Init -
@@ -22,7 +23,7 @@ class Executable {
     // ----------------------------------
     //  MARK: - Execution -
     //
-    private func findConfiguration() throws -> Configuration {
+    private func findConfigurationURL() throws -> URL {
         guard let rootPath = args.rootPath, !rootPath.isEmpty else {
             print("A path to the root directory is required.")
             exit(1)
@@ -32,25 +33,13 @@ class Executable {
         let coordinator   = ConfigurationCoordinator(at: rootURL)
         
         let configURL     = try coordinator.findConfiguration()
-        let configuration = try Configuration(at: configURL)
         
-        return configuration
+        return configURL
     }
     
-    private func schemaJSON(using configuration: Configuration) throws -> JSON {
-        if let schemaPath: URL = configuration.valueFor("schemaPath") {
-            
-            return try JSON.from(fileAt: schemaPath)
-            
-        } else if let schemaURL: URL = configuration.valueFor("schemaURL") {
-            
-            // TODO: Send introspection query to URL
-            return [:]
-            
-        } else {
-            print("Failed to generate schema. The configuration must provide a `schemaPath` or a `schemaURL` parameter.")
-            exit(1)
-        }
+    private func loadConfigurationAt(_ url: URL) throws -> Configuration {
+        let json = try JSON.from(fileAt: url)
+        return Configuration(json: json)
     }
     
     func execute() {
@@ -66,8 +55,20 @@ class Executable {
         let destinationURL = URL(fileURLWithPath: destinationPath)
         
         do {
-            let configuration = try self.findConfiguration()
-            let schemaJSON    = try self.schemaJSON(using: configuration)
+            let configURL = try self.findConfigurationURL()
+            
+            /* ------------------------------------
+             ** We need to set the current working
+             ** directory to be the configuration's
+             ** containing folder so that all paths
+             ** referenced in .gryphin are relative
+             ** to this location.
+             */
+            self.fileManager.changeCurrentDirectoryPath(configURL.deletingLastPathComponent().path)
+            print("Changed to configuration directory: \(self.fileManager.currentDirectoryPath)")
+            
+            let configuration = try self.loadConfigurationAt(configURL)
+            let schemaJSON    = try configuration.loadSchema()
             let generator     = Swift.Generator(withSchema: schemaJSON)
             
             let files = generator.generate()
@@ -80,19 +81,14 @@ class Executable {
             
             print("Schema generated to: \(destinationURL)")
             
-        } catch ConfigurationError.readFailed {
+        } catch ConfigurationError.noSchemaLocation {
             
-            print("Failed to read configuration file. Check that you have a .gryphin configuration file somewhere in a parent directory.")
+            print("Failed to load schema. Configuration must provide a `path` or `url` parameters for `schema`.")
             exit(1)
             
-        } catch ConfigurationError.emptyFile {
+        } catch JsonError.readFailed(let url) {
             
-            print("Failed to read configuration file. It appears to be empty.")
-            exit(1)
-            
-        } catch JsonError.readFailed {
-            
-            print("Failed to read schema at URL.")
+            print("Failed to read file at: \(url)")
             exit(1)
             
         } catch JsonError.invalidFormat {
@@ -107,9 +103,8 @@ class Executable {
             
         } catch ConfigurationCoordinatorError.notFound {
             
-            print("Failed to find configuration file. Bypassing generation...")
-            print("To enable schema generation, create a config file name: .grypin in your project root.")
-            exit(0)
+            print("Failed to find .gryphin configuration file. Create a configuration file named .grypin in your project root.")
+            exit(1)
             
         } catch ConfigurationCoordinatorError.multipleFound {
             

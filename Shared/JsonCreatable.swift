@@ -43,7 +43,7 @@ public extension JsonCreatable {
 }
 
 enum JsonError: Error {
-    case readFailed
+    case readFailed(URL)
     case invalidFormat
     case invalidSchema
 }
@@ -64,7 +64,7 @@ extension Dictionary where Value: Any {
     
     static func from(fileAt url: URL) throws -> Dictionary {
         guard let data = try? Data(contentsOf: url) else {
-            throw JsonError.readFailed
+            throw JsonError.readFailed(url)
         }
         
         return try self.from(data: data)

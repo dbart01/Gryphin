@@ -14,6 +14,5 @@ enum ConfigurationCoordinatorError: Error {
 }
 
 enum ConfigurationError: Error {
-    case readFailed
-    case emptyFile
+    case noSchemaLocation
 }
