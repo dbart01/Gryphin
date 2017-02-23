@@ -303,8 +303,6 @@
 		9A9A6A661E12CAC1008754A4 /* Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.swift; sourceTree = "<group>"; };
 		9A9A6A6A1E12D2F6008754A4 /* Swift.Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Line.swift; sourceTree = "<group>"; };
 		9AA48FBE1E227D410028F044 /* Typeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typeable.swift; sourceTree = "<group>"; };
-		9AAF01661E2EC295004062EE /* APIModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIModels.swift; path = /Users/dbart/Desktop/APIModels.swift; sourceTree = "<absolute>"; };
-		9AAF01671E2EC295004062EE /* APISchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APISchema.swift; path = /Users/dbart/Desktop/APISchema.swift; sourceTree = "<absolute>"; };
 		9AD022041E3BA495005C49F8 /* ConcreteGraphModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteGraphModel.swift; sourceTree = "<group>"; };
 		9AD0220E1E3F66E0005C49F8 /* Swift.AnnotationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.AnnotationTests.swift; sourceTree = "<group>"; };
 		9AD022101E3F680F005C49F8 /* Swift.LinesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.LinesTests.swift; sourceTree = "<group>"; };
@@ -449,7 +447,6 @@
 				9A9A6A5A1E0ECA55008754A4 /* SchemaTests.swift */,
 				9AD6AA751E3657A200BF909C /* queryComprehensive.json */,
 				9AD6AA881E3795FC00BF909C /* queryNode.json */,
-				9AAF01601E2EC148004062EE /* Generated */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -608,15 +605,6 @@
 				9A9A6A4D1E0ECA33008754A4 /* Parameter.swift */,
 			);
 			path = "Query Generation";
-			sourceTree = "<group>";
-		};
-		9AAF01601E2EC148004062EE /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				9AAF01661E2EC295004062EE /* APIModels.swift */,
-				9AAF01671E2EC295004062EE /* APISchema.swift */,
-			);
-			name = Generated;
 			sourceTree = "<group>";
 		};
 		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
