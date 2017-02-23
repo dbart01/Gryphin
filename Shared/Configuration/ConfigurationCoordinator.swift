@@ -27,10 +27,13 @@ class ConfigurationCoordinator {
     //  MARK: - Paths -
     //
     func findConfiguration() throws -> URL {
-        return try self.traverseFrom(self.rootURL, lookingFor: self.fileName)
+        return try self.traverseFrom(self.rootURL, lookingFor: self.fileName).last!
     }
     
-    private func traverseFrom(_ url: URL, lookingFor fileName: String) throws -> URL {
+    private func traverseFrom(_ url: URL, lookingFor fileName: String) throws -> [URL] {
+        
+        var configFiles: [URL] = []
+        
         var root = url
         repeat {
             
@@ -55,7 +58,7 @@ class ConfigurationCoordinator {
                     throw ConfigurationCoordinatorError.multipleFound
                 }
                 
-                return root.appendingPathComponent(foundFiles[0])
+                configFiles += root.appendingPathComponent(foundFiles.first!)
             }
             
             /* ---------------------------------
@@ -66,7 +69,11 @@ class ConfigurationCoordinator {
             
         } while root.path.characters.count > 1
         
-        throw ConfigurationCoordinatorError.notFound
+        guard !configFiles.isEmpty else {
+            throw ConfigurationCoordinatorError.notFound
+        }
+        
+        return configFiles
     }
     
     private func filesAt(_ url: URL) -> [String] {

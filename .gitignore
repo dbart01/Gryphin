@@ -1,6 +1,2 @@
 # Ignore all generated classes
 */Gen$*
-
-# Ignore the GraphQL schema file
-/Schema/*
-
