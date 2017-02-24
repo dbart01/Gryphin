@@ -43,10 +43,14 @@ class Configuration: JsonCreatable {
     //
     func loadSchema() throws -> JSON {
         if let localURL = self.schemaDescription?.path {
+            
+            print("Local schema specified. Loading from file...")
             return try JSON.from(fileAt: localURL)
             
         } else if let _ = self.schemaDescription?.url {
+            
             // TODO: POST introspection query to endpoint
+            print("Remote schema URL specified. Sending introspection...")
             return [:]
             
         } else {

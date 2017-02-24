@@ -29,10 +29,10 @@ class Executable {
             exit(1)
         }
         
-        let rootURL       = URL(fileURLWithPath: rootPath)
-        let coordinator   = ConfigurationCoordinator(at: rootURL)
+        let rootURL     = URL(fileURLWithPath: rootPath)
+        let coordinator = ConfigurationCoordinator(at: rootURL)
         
-        let configURL     = try coordinator.findConfiguration()
+        let configURL   = try coordinator.findConfiguration()
         
         return configURL
     }
@@ -56,6 +56,7 @@ class Executable {
         
         do {
             let configURL = try self.findConfigurationURL()
+            print("Using configuration at: \(configURL.absoluteString)")
             
             /* ------------------------------------
              ** We need to set the current working
