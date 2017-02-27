@@ -99,8 +99,8 @@ class GraphModelTests: XCTestCase {
     func testSetters() {
         let model = TestModel(json: [:])
         
-        model!.set("John", for: "name")
-        model!.set(3,      for: "children")
+        try! model!.set("John", for: "name",     type: String.self)
+        try! model!.set(3,      for: "children", type: Int.self)
         
         XCTAssertTrue(model!.hasValueFor("name"))
         XCTAssertTrue(model!.hasValueFor("children"))
@@ -110,24 +110,34 @@ class GraphModelTests: XCTestCase {
     }
     
     func testNullSetters() {
-        
         let model = TestModel(json: [:])
         
-        model!.set(nil, for: "name")
+        try! model!.set(nil, for: "name", type: String.self)
         
         XCTAssertFalse(model!.hasValueFor("name"))
         
-        model!.set(Optional("John"), for: "name")
+        try! model!.set(Optional("John"), for: "name", type: String.self)
         
         XCTAssertTrue(model!.hasValueFor("name"))
         XCTAssertEqual(try! model!.valueFor(nonnull: "name"), "John")
+    }
+    
+    func testInvalidSchemaSetters() {
+        let model = TestModel(json: [:])
+        
+        do {
+            try model!.set(13, for: "name", type: String.self)
+            XCTFail()
+        } catch {
+            XCTAssertTrue(true)
+        }
     }
     
     func testNonnullGetters() {
         
         let model = TestModel(json: [:])
         
-        model!.set("John", for: "name")
+        try! model!.set("John", for: "name", type: String.self)
         
         do {
             let name: String = try model!.valueFor(nonnull: "name")
@@ -158,7 +168,7 @@ class GraphModelTests: XCTestCase {
     func testNullableGetters() {
         let model = TestModel(json: [:])
         
-        model!.set("John", for: "name")
+        try! model!.set("John", for: "name", type: String.self)
         
         do {
             let name: String? = try model!.valueFor(nullable: "name")

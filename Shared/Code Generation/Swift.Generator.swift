@@ -626,16 +626,17 @@ extension Swift {
             if let possibleTypes = concreteInterface.possibleTypes {
                 for possibleType in possibleTypes {
                     
+                    let typeName = possibleType.modelTypeName.implicitNullable
                     swiftClass += Property(
                         visibility: .public,
                         name:       possibleType.name.lowercasedFirst,
-                        returnType: possibleType.modelTypeName.implicitNullable,
+                        returnType: typeName,
                         accessors:  [
                             Property.Accessor(kind: .get, body: [
                                 Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
-                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercasedFirst)\")")
+                                Line(content: "try! self.set(newValue, for: \"\(possibleType.name.lowercasedFirst)\", type: \(typeName).self)")
                             ]),
                         ],
                         comments: [
@@ -720,27 +721,35 @@ extension Swift {
              ** and generate scalar / object assignments.
              */
             if let fields = fields, !fields.isEmpty {
+                
+                func typeNameFor(_ field: Schema.Field) -> String {
+                    return field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
+                }
+                
+                /* ---------------------------------
+                 ** Generate all the scalar fields
+                 */
                 let scalarFields = fields.filter { $0.type.hasScalar }
                 if !scalarFields.isEmpty {
                     initBody += ""
                     
                     for field in scalarFields {
-                        initBody += self.generate(propertyAssignmentNamed: field.name, isFragment: false)
+                        initBody += self.generate(propertyAssignmentNamed: field.name, type: typeNameFor(field), isScalar: true, isFragment: false)
                     }
                 }
                 
+                /* ---------------------------------
+                 ** Generate all the object fields
+                 */
                 let objectFields = fields.filter { !$0.type.hasScalar }
                 if !objectFields.isEmpty {
                     initBody += ""
                     
                     for field in objectFields {
-                        let type  = field.type.recursiveType(queryKind: .model, unmodified: field.type.hasScalar, ignoreNull: true)
-                        initBody += self.generate(propertyAssignmentNamed: field.name, type: type, isFragment: false, isCollection: field.type.isCollection)
+                        initBody += self.generate(propertyAssignmentNamed: field.name, type: typeNameFor(field), isScalar: false, isFragment: false, isCollection: field.type.isCollection)
                     }
                 }
             }
-            
-            initBody += ""
             
             /* ----------------------------------------
              ** Iterarate over all possible types and
@@ -750,11 +759,13 @@ extension Swift {
              ** without accessing any of the children.
              */
             if let types = types, !types.isEmpty {
+                initBody += ""
+                
                 for type in types {
                     precondition(!type.hasScalar) // These should always be possible object types
                     
                     let name  = type.recursiveType(queryKind: .model, unmodified: false, ignoreNull: true)
-                    initBody += self.generate(propertyAssignmentNamed: type.name.lowercasedFirst, type: name, isFragment: true, isCollection: type.isCollection)
+                    initBody += self.generate(propertyAssignmentNamed: type.name.lowercasedFirst, type: name, isScalar: false, isFragment: true, isCollection: type.isCollection)
                 }
             }
             
@@ -768,8 +779,10 @@ extension Swift {
             )
         }
         
-        private func generate(propertyAssignmentNamed name: String, type: String? = nil, isFragment: Bool, isCollection: Bool = false) -> Line {
-            if let type = type {
+        private func generate(propertyAssignmentNamed name: String, type: String, isScalar: Bool, isFragment: Bool, isCollection: Bool = false) -> Line {
+            if isScalar {
+                return Line(content: "try! self.set(json.v(\"\(name)\"), for: \"\(name)\", type: \(type).self)")
+            } else {
                 
                 let value: String
                 if isFragment {
@@ -779,30 +792,28 @@ extension Swift {
                 }
                 
                 if isCollection {
-                    return Line(content: "self.set(\(type).from(\(value)), for: \"\(name)\")")
+                    return Line(content: "try! self.set(\(type).from(\(value)), for: \"\(name)\", type: \(type).self)")
                 } else {
-                    return Line(content: "self.set(\(type)(json: \(value)), for: \"\(name)\")")
+                    return Line(content: "try! self.set(\(type)(json: \(value)), for: \"\(name)\", type: \(type).self)")
                 }
-                
-            } else {
-                return Line(content: "self.set(json.v(\"\(name)\"), for: \"\(name)\")")
             }
         }
         
         private func generate(modelPropertyFor field: Schema.Field) -> Property {
             let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
+            let typeName    = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
             
             return Property(
                 visibility:  .public,
                 name:        field.name,
-                returnType:  field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar),
+                returnType:  typeName,
                 annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
                 accessors:   [
                     Property.Accessor(kind: .get, body: [
                         Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
                         ]),
                     Property.Accessor(kind: .set, body: [
-                        Line(content: "self.set(newValue, for: \"\(field.name)\")")
+                        Line(content: "try! self.set(newValue, for: \"\(field.name)\", type: \(typeName).self)")
                         ]),
                     ],
                 comments: field.descriptionComments()

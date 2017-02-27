@@ -78,14 +78,35 @@ public class GraphModel: CustomDebugStringConvertible {
         return value!
     }
     
-    func set(_ value: Any, for key: String) {
+    private func set(_ value: Any, for key: String) {
         self.values[key] = value
     }
     
-    func set(_ value: Any?, for key: String) {
+    private func set(_ value: Any?, for key: String) {
         if let value = value {
             self.set(value, for: key)
+        } else {
+            self.unset(key: key)
         }
+    }
+    
+    private func unset(key: String) {
+        self.values[key] = nil
+    }
+    
+    func set<T>(_ value: Any?, for key: String, type: T.Type) throws {
+        
+        /* -----------------------------------------
+         ** For non-nil values, check to ensure they
+         ** are of a particular type before assignment.
+         */
+        if value != nil {
+            guard let _ = value as? T else {
+                throw ModelError.InconsistentSchema
+            }
+        }
+        
+        self.set(value, for: key)
     }
     
     // ----------------------------------
