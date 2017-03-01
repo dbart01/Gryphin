@@ -100,20 +100,13 @@ extension Swift {
                 Schema.Object(json: $0)
             }
             
+            let generatedTypes = types.keyedUsing { $0.name }
+            
             types.sort { lhs, rhs in
                 lhs.kind.rawValue < rhs.kind.rawValue
             }
             
-            var generatedTypes: [String : Schema.Object] = [:]
-            for type in types {
-                generatedTypes[type.name] = type
-                
-                /* ---------------------------------
-                 ** Ignore the GraphQL private types
-                 */
-                guard !type.name.hasPrefix("__") else {
-                    continue
-                }
+            for type in types where !type.name.hasPrefix("__") {
                 
                 /* -----------------------------------------
                  ** Generate the appropriate source for each
