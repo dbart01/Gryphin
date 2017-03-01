@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum ConfigurationError: Error {
+    case noSchemaLocation
+}
+
 class Configuration: JsonCreatable {
     
     struct SchemaDescription: JsonCreatable {

@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum ConfigurationCoordinatorError: Error {
+    case multipleFound
+    case notFound
+}
+
 class ConfigurationCoordinator {
     
     let fileName: String = "gryphin"

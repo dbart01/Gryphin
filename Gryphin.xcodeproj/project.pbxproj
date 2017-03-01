@@ -159,6 +159,7 @@
 		9ADAD3E81E50F2CE008AC561 /* Collection+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */; };
 		9ADAD3E91E50F31D008AC561 /* Collection+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */; };
 		9ADAD4521E533793008AC561 /* GryphinGenerate in Copy Generator to /tmp */ = {isa = PBXBuildFile; fileRef = 9AD5FF731E4D214B0062070B /* GryphinGenerate */; };
+		9ADAD4D81E66FC54008AC561 /* IntrospectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4D71E66FC54008AC561 /* IntrospectionCoordinator.swift */; };
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
@@ -170,9 +171,6 @@
 		9AEF60DC1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */; };
 		9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */; };
 		9AEF60E31E5E7B9F0067FA90 /* Executable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E21E5E7B9F0067FA90 /* Executable.swift */; };
-		9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
-		9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
-		9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
 		9AFA3B461E6997B50056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
 		9AFA3B471E6997B50056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
 		9AFA3B4A1E6997C60056C5AA /* URL+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */; };
@@ -326,13 +324,13 @@
 		9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLTests.swift; sourceTree = "<group>"; };
 		9ADAD0A71E43713C008AC561 /* ContainingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainingTests.swift; sourceTree = "<group>"; };
 		9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Append.swift"; sourceTree = "<group>"; };
+		9ADAD4D71E66FC54008AC561 /* IntrospectionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntrospectionCoordinator.swift; sourceTree = "<group>"; };
 		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
 		9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphErrorTests.swift; sourceTree = "<group>"; };
 		9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationCoordinator.swift; sourceTree = "<group>"; };
 		9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		9AEF60E21E5E7B9F0067FA90 /* Executable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Executable.swift; sourceTree = "<group>"; };
-		9AEF60E41E5E82320067FA90 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		9AFA3B451E6997B50056C5AA /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
 		9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+ScalarType.swift"; sourceTree = "<group>"; };
 		9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ScalarType.swift"; sourceTree = "<group>"; };
@@ -624,6 +622,7 @@
 		9AD5FF741E4D214B0062070B /* GryphinGenerate */ = {
 			isa = PBXGroup;
 			children = (
+				9ADAD4D71E66FC54008AC561 /* IntrospectionCoordinator.swift */,
 				9A36AEDB1E4DF2F900DA0201 /* Arguments.swift */,
 				9AEF60E21E5E7B9F0067FA90 /* Executable.swift */,
 				9A36AEDD1E4DF3B700DA0201 /* main.swift */,
@@ -671,7 +670,6 @@
 		9AEF60D41E5DB8D10067FA90 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				9AEF60E41E5E82320067FA90 /* Errors.swift */,
 				9AEF60D91E5DBD620067FA90 /* ConfigurationCoordinator.swift */,
 				9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */,
 			);
@@ -923,7 +921,6 @@
 				9AD26F1F1E51EC45002DC70F /* Schema.InputField.swift in Sources */,
 				9AD26F1E1E51EC44002DC70F /* Schema.Argument.swift in Sources */,
 				9AD26F291E51EC5D002DC70F /* StringRepresentable.swift in Sources */,
-				9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */,
 				9AD26F2A1E51EC60002DC70F /* Containable.swift in Sources */,
 				9AFA3B551E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */,
 				9AD26F2B1E51EC62002DC70F /* Containing.swift in Sources */,
@@ -1026,7 +1023,6 @@
 				9AD26FAA1E5258D7002DC70F /* Schema.InputField.swift in Sources */,
 				9AD26FAB1E5258D7002DC70F /* Schema.Argument.swift in Sources */,
 				9AD26FAC1E5258D7002DC70F /* StringRepresentable.swift in Sources */,
-				9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */,
 				9AD26FAD1E5258D7002DC70F /* Containable.swift in Sources */,
 				9AFA3B561E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */,
 				9AD26FAE1E5258D7002DC70F /* Containing.swift in Sources */,
@@ -1081,10 +1077,10 @@
 				9AD26F751E51ED15002DC70F /* Schema.Argument.swift in Sources */,
 				9AD26F851E51ED1E002DC70F /* StringRepresentable.swift in Sources */,
 				9AD26F861E51ED1E002DC70F /* Containable.swift in Sources */,
+				9ADAD4D81E66FC54008AC561 /* IntrospectionCoordinator.swift in Sources */,
 				9AD26F871E51ED1E002DC70F /* Containing.swift in Sources */,
 				9AFA3B4D1E699B540056C5AA /* JsonCreatable.swift in Sources */,
 				9AD26F881E51ED1E002DC70F /* Swift.swift in Sources */,
-				9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */,
 				9AD26F891E51ED1E002DC70F /* Swift.Visibility.swift in Sources */,
 				9AD26F8A1E51ED1E002DC70F /* Swift.Container.swift in Sources */,
 				9AD26F8B1E51ED1E002DC70F /* Swift.Annotation.swift in Sources */,
