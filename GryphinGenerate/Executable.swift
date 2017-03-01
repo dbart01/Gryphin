@@ -44,6 +44,11 @@ class Executable {
     
     func execute() {
         
+        let start = CFAbsoluteTimeGetCurrent()
+        defer {
+            print("Generation time: \(CFAbsoluteTimeGetCurrent() - start) sec")
+        }
+        
         let prefix = "Gen$"
         let suffix = ".swift"
         
