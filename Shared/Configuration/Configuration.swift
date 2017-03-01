@@ -29,13 +29,27 @@ class Configuration: JsonCreatable {
         }
     }
     
-    let schemaDescription: SchemaDescription?
+    struct ScalarDescription: JsonCreatable {
+        let name:   String
+        let alias:  String
+        let source: URL
+        
+        init(json: JSON) {
+            self.name   = json["name"] as! String
+            self.alias  = json["alias"] as! String
+            self.source = URL(string: json["source"] as! String)!
+        }
+    }
+    
+    let schemaDescription:  SchemaDescription?
+    let scalarDescriptions: [ScalarDescription]?
     
     // ----------------------------------
     //  MARK: - Init -
     //
     required init(json: JSON) {
-        self.schemaDescription = SchemaDescription(json: json["schema"] as? JSON)
+        self.schemaDescription  = SchemaDescription(json: json["schema"] as? JSON)
+        self.scalarDescriptions = ScalarDescription.collectionWith(optionalJson: json["scalars"] as? [JSON])
     }
     
     // ----------------------------------
