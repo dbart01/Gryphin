@@ -19,14 +19,34 @@ class ConfigurationTests: XCTestCase {
             "schema": [
                 "path": "schema.json",
                 "url": "https://www.schema.com/graphql"
+            ],
+            "scalars": [
+                [
+                    "name": "DateTime",
+                    "alias": "Date",
+                ],
+                [
+                    "name": "ID",
+                    "file": ".scalars",
+                ]
             ]
         ]
         
         let configuration = Configuration(json: json)
         
         XCTAssertNotNil(configuration)
+        
+        XCTAssertNotNil(configuration.schemaDescription)
         XCTAssertEqual(configuration.schemaDescription!.path, URL(fileURLWithPath: "schema.json"))
         XCTAssertEqual(configuration.schemaDescription!.url, URL(string: "https://www.schema.com/graphql"))
+        
+        XCTAssertNotNil(configuration.scalarDescriptions)
+        
+        XCTAssertEqual(configuration.scalarDescriptions![0].name, "DateTime")
+        XCTAssertTrue(self.equal(configuration.scalarDescriptions![0].source, expected: .aliasFor("Date")))
+        
+        XCTAssertEqual(configuration.scalarDescriptions![1].name, "ID")
+        XCTAssertTrue(self.equal(configuration.scalarDescriptions![1].source, expected: .file(URL(fileURLWithPath: ".scalars"))))
     }
     
     func testIncompleteInit() {
@@ -39,6 +59,17 @@ class ConfigurationTests: XCTestCase {
         XCTAssertNotNil(configuration)
         XCTAssertNil(configuration.schemaDescription!.path)
         XCTAssertNil(configuration.schemaDescription!.url)
+    }
+    
+    private func equal(_ source: Configuration.ScalarDescription.Source, expected: Configuration.ScalarDescription.Source) -> Bool {
+        switch (source, expected) {
+        case (.file(let lhs), .file(let rhs)) where lhs == rhs:
+            return true
+        case (.aliasFor(let lhs), .aliasFor(let rhs)) where lhs == rhs:
+            return true
+        default:
+            return false
+        }
     }
     
     // ----------------------------------

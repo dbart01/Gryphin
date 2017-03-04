@@ -109,6 +109,26 @@ class GraphModelTests: XCTestCase {
         XCTAssertEqual(try! model!.valueFor(nonnull: "children"), 3)
     }
     
+    func testScalarSetters() {
+        let model = TestModel(json: [:])
+        
+        try! model!.set("123",  for: "id1", type: TestID.self)
+        try! model!.set(nil,    for: "id2", type: TestID.self)
+        
+        XCTAssertTrue(model!.hasValueFor("id1"))
+        XCTAssertFalse(model!.hasValueFor("id2"))
+        
+        let id: TestID = try! model!.valueFor(nonnull: "id1")
+        XCTAssertEqual(id.string, "123")
+        
+        do {
+            try model!.set(Data(), for: "id3", type: TestID.self)
+            XCTFail()
+        } catch {
+            XCTAssertTrue(true)
+        }
+    }
+    
     func testNullSetters() {
         let model = TestModel(json: [:])
         
@@ -268,4 +288,16 @@ class GraphModelTests: XCTestCase {
 //
 private class TestModel: GraphModel {
     static override var typeName: String { return "TestModel" }
+}
+
+// ----------------------------------
+//  MARK: - Test Scalar -
+//
+private struct TestID: ScalarType {
+    
+    let string: String
+    
+    init(from string: String) {
+        self.string = string
+    }
 }

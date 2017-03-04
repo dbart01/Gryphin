@@ -49,9 +49,6 @@ class Executable {
             print("Generation time: \(CFAbsoluteTimeGetCurrent() - start) sec")
         }
         
-        let prefix = "Gen$"
-        let suffix = ".swift"
-        
         guard let destinationPath = args.destinationPath, !destinationPath.isEmpty else {
             print("A destination path for the generated files directory is required.")
             exit(1)
@@ -75,15 +72,24 @@ class Executable {
             
             let configuration = try self.loadConfigurationAt(configURL)
             let schemaJSON    = try configuration.loadSchema()
-            let generator     = Swift.Generator(withSchema: schemaJSON)
+            let generator     = Swift.Generator(withSchema: schemaJSON, configuration: configuration)
             
             let files = generator.generate()
             try files.forEach { file in
                 let content = file.container.stringRepresentation
-                let fileURL = destinationURL.appendingPathComponent("\(prefix)\(file.name)\(suffix)")
+                let fileURL = file.url(relativeTo: destinationURL)
                 
                 try content.write(to: fileURL, atomically: true, encoding: .utf8)
             }
+            
+            /* -------------------------------------
+             ** Check if custom scalars are provided
+             ** and handle the implementations.
+             */
+            let scalarFile = files.filter { $0.kind == .aliases }.first!
+            let scalarURL  = scalarFile.url(relativeTo: destinationURL)
+            
+            try self.copyScalarsDefinedIn(configuration, to: scalarURL)
             
             print("Schema generated to: \(destinationURL)")
             
@@ -120,6 +126,37 @@ class Executable {
         } catch let error {
             print("Failed to generate schema: \(error)")
             exit(1)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Scalars -
+    //
+    private func copyScalarsDefinedIn(_ configuration: Configuration, to url: URL) throws {
+        guard let scalarDescriptions = configuration.scalarDescriptions else {
+            return
+        }
+        
+        let newline = "\n".data(using: .utf8)!
+        let file    = try FileHandle(forWritingTo: url)
+        file.seekToEndOfFile()
+        
+        defer {
+            file.closeFile()
+        }
+        
+        var processedSources: Set<URL> = []
+        
+        for scalarDescription in scalarDescriptions {
+            if case .file(let sourceURL) = scalarDescription.source, !processedSources.contains(sourceURL) {
+                
+                if let data = try? Data(contentsOf: sourceURL) {
+                    print("Writing scalar definitions from: \(sourceURL)")
+                    file.write(newline)
+                    file.write(data)
+                }
+                processedSources.insert(sourceURL)
+            }
         }
     }
 }

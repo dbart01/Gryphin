@@ -30,6 +30,20 @@ class ParameterTests: XCTestCase {
                     equals:    "numbers: [123, 234]")
     }
     
+    func testScalarTypeInit() {
+        self.assert(parameter: Parameter(name: "id", value: TestID(from: "123")),
+                    equals:    "id: \"123\"")
+    }
+    
+    func testScalarTypeCollectionInit() {
+        let values = [
+            TestID(from: "123"),
+            TestID(from: "234"),
+        ]
+        self.assert(parameter: Parameter(name: "ids", value: values),
+                    equals:    "ids: [\"123\", \"234\"]")
+    }
+    
     func testEnumInit() {
         self.assert(parameter: Parameter(name: "enum", value: TestEnum.two),
                     equals:    "enum: 2two")
@@ -57,5 +71,17 @@ class ParameterTests: XCTestCase {
         let param3 = Parameter(name: "number", value: "123")
         
         XCTAssertNotEqual(param2, param3)
+    }
+}
+
+// ----------------------------------
+//  MARK: - Test Scalar -
+//
+private struct TestID: ScalarType {
+    
+    let string: String
+    
+    init(from string: String) {
+        self.string = string
     }
 }

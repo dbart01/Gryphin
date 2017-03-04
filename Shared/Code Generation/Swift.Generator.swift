@@ -17,18 +17,38 @@ extension Swift {
         }
         
         struct File {
-            var name:      String
+            
+            enum Kind: String {
+                case aliases
+                case enums
+                case queries
+                case models
+                case inputs
+                case network
+            }
+            
+            var kind:      Kind
             var container: Container
+            
+            var fileName: String {
+                return "Gen$\(self.kind.rawValue).swift"
+            }
+            
+            func url(relativeTo url: URL) -> URL {
+                return url.appendingPathComponent(self.fileName)
+            }
         }
         
-        let schemaJSON: JSON
+        let schemaJSON:    JSON
+        let configuration: Configuration
         
-        private let standardScalars: Set<String> = [
+        private var standardScalars: Set<String> = [
             "Int",
             "Boolean",
             "Float",
             "String",
             "URL",
+            "Date",
             
             // "ID",
             
@@ -39,6 +59,8 @@ extension Swift {
              ** type definition for it.
              */
         ]
+        
+        private var customScalarTypes: [String: String] = [:]
         
         private struct SchemaKey {
             static let data             = "data"
@@ -53,25 +75,41 @@ extension Swift {
         // ----------------------------------
         //  MARK: - Init -
         //
-        init(withSchema schema: JSON) {
-            self.schemaJSON = schema
+        init(withSchema schema: JSON, configuration: Configuration) {
+            self.schemaJSON    = schema
+            self.configuration = configuration
+            
+            /* ------------------------------------
+             ** Insert scalar names into the ignore
+             ** set if they have a source file. Any
+             ** scalars that are aliases will still
+             ** need generated typealias definitions.
+             */
+            configuration.scalarDescriptions?.forEach {
+                switch $0.source {
+                case .file:
+                    self.standardScalars.insert($0.name)
+                case .aliasFor(let type):
+                    self.customScalarTypes[$0.name] = type
+                }
+            }
         }
         
-        convenience init(withSchemaData data: Data) throws {
+        convenience init(withSchemaData data: Data, configuration: Configuration) throws {
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             
             guard let schemaJSON = json as? JSON else {
                 throw GeneratorError.invalidFormat
             }
             
-            self.init(withSchema: schemaJSON)
+            self.init(withSchema: schemaJSON, configuration: configuration)
         }
         
-        convenience init(withSchemaAt url: URL) throws {
+        convenience init(withSchemaAt url: URL, configuration: Configuration) throws {
             guard let data = try? Data(contentsOf: url) else {
                 throw GeneratorError.unableToOpenSchema
             }
-            try self.init(withSchemaData: data)
+            try self.init(withSchemaData: data, configuration: configuration)
         }
         
         // ----------------------------------
@@ -86,12 +124,12 @@ extension Swift {
             let queryType      = TypeName(name: (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String)
             let mutationType   = TypeName(name: (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String)
             
-            let scalarsFile = File(name: "Scalars", container: Container())
-            let enumsFile   = File(name: "Enums",   container: Container())
-            let queriesFile = File(name: "Queries", container: Container())
-            let modelsFile  = File(name: "Models",  container: Container())
-            let inputsFile  = File(name: "Inputs",  container: Container())
-            let networkFile = File(name: "Network", container: Container())
+            let aliasesFile = File(kind: .aliases, container: Container())
+            let enumsFile   = File(kind: .enums,   container: Container())
+            let queriesFile = File(kind: .queries, container: Container())
+            let modelsFile  = File(kind: .models,  container: Container())
+            let inputsFile  = File(kind: .inputs,  container: Container())
+            let networkFile = File(kind: .network, container: Container())
             
             /* -----------------------------
              ** Parse the schema types first
@@ -145,8 +183,8 @@ extension Swift {
                     inputsFile.container += self.generate(inputObject: type)
                     
                 case .scalar:
-                    if let alias = self.generate(scalar: type) {
-                        scalarsFile.container += alias
+                    if let alias = self.generate(scalar: type.name) {
+                        aliasesFile.container += alias
                     }
                     
                 case .union:
@@ -169,7 +207,7 @@ extension Swift {
             networkFile.container += self.generate(networkExtensionsWith: queryType, mutationType: mutationType)
             
             return [
-                scalarsFile,
+                aliasesFile,
                 enumsFile,
                 queriesFile,
                 modelsFile,
@@ -203,21 +241,20 @@ extension Swift {
             return enumClass
         }
         
-        private func generate(scalar: Schema.Object) -> Alias? {
-            precondition(scalar.kind == .scalar)
+        private func generate(scalar: String) -> Alias? {
             
             /* ----------------------------------------
              ** Ensure that we're not creating a type
              ** alias for a standard type (redundant).
              */
-            guard !self.standardScalars.contains(scalar.name) else {
+            guard !self.standardScalars.contains(scalar) else {
                 return nil
             }
             
             return Alias(
                 visibility: .public,
-                name:       scalar.name,
-                forType:    "String"
+                name:       scalar,
+                forType:    self.customScalarTypes[scalar] ?? "String"
             )
         }
         

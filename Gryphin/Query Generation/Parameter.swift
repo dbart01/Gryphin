@@ -32,6 +32,14 @@ public struct Parameter: ValueType {
         self.init(name: name, finalValue: "[\(valueString)]")
     }
     
+    init(name: String, value: ScalarType) {
+        self.init(name: name, value: value.string)
+    }
+    
+    init(name: String, value: [ScalarType]) {
+        self.init(name: name, value: value.map { $0.string })
+    }
+    
     init<T>(name: String, value: T) where T: RawRepresentable, T.RawValue == String {
         self.init(name: name, finalValue: value.rawValue)
     }

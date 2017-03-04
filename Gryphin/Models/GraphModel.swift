@@ -109,6 +109,19 @@ public class GraphModel: CustomDebugStringConvertible {
         self.set(value, for: key)
     }
     
+    func set<T: ScalarType>(_ value: Any?, for key: String, type: T.Type) throws {
+        if let value = value {
+            
+            guard let string = value as? String else {
+                throw ModelError.InconsistentSchema
+            }
+            self.set(T(from: string), for: key)
+            
+        } else {
+            self.set(nil, for: key)
+        }
+    }
+    
     // ----------------------------------
     //  MARK: - Alias Management -
     //

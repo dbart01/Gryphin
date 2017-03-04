@@ -1,5 +1,19 @@
 {
   "schema": {
     "path": "Schema/github.json"
-  }
+  },
+  "scalars": [
+  	{
+  		"name": "DateTime",
+  		"alias": "Date"
+  	},
+  	{
+  		"name": "ID",
+  		"file": ".scalars"
+  	},
+  	{
+  		"name": "URI",
+  		"alias": "URL"
+  	}
+  ]
 }

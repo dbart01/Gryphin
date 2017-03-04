@@ -30,14 +30,28 @@ class Configuration: JsonCreatable {
     }
     
     struct ScalarDescription: JsonCreatable {
+        
+        enum Source: JsonCreatable {
+            case file(URL)
+            case aliasFor(String)
+            
+            init(json: JSON) {
+                if let file = json["file"] as? String {
+                    self = .file(URL(fileURLWithPath: file))
+                } else if let name = json["alias"] as? String {
+                    self = .aliasFor(name)
+                } else {
+                    fatalError("Scalar description must contain a `source` or `alias` value.")
+                }
+            }
+        }
+        
         let name:   String
-        let alias:  String
-        let source: URL
+        let source: Source
         
         init(json: JSON) {
             self.name   = json["name"] as! String
-            self.alias  = json["alias"] as! String
-            self.source = URL(string: json["source"] as! String)!
+            self.source = Source(json: json)
         }
     }
     

@@ -149,7 +149,6 @@
 		9AD26FCA1E5258D7002DC70F /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A471E0ECA33008754A4 /* ReferenceType.swift */; };
 		9AD26FD21E5258D7002DC70F /* Gryphin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A6A101E0EC9C6008754A4 /* Gryphin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8878CF1E258585007FB44F /* Environment.swift */; };
-		9AD5FF7D1E4D21AF0062070B /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
 		9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6AA8B1E37BA0400BF909C /* GraphQL.swift */; };
 		9AD5FF981E4D21C40062070B /* String+CaseConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27B03C1E24728E00AFBDA6 /* String+CaseConversion.swift */; };
 		9AD6AA761E3657A200BF909C /* queryComprehensive.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6AA751E3657A200BF909C /* queryComprehensive.json */; };
@@ -160,18 +159,6 @@
 		9ADAD3E81E50F2CE008AC561 /* Collection+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */; };
 		9ADAD3E91E50F31D008AC561 /* Collection+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */; };
 		9ADAD4521E533793008AC561 /* GryphinGenerate in Copy Generator to /tmp */ = {isa = PBXBuildFile; fileRef = 9AD5FF731E4D214B0062070B /* GryphinGenerate */; };
-		9ADAD4A41E59CA3B008AC561 /* Gen$Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4941E588902008AC561 /* Gen$Enums.swift */; };
-		9ADAD4A51E59CA3B008AC561 /* Gen$Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4951E588902008AC561 /* Gen$Inputs.swift */; };
-		9ADAD4A61E59CA3B008AC561 /* Gen$Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4961E588902008AC561 /* Gen$Models.swift */; };
-		9ADAD4A71E59CA3B008AC561 /* Gen$Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4971E588902008AC561 /* Gen$Queries.swift */; };
-		9ADAD4A81E59CA3B008AC561 /* Gen$Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4981E588902008AC561 /* Gen$Scalars.swift */; };
-		9ADAD4A91E59CA3B008AC561 /* Gen$Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4921E5888DD008AC561 /* Gen$Network.swift */; };
-		9ADAD4AA1E59CA41008AC561 /* Gen$Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4941E588902008AC561 /* Gen$Enums.swift */; };
-		9ADAD4AB1E59CA41008AC561 /* Gen$Inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4951E588902008AC561 /* Gen$Inputs.swift */; };
-		9ADAD4AC1E59CA41008AC561 /* Gen$Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4961E588902008AC561 /* Gen$Models.swift */; };
-		9ADAD4AD1E59CA41008AC561 /* Gen$Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4971E588902008AC561 /* Gen$Queries.swift */; };
-		9ADAD4AE1E59CA41008AC561 /* Gen$Scalars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4981E588902008AC561 /* Gen$Scalars.swift */; };
-		9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD4921E5888DD008AC561 /* Gen$Network.swift */; };
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
@@ -186,6 +173,29 @@
 		9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
 		9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
 		9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60E41E5E82320067FA90 /* Errors.swift */; };
+		9AFA3B461E6997B50056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
+		9AFA3B471E6997B50056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
+		9AFA3B4A1E6997C60056C5AA /* URL+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */; };
+		9AFA3B4B1E6997C60056C5AA /* URL+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */; };
+		9AFA3B4D1E699B540056C5AA /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
+		9AFA3B4E1E699B5A0056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
+		9AFA3B4F1E699B5A0056C5AA /* URL+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */; };
+		9AFA3B501E69C2EF0056C5AA /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E751E49F723004135BF /* NetworkTests.swift */; };
+		9AFA3B551E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
+		9AFA3B561E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
+		9AFA3B571E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
+		9AFA3B5E1E6A3E950056C5AA /* Gen$aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B581E6A3E830056C5AA /* Gen$aliases.swift */; };
+		9AFA3B5F1E6A3E950056C5AA /* Gen$enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B591E6A3E830056C5AA /* Gen$enums.swift */; };
+		9AFA3B601E6A3E950056C5AA /* Gen$inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5A1E6A3E830056C5AA /* Gen$inputs.swift */; };
+		9AFA3B611E6A3E950056C5AA /* Gen$models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5B1E6A3E830056C5AA /* Gen$models.swift */; };
+		9AFA3B621E6A3E950056C5AA /* Gen$network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5C1E6A3E830056C5AA /* Gen$network.swift */; };
+		9AFA3B631E6A3E950056C5AA /* Gen$queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5D1E6A3E830056C5AA /* Gen$queries.swift */; };
+		9AFA3B641E6A3E9B0056C5AA /* Gen$aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B581E6A3E830056C5AA /* Gen$aliases.swift */; };
+		9AFA3B651E6A3E9B0056C5AA /* Gen$enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B591E6A3E830056C5AA /* Gen$enums.swift */; };
+		9AFA3B661E6A3E9B0056C5AA /* Gen$inputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5A1E6A3E830056C5AA /* Gen$inputs.swift */; };
+		9AFA3B671E6A3E9B0056C5AA /* Gen$models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5B1E6A3E830056C5AA /* Gen$models.swift */; };
+		9AFA3B681E6A3E9B0056C5AA /* Gen$network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5C1E6A3E830056C5AA /* Gen$network.swift */; };
+		9AFA3B691E6A3E9B0056C5AA /* Gen$queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B5D1E6A3E830056C5AA /* Gen$queries.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -316,12 +326,6 @@
 		9ADAD0A51E436FCF008AC561 /* GraphQLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLTests.swift; sourceTree = "<group>"; };
 		9ADAD0A71E43713C008AC561 /* ContainingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainingTests.swift; sourceTree = "<group>"; };
 		9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Append.swift"; sourceTree = "<group>"; };
-		9ADAD4921E5888DD008AC561 /* Gen$Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Network.swift; sourceTree = "<group>"; };
-		9ADAD4941E588902008AC561 /* Gen$Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Enums.swift; sourceTree = "<group>"; };
-		9ADAD4951E588902008AC561 /* Gen$Inputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Inputs.swift; sourceTree = "<group>"; };
-		9ADAD4961E588902008AC561 /* Gen$Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Models.swift; sourceTree = "<group>"; };
-		9ADAD4971E588902008AC561 /* Gen$Queries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Queries.swift; sourceTree = "<group>"; };
-		9ADAD4981E588902008AC561 /* Gen$Scalars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gen$Scalars.swift; sourceTree = "<group>"; };
 		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
 		9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphErrorTests.swift; sourceTree = "<group>"; };
 		9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -329,6 +333,15 @@
 		9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		9AEF60E21E5E7B9F0067FA90 /* Executable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Executable.swift; sourceTree = "<group>"; };
 		9AEF60E41E5E82320067FA90 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		9AFA3B451E6997B50056C5AA /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
+		9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+ScalarType.swift"; sourceTree = "<group>"; };
+		9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ScalarType.swift"; sourceTree = "<group>"; };
+		9AFA3B581E6A3E830056C5AA /* Gen$aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$aliases.swift; sourceTree = "<group>"; };
+		9AFA3B591E6A3E830056C5AA /* Gen$enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$enums.swift; sourceTree = "<group>"; };
+		9AFA3B5A1E6A3E830056C5AA /* Gen$inputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$inputs.swift; sourceTree = "<group>"; };
+		9AFA3B5B1E6A3E830056C5AA /* Gen$models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$models.swift; sourceTree = "<group>"; };
+		9AFA3B5C1E6A3E830056C5AA /* Gen$network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$network.swift; sourceTree = "<group>"; };
+		9AFA3B5D1E6A3E830056C5AA /* Gen$queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gen$queries.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +484,7 @@
 		9A8879071E2D5DD9007FB44F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9AFA3B441E6997B50056C5AA /* Scalars */,
 				9AEF60D41E5DB8D10067FA90 /* Configuration */,
 				9A9A6A351E0EC9E5008754A4 /* Schema */,
 				9A9A6A361E0EC9EB008754A4 /* Code Generation */,
@@ -620,12 +634,12 @@
 		9ADAD3F41E50F7B1008AC561 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				9ADAD4941E588902008AC561 /* Gen$Enums.swift */,
-				9ADAD4951E588902008AC561 /* Gen$Inputs.swift */,
-				9ADAD4961E588902008AC561 /* Gen$Models.swift */,
-				9ADAD4971E588902008AC561 /* Gen$Queries.swift */,
-				9ADAD4981E588902008AC561 /* Gen$Scalars.swift */,
-				9ADAD4921E5888DD008AC561 /* Gen$Network.swift */,
+				9AFA3B581E6A3E830056C5AA /* Gen$aliases.swift */,
+				9AFA3B591E6A3E830056C5AA /* Gen$enums.swift */,
+				9AFA3B5A1E6A3E830056C5AA /* Gen$inputs.swift */,
+				9AFA3B5B1E6A3E830056C5AA /* Gen$models.swift */,
+				9AFA3B5C1E6A3E830056C5AA /* Gen$network.swift */,
+				9AFA3B5D1E6A3E830056C5AA /* Gen$queries.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -670,6 +684,16 @@
 				9AEF60DE1E5DC86B0067FA90 /* ConfigurationTests.swift */,
 			);
 			name = Configuration;
+			sourceTree = "<group>";
+		};
+		9AFA3B441E6997B50056C5AA /* Scalars */ = {
+			isa = PBXGroup;
+			children = (
+				9AFA3B451E6997B50056C5AA /* ScalarType.swift */,
+				9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */,
+				9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */,
+			);
+			path = Scalars;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -877,12 +901,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ADAD4A41E59CA3B008AC561 /* Gen$Enums.swift in Sources */,
-				9ADAD4A51E59CA3B008AC561 /* Gen$Inputs.swift in Sources */,
-				9ADAD4A61E59CA3B008AC561 /* Gen$Models.swift in Sources */,
-				9ADAD4A71E59CA3B008AC561 /* Gen$Queries.swift in Sources */,
-				9ADAD4A81E59CA3B008AC561 /* Gen$Scalars.swift in Sources */,
-				9ADAD4A91E59CA3B008AC561 /* Gen$Network.swift in Sources */,
+				9AFA3B5E1E6A3E950056C5AA /* Gen$aliases.swift in Sources */,
+				9AFA3B5F1E6A3E950056C5AA /* Gen$enums.swift in Sources */,
+				9AFA3B601E6A3E950056C5AA /* Gen$inputs.swift in Sources */,
+				9AFA3B611E6A3E950056C5AA /* Gen$models.swift in Sources */,
+				9AFA3B621E6A3E950056C5AA /* Gen$network.swift in Sources */,
+				9AFA3B631E6A3E950056C5AA /* Gen$queries.swift in Sources */,
+				9AFA3B461E6997B50056C5AA /* ScalarType.swift in Sources */,
 				9AEF60DA1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26F281E51EC55002DC70F /* Nameable.swift in Sources */,
 				9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */,
@@ -891,6 +916,7 @@
 				9AD26F251E51EC51002DC70F /* Schema.swift in Sources */,
 				9AD26F241E51EC4D002DC70F /* Schema.Kind.swift in Sources */,
 				9AD26F231E51EC4C002DC70F /* Schema.ObjectType.swift in Sources */,
+				9AFA3B4A1E6997C60056C5AA /* URL+ScalarType.swift in Sources */,
 				9AD26F221E51EC4A002DC70F /* Schema.Object.swift in Sources */,
 				9AD26F211E51EC48002DC70F /* Schema.EnumValue.swift in Sources */,
 				9AD26F201E51EC47002DC70F /* Schema.Field.swift in Sources */,
@@ -899,6 +925,7 @@
 				9AD26F291E51EC5D002DC70F /* StringRepresentable.swift in Sources */,
 				9AEF60E81E5F16170067FA90 /* Errors.swift in Sources */,
 				9AD26F2A1E51EC60002DC70F /* Containable.swift in Sources */,
+				9AFA3B551E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */,
 				9AD26F2B1E51EC62002DC70F /* Containing.swift in Sources */,
 				9AD26F2C1E51EC64002DC70F /* Swift.swift in Sources */,
 				9AD26F2D1E51EC65002DC70F /* Swift.Visibility.swift in Sources */,
@@ -968,6 +995,7 @@
 				9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */,
 				9A972A341E40EE56007F7B0B /* Swift.PropertyTests.swift in Sources */,
 				9A972A3D1E4219C7007F7B0B /* Schema.EnumValueTests.swift in Sources */,
+				9AFA3B501E69C2EF0056C5AA /* NetworkTests.swift in Sources */,
 				9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -976,12 +1004,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ADAD4AA1E59CA41008AC561 /* Gen$Enums.swift in Sources */,
-				9ADAD4AB1E59CA41008AC561 /* Gen$Inputs.swift in Sources */,
-				9ADAD4AC1E59CA41008AC561 /* Gen$Models.swift in Sources */,
-				9ADAD4AD1E59CA41008AC561 /* Gen$Queries.swift in Sources */,
-				9ADAD4AE1E59CA41008AC561 /* Gen$Scalars.swift in Sources */,
-				9ADAD4AF1E59CA41008AC561 /* Gen$Network.swift in Sources */,
+				9AFA3B641E6A3E9B0056C5AA /* Gen$aliases.swift in Sources */,
+				9AFA3B651E6A3E9B0056C5AA /* Gen$enums.swift in Sources */,
+				9AFA3B661E6A3E9B0056C5AA /* Gen$inputs.swift in Sources */,
+				9AFA3B671E6A3E9B0056C5AA /* Gen$models.swift in Sources */,
+				9AFA3B681E6A3E9B0056C5AA /* Gen$network.swift in Sources */,
+				9AFA3B691E6A3E9B0056C5AA /* Gen$queries.swift in Sources */,
+				9AFA3B471E6997B50056C5AA /* ScalarType.swift in Sources */,
 				9AEF60DB1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */,
 				9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */,
@@ -990,6 +1019,7 @@
 				9AD26FA41E5258D7002DC70F /* Schema.swift in Sources */,
 				9AD26FA51E5258D7002DC70F /* Schema.Kind.swift in Sources */,
 				9AD26FA61E5258D7002DC70F /* Schema.ObjectType.swift in Sources */,
+				9AFA3B4B1E6997C60056C5AA /* URL+ScalarType.swift in Sources */,
 				9AD26FA71E5258D7002DC70F /* Schema.Object.swift in Sources */,
 				9AD26FA81E5258D7002DC70F /* Schema.EnumValue.swift in Sources */,
 				9AD26FA91E5258D7002DC70F /* Schema.Field.swift in Sources */,
@@ -998,6 +1028,7 @@
 				9AD26FAC1E5258D7002DC70F /* StringRepresentable.swift in Sources */,
 				9AEF60E71E5F16160067FA90 /* Errors.swift in Sources */,
 				9AD26FAD1E5258D7002DC70F /* Containable.swift in Sources */,
+				9AFA3B561E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */,
 				9AD26FAE1E5258D7002DC70F /* Containing.swift in Sources */,
 				9AD26FAF1E5258D7002DC70F /* Swift.swift in Sources */,
 				9AD26FB01E5258D7002DC70F /* Swift.Visibility.swift in Sources */,
@@ -1036,6 +1067,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AD26F6B1E51ED15002DC70F /* Nameable.swift in Sources */,
+				9AFA3B4E1E699B5A0056C5AA /* ScalarType.swift in Sources */,
 				9AD26F6C1E51ED15002DC70F /* Typeable.swift in Sources */,
 				9AD26F6D1E51ED15002DC70F /* Describeable.swift in Sources */,
 				9AD26F6E1E51ED15002DC70F /* Schema.swift in Sources */,
@@ -1050,6 +1082,7 @@
 				9AD26F851E51ED1E002DC70F /* StringRepresentable.swift in Sources */,
 				9AD26F861E51ED1E002DC70F /* Containable.swift in Sources */,
 				9AD26F871E51ED1E002DC70F /* Containing.swift in Sources */,
+				9AFA3B4D1E699B540056C5AA /* JsonCreatable.swift in Sources */,
 				9AD26F881E51ED1E002DC70F /* Swift.swift in Sources */,
 				9AEF60E51E5E82320067FA90 /* Errors.swift in Sources */,
 				9AD26F891E51ED1E002DC70F /* Swift.Visibility.swift in Sources */,
@@ -1065,12 +1098,13 @@
 				9AD26F921E51ED1E002DC70F /* Swift.Generator.swift in Sources */,
 				9ADAD3E91E50F31D008AC561 /* Collection+Append.swift in Sources */,
 				9A56D4B91E51EA84008A37C5 /* main.swift in Sources */,
-				9AD5FF7D1E4D21AF0062070B /* JsonCreatable.swift in Sources */,
+				9AFA3B571E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */,
 				9A36AEDC1E4DF2F900DA0201 /* Arguments.swift in Sources */,
 				9AD5FF981E4D21C40062070B /* String+CaseConversion.swift in Sources */,
 				9AD5FF7C1E4D21AF0062070B /* Environment.swift in Sources */,
 				9AEF60E31E5E7B9F0067FA90 /* Executable.swift in Sources */,
 				9AD5FF7E1E4D21AF0062070B /* GraphQL.swift in Sources */,
+				9AFA3B4F1E699B5A0056C5AA /* URL+ScalarType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

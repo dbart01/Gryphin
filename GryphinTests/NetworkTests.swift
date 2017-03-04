@@ -28,7 +28,7 @@ class NetworkTests: XCTestCase {
     func testQuery() {
         let e = self.expectation(description: "")
         
-        let project = QCreateProjectInput(clientMutationId: "unique-string", ownerId: "MDEwOlJlcG9zaXRvcnk3NTk3NjE5OA==", name: "TestProject", body: "This a GraphQL generated project for testing.")
+        let project = QCreateProjectInput(clientMutationId: "unique-string", ownerId: ID("MDEwOlJlcG9zaXRvcnk3NTk3NjE5OA=="), name: "TestProject", body: "This a GraphQL generated project for testing.")
         let mutation = QMutation { $0
             .createProject(input: project) { $0
                 .clientMutationId
