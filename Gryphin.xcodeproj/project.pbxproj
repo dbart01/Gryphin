@@ -162,6 +162,9 @@
 		9ADAD50D1E6C4972008AC561 /* IntrospectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD50C1E6C4972008AC561 /* IntrospectionCoordinator.swift */; };
 		9ADAD50E1E6C4972008AC561 /* IntrospectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD50C1E6C4972008AC561 /* IntrospectionCoordinator.swift */; };
 		9ADAD50F1E6C4972008AC561 /* IntrospectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD50C1E6C4972008AC561 /* IntrospectionCoordinator.swift */; };
+		9ADAD5111E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */; };
+		9ADAD5121E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */; };
+		9ADAD5131E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */; };
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
@@ -180,7 +183,6 @@
 		9AFA3B4D1E699B540056C5AA /* JsonCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A6A271E0EC9E2008754A4 /* JsonCreatable.swift */; };
 		9AFA3B4E1E699B5A0056C5AA /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B451E6997B50056C5AA /* ScalarType.swift */; };
 		9AFA3B4F1E699B5A0056C5AA /* URL+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */; };
-		9AFA3B501E69C2EF0056C5AA /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E751E49F723004135BF /* NetworkTests.swift */; };
 		9AFA3B551E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
 		9AFA3B561E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
 		9AFA3B571E6A3CFD0056C5AA /* Date+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */; };
@@ -327,6 +329,7 @@
 		9ADAD0A71E43713C008AC561 /* ContainingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainingTests.swift; sourceTree = "<group>"; };
 		9ADAD3E71E50F2CE008AC561 /* Collection+Append.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Append.swift"; sourceTree = "<group>"; };
 		9ADAD50C1E6C4972008AC561 /* IntrospectionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntrospectionCoordinator.swift; sourceTree = "<group>"; };
+		9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+ScalarType.swift"; sourceTree = "<group>"; };
 		9AEF60CB1E5C782C0067FA90 /* GraphError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphError.swift; sourceTree = "<group>"; };
 		9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphErrorTests.swift; sourceTree = "<group>"; };
 		9AEF60D51E5DB8DA0067FA90 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -700,6 +703,7 @@
 				9AFA3B451E6997B50056C5AA /* ScalarType.swift */,
 				9AFA3B491E6997C60056C5AA /* URL+ScalarType.swift */,
 				9AFA3B541E6A3CFD0056C5AA /* Date+ScalarType.swift */,
+				9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */,
 			);
 			path = Scalars;
 			sourceTree = "<group>";
@@ -915,6 +919,7 @@
 				9AFA3B611E6A3E950056C5AA /* Gen$models.swift in Sources */,
 				9AFA3B621E6A3E950056C5AA /* Gen$network.swift in Sources */,
 				9AFA3B631E6A3E950056C5AA /* Gen$queries.swift in Sources */,
+				9ADAD5111E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */,
 				9AFA3B461E6997B50056C5AA /* ScalarType.swift in Sources */,
 				9AEF60DA1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26F281E51EC55002DC70F /* Nameable.swift in Sources */,
@@ -1003,7 +1008,6 @@
 				9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */,
 				9A972A341E40EE56007F7B0B /* Swift.PropertyTests.swift in Sources */,
 				9A972A3D1E4219C7007F7B0B /* Schema.EnumValueTests.swift in Sources */,
-				9AFA3B501E69C2EF0056C5AA /* NetworkTests.swift in Sources */,
 				9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1018,6 +1022,7 @@
 				9AFA3B671E6A3E9B0056C5AA /* Gen$models.swift in Sources */,
 				9AFA3B681E6A3E9B0056C5AA /* Gen$network.swift in Sources */,
 				9AFA3B691E6A3E9B0056C5AA /* Gen$queries.swift in Sources */,
+				9ADAD5121E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */,
 				9AFA3B471E6997B50056C5AA /* ScalarType.swift in Sources */,
 				9AEF60DB1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26FA11E5258D7002DC70F /* Nameable.swift in Sources */,
@@ -1080,6 +1085,7 @@
 				9AD26F6D1E51ED15002DC70F /* Describeable.swift in Sources */,
 				9AD26F6E1E51ED15002DC70F /* Schema.swift in Sources */,
 				9AD26F6F1E51ED15002DC70F /* Schema.Kind.swift in Sources */,
+				9ADAD5131E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */,
 				9AD26F701E51ED15002DC70F /* Schema.ObjectType.swift in Sources */,
 				9AEF60DC1E5DBD620067FA90 /* ConfigurationCoordinator.swift in Sources */,
 				9AD26F711E51ED15002DC70F /* Schema.Object.swift in Sources */,
