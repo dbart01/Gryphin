@@ -18,7 +18,10 @@ class ConfigurationTests: XCTestCase {
         let json: JSON = [
             "schema": [
                 "path": "schema.json",
-                "url": "https://www.schema.com/graphql"
+                "url": "https://www.schema.com/graphql",
+                "headers": [
+                    "Authorization": "Bearer token",
+                ]
             ],
             "scalars": [
                 [
@@ -38,7 +41,10 @@ class ConfigurationTests: XCTestCase {
         
         XCTAssertNotNil(configuration.schemaDescription)
         XCTAssertEqual(configuration.schemaDescription!.path, URL(fileURLWithPath: "schema.json"))
-        XCTAssertEqual(configuration.schemaDescription!.url, URL(string: "https://www.schema.com/graphql"))
+        XCTAssertEqual(configuration.schemaDescription!.url,  URL(string: "https://www.schema.com/graphql"))
+        XCTAssertEqual(configuration.schemaDescription!.headers!, [
+            "Authorization": "Bearer token",
+        ])
         
         XCTAssertNotNil(configuration.scalarDescriptions)
         

@@ -15,8 +15,9 @@ enum ConfigurationError: Error {
 class Configuration: JsonCreatable {
     
     struct SchemaDescription: JsonCreatable {
-        let path: URL?
-        let url:  URL?
+        let path:    URL?
+        let url:     URL?
+        let headers: Headers?
         
         init(json: JSON) {
             if let path = json["path"] as? String {
@@ -30,6 +31,8 @@ class Configuration: JsonCreatable {
             } else {
                 self.url = nil
             }
+            
+            self.headers = json["headers"] as? Headers
         }
     }
     
@@ -79,11 +82,14 @@ class Configuration: JsonCreatable {
             print("Local schema specified. Loading from file...")
             return try JSON.from(fileAt: localURL)
             
-        } else if let _ = self.schemaDescription?.url {
+        } else if let remoteURL = self.schemaDescription?.url {
             
-            // TODO: POST introspection query to endpoint
             print("Remote schema URL specified. Sending introspection...")
-            return [:]
+            if let headers = self.schemaDescription?.headers {
+                print("Additional header specified: \(headers)")
+            }
+            
+            return try IntrospectionCoordinator.introspectAt(remoteURL, additionalHeaders: self.schemaDescription?.headers)
             
         } else {
             throw ConfigurationError.noSchemaLocation
