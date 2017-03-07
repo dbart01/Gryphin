@@ -167,7 +167,7 @@ extension Swift {
                     }
                     
                     queriesFile.container += objectClass
-                    modelsFile.container += self.generate(objectModel: type)
+                    modelsFile.container  += self.generate(objectModel: type, parsedTypes: generatedTypes)
                     
                 case .interface:
                     queriesFile.container += self.generate(interface: type, parsedTypes: generatedTypes)
@@ -681,7 +681,7 @@ extension Swift {
             return swiftClass
         }
         
-        private func generate(objectModel object: Schema.Object) -> Class {
+        private func generate(objectModel object: Schema.Object, parsedTypes: [String: Schema.Object]) -> Class {
             
             precondition(object.kind == .object)
             
@@ -706,7 +706,20 @@ extension Swift {
                  ** model object.
                  */
                 for field in fields {
-                    swiftClass += self.generate(modelPropertyFor: field)
+                    
+                    var targetField = field
+                    
+                    /* ------------------------------------
+                     ** If the field is a connection, we'll
+                     ** create a convenience accessor for
+                     ** all the nodes it's edges contain.
+                     */
+                    if let fieldObject = parsedTypes[field.type.leaf.possibleName!], let _ = fieldObject.edgesField {
+                        targetField = field.changing(name: field.nameForConnection)
+                        swiftClass += self.generate(modelConnectionPropertyFor: field, parsedTypes: parsedTypes)
+                    }
+                    
+                    swiftClass += self.generate(modelPropertyFor: targetField)
                 }
                 
                 swiftClass += self.generate(initializerWith: fields, types: nil)
@@ -827,6 +840,23 @@ extension Swift {
                     return Line(content: "try! self.set(\(type)(json: \(value)), for: \"\(name)\", type: \(type).self)")
                 }
             }
+        }
+        
+        private func generate(modelConnectionPropertyFor field: Schema.Field, parsedTypes: [String: Schema.Object]) -> Property {
+            
+            let result   = self.unwrapConnectionStartingAt(connectionField: field, parsedTypes: parsedTypes)!
+            let typeName = result.nodeType.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar, ignoreNull: true)
+            
+            return Property(
+                visibility:  .public,
+                name:        field.name,
+                returnType:  "[\(typeName)]",
+                annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
+                body: [
+                    Line(content: result.content),
+                ],
+                comments: field.descriptionComments()
+            )
         }
         
         private func generate(modelPropertyFor field: Schema.Field) -> Property {
@@ -1141,6 +1171,31 @@ extension Swift {
             return lines
         }
         
+        private func unwrapConnectionStartingAt(connectionField: Schema.Field, parsedTypes: [String: Schema.Object]) -> (content: String, nodeType: Schema.ObjectType)? {
+            
+            if let connection  = parsedTypes[connectionField.type.leaf.name],
+                let edgesField = connection.edgesField,
+                let edges      = parsedTypes[edgesField.type.leaf.name],
+                let nodeField  = edges.nodeField {
+                
+                let edgeNullability = edgesField.type.isTopLevelNullable ? "?" : ""
+                let expNullability  = edgesField.type.isTopLevelNullable ? " ?? []" : ""
+                let nodeNullability = edgesField.type.isLeafNullable ? "?" : ""
+                
+                let content = "return " +
+                    "self." +
+                    "\(connectionField.nameForConnection)." +
+                    "\(edgesField.name)\(edgeNullability)." +
+                    "flatMap { " +
+                    "$0\(nodeNullability)." +
+                    "\(nodeField.name)" +
+                    " }\(expNullability)"
+                
+                return (content, nodeField.type.leaf)
+            }
+            return nil
+        }
+        
         // ----------------------------------
         //  MARK: - Deprecations -
         //
@@ -1170,6 +1225,12 @@ fileprivate extension Array {
             dictionary[block($0)] = $0
         }
         return dictionary
+    }
+    
+    func forEachFilteredUsing(_ filter: (Element) -> Bool, _ body: (Element) throws -> Void) rethrows {
+        for element in self where filter(element) {
+            try body(element)
+        }
     }
 }
 
@@ -1389,6 +1450,10 @@ fileprivate extension Schema.Argument {
 //  MARK: - Field Extension -
 //
 fileprivate extension Schema.Field {
+    
+    var nameForConnection: String {
+        return "\(self.name)Connection"
+    }
     
     func parameterDocComments() -> [Swift.Line] {
         var comments: [Swift.Line] = []

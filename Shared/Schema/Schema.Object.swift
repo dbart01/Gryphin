@@ -20,6 +20,14 @@ extension Schema {
         let enumValues:    [EnumValue]?
         let possibleTypes: [ObjectType]?
         
+        var edgesField: Field? {
+            return self.field(named: "edges")
+        }
+        
+        var nodeField: Field? {
+            return self.field(named: "node")
+        }
+        
         // ----------------------------------
         //  MARK: - Init -
         //
@@ -33,6 +41,23 @@ extension Schema {
             self.interfaces    = ObjectType.collectionWith(optionalJson: json["interfaces"]    as? [JSON])
             self.enumValues    = EnumValue.collectionWith(optionalJson:  json["enumValues"]    as? [JSON])
             self.possibleTypes = ObjectType.collectionWith(optionalJson: json["possibleTypes"] as? [JSON])
+        }
+        
+        // ----------------------------------
+        //  MARK: - Field Queries -
+        //
+        private func field(named name: String) -> Field? {
+            guard let fields = self.fields else {
+                return nil
+            }
+            
+            for field in fields {
+                if field.name == name {
+                    return field
+                }
+            }
+            
+            return nil
         }
     }
 }

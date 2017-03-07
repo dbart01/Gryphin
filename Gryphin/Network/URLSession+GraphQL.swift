@@ -45,6 +45,8 @@ public extension URLSession {
                 let object = try? JSONSerialization.jsonObject(with: data, options: []),
                 let json = object as? JSON {
                 
+                networkDebug("Response: \(json)")
+                
                 if let errorsJson = json["errors"] as? [JSON] {
                     error = .query(errors: QueryError.collectionWith(requiredJson: errorsJson))
                 }
@@ -52,8 +54,6 @@ public extension URLSession {
                 if let data = json["data"] as? JSON {
                     root = R(json: data)
                 }
-                
-                networkDebug("Response: \(json)")
             }
         }
     }

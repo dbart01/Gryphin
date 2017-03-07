@@ -49,12 +49,18 @@ extension Schema {
             return self.kind != .nonNull
         }
         
+        var isLeafNullable: Bool {
+            return self.leaf.parentType?.isTopLevelNullable ?? self.isTopLevelNullable
+        }
+        
         var leaf: ObjectType {
             if let type = self.ofType {
                 return type.leaf
             }
             return self
         }
+        
+        private let parentType: ObjectType?
         
         // ----------------------------------
         //  MARK: - Init -
@@ -63,6 +69,9 @@ extension Schema {
             self.kind         = Kind(string: json["kind"]       as! String)!
             self.possibleName = json["name"]                    as? String
             self.ofType       = ObjectType(json: json["ofType"] as? JSON)
+            self.parentType   = nil
+            
+            self.ofType?.parentType = self
         }
     }
 }
