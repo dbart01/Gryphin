@@ -78,47 +78,79 @@ public class GraphModel: CustomDebugStringConvertible {
         return value!
     }
     
-    private func set(_ value: Any, for key: String) {
-        self.values[key] = value
-    }
-    
-    private func set(_ value: Any?, for key: String) {
+    // ----------------------------------
+    //  MARK: - Property Setter -
+    //
+    func set(_ value: Any?, for key: String) {
         if let value = value {
-            self.set(value, for: key)
+            self.values[key] = value
         } else {
-            self.unset(key: key)
+            self.values[key] = nil as Any?
         }
     }
     
-    private func unset(key: String) {
-        self.values[key] = nil
-    }
-    
-    func set<T>(_ value: Any?, for key: String, type: T.Type) throws {
-        
-        /* -----------------------------------------
-         ** For non-nil values, check to ensure they
-         ** are of a particular type before assignment.
-         */
-        if value != nil {
-            guard let _ = value as? T else {
+    // ----------------------------------
+    //  MARK: - Deserialization Setters -
+    //
+    func set<T: ScalarType>(valueFrom json: JSON, for key: String, type: T.Type) throws {
+
+        try self.set(any: json[key], for: key, convertUsing: { value in
+            guard let scalarString = value as? String else {
                 throw ModelError.InconsistentSchema
             }
-        }
-        
-        self.set(value, for: key)
+            return T(from: scalarString)
+        })
     }
     
-    func set<T: ScalarType>(_ value: Any?, for key: String, type: T.Type) throws {
-        if let value = value {
+    func set<T>(valueFrom json: JSON, for key: String, type: T.Type) throws {
+
+        try self.set(any: json[key], for: key, convertUsing: { value in
+            guard let typed = value as? T else {
+                throw ModelError.InconsistentSchema
+            }
+            return typed
+        })
+    }
+    
+    func set<T: GraphModel>(modelFrom json: JSON, for key: String, type: T.Type) throws {
+
+        try self.set(any: json[key], for: key, convertUsing: { value in
+            guard let json = value as? JSON else {
+                throw ModelError.InconsistentSchema
+            }
+            return T(json: json)
+        })
+    }
+    
+    func set<T: GraphModel>(modelCollectionFrom json: JSON, for key: String, type: [T].Type) throws {
+
+        try self.set(any: json[key], for: key, convertUsing: { value in
+            guard let json = value as? [JSON] else {
+                throw ModelError.InconsistentSchema
+            }
+            return [T].from(json)
+        })
+    }
+    
+    private func set(any: Any??, for key: String, convertUsing converter: (Any) throws -> Any?) throws {
+        if let anyContainer = any {
             
-            guard let string = value as? String else {
-                throw ModelError.InconsistentSchema
+            if let anyValue = anyContainer, let convertedValue = try converter(anyValue) {
+                self.values[key] = convertedValue
+            } else {
+                self.values[key] = nil as Any?
             }
-            self.set(T(from: string), for: key)
             
         } else {
-            self.set(nil, for: key)
+            self.values[key] = nil
+        }
+    }
+    
+    func set<T: GraphModel>(json: JSON, for key: String, type: T.Type) throws {
+        if let model = T(json: json) {
+            self.values[key] = model
+        } else {
+            self.values[key] = nil
         }
     }
     

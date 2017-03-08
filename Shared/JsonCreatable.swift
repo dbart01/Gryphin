@@ -69,8 +69,4 @@ extension Dictionary where Value: Any {
         
         return try self.from(data: data)
     }
-    
-    func v<T>(_ key: Key) -> T? {
-        return self[key] as? T
-    }
 }

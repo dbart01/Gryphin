@@ -666,7 +666,7 @@ extension Swift {
                                 Line(content: "return try! self.valueFor(nullable: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                             Property.Accessor(kind: .set, body: [
-                                Line(content: "try! self.set(newValue, for: \"\(possibleType.name.lowercasedFirst)\", type: \(typeName).self)")
+                                Line(content: "self.set(newValue, for: \"\(possibleType.name.lowercasedFirst)\")")
                             ]),
                         ],
                         comments: [
@@ -707,7 +707,7 @@ extension Swift {
                  */
                 for field in fields {
                     
-                    var targetField = field
+                    var fieldAlias: String?
                     
                     /* ------------------------------------
                      ** If the field is a connection, we'll
@@ -715,11 +715,11 @@ extension Swift {
                      ** all the nodes it's edges contain.
                      */
                     if let fieldObject = parsedTypes[field.type.leaf.possibleName!], let _ = fieldObject.edgesField {
-                        targetField = field.changing(name: field.nameForConnection)
+                        fieldAlias = field.nameForConnection
                         swiftClass += self.generate(modelConnectionPropertyFor: field, parsedTypes: parsedTypes)
                     }
                     
-                    swiftClass += self.generate(modelPropertyFor: targetField)
+                    swiftClass += self.generate(modelPropertyFor: field, nameAlias: fieldAlias)
                 }
                 
                 swiftClass += self.generate(initializerWith: fields, types: nil)
@@ -777,7 +777,8 @@ extension Swift {
                     initBody += ""
                     
                     for field in scalarFields {
-                        initBody += self.generate(propertyAssignmentNamed: field.name, type: typeNameFor(field), isScalar: true, isFragment: false)
+                        // TODO: What if it's a scalar collection?
+                        initBody += self.generate(propertyAssignmentNamed: field.name, type: typeNameFor(field), isScalar: true, isFragment: false, isCollection: false)
                     }
                 }
                 
@@ -824,21 +825,21 @@ extension Swift {
         
         private func generate(propertyAssignmentNamed name: String, type: String, isScalar: Bool, isFragment: Bool, isCollection: Bool = false) -> Line {
             if isScalar {
-                return Line(content: "try! self.set(json.v(\"\(name)\"), for: \"\(name)\", type: \(type).self)")
+                return Line(content: "try! self.set(valueFrom: json, for: \"\(name)\", type: \(type).self)")
+                
             } else {
                 
-                let value: String
                 if isFragment {
-                    value = "json"
+                    return Line(content: "try! self.set(json: json, for: \"\(name)\", type: \(type).self)")
                 } else {
-                    value = "json.v(\"\(name)\")"
+                    if isCollection {
+                        return Line(content: "try! self.set(modelCollectionFrom: json, for: \"\(name)\", type: \(type).self)")
+                    } else {
+                        return Line(content: "try! self.set(modelFrom: json, for: \"\(name)\", type: \(type).self)")
+                    }
                 }
                 
-                if isCollection {
-                    return Line(content: "try! self.set(\(type).from(\(value)), for: \"\(name)\", type: \(type).self)")
-                } else {
-                    return Line(content: "try! self.set(\(type)(json: \(value)), for: \"\(name)\", type: \(type).self)")
-                }
+                
             }
         }
         
@@ -859,13 +860,13 @@ extension Swift {
             )
         }
         
-        private func generate(modelPropertyFor field: Schema.Field) -> Property {
+        private func generate(modelPropertyFor field: Schema.Field, nameAlias: String? = nil) -> Property {
             let nullability = field.type.isTopLevelNullable ? "nullable" : "nonnull"
             let typeName    = field.type.recursiveType(queryKind: .model, concrete: true, unmodified: field.type.hasScalar)
             
             return Property(
                 visibility:  .public,
-                name:        field.name,
+                name:        nameAlias ?? field.name,
                 returnType:  typeName,
                 annotations: field.isDeprecated ? [self.deprecationAnnotationWith(field.deprecationReason)] : nil,
                 accessors:   [
@@ -873,7 +874,7 @@ extension Swift {
                         Line(content: "return try! self.valueFor(\(nullability): \"\(field.name)\")")
                         ]),
                     Property.Accessor(kind: .set, body: [
-                        Line(content: "try! self.set(newValue, for: \"\(field.name)\", type: \(typeName).self)")
+                        Line(content: "self.set(newValue, for: \"\(field.name)\")")
                         ]),
                     ],
                 comments: field.descriptionComments()
