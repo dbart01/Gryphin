@@ -21,45 +21,13 @@ extension Schema {
         // ----------------------------------
         //  MARK: - Init -
         //
-        convenience init(json: JSON) {
-            let name              = json["name"]                  as! String
-            let description       = json["description"]           as? String
-            let isDeprecated      = json["isDeprecated"]          as? Bool ?? false
-            let deprecationReason = json["deprecationReason"]     as? String
-            let type              = ObjectType(json: json["type"] as! JSON)
-            let arguments         = Argument.collectionWith(requiredJson: json["args"] as! [JSON])
-            
-            self.init(
-                name:              name,
-                description:       description,
-                type:              type,
-                arguments:         arguments,
-                isDeprecated:      isDeprecated,
-                deprecationReason: deprecationReason
-            )
-        }
-        
-        private init(name: String, description: String?, type: ObjectType, arguments: [Argument], isDeprecated: Bool, deprecationReason: String?) {
-            self.name              = name
-            self.description       = description
-            self.type              = type
-            self.arguments         = arguments
-            self.isDeprecated      = isDeprecated
-            self.deprecationReason = deprecationReason
-        }
-        
-        // ----------------------------------
-        //  MARK: - Copy -
-        //
-        func changing(name: String) -> Field {
-            return Field(
-                name:              name,
-                description:       self.description,
-                type:              self.type,
-                arguments:         self.arguments,
-                isDeprecated:      self.isDeprecated,
-                deprecationReason: self.deprecationReason
-            )
+        init(json: JSON) {
+            self.name              = json["name"]                  as! String
+            self.description       = json["description"]           as? String
+            self.isDeprecated      = json["isDeprecated"]          as? Bool ?? false
+            self.deprecationReason = json["deprecationReason"]     as? String
+            self.type              = ObjectType(json: json["type"] as! JSON)
+            self.arguments         = Argument.collectionWith(requiredJson: json["args"] as! [JSON])
         }
     }
 }
