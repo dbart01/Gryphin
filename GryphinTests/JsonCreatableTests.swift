@@ -56,20 +56,69 @@ class JsonCreatableTests: XCTestCase {
     }
     
     // ----------------------------------
-    //  MARK: - JSON Accessor -
+    //  MARK: - Json Parsing -
     //
-    func testJsonAccessor() {
-        let json = self.singleJSON()
+    func testJsonParseFromInvalidData() {
+        let invalidData = self.dataFor("{\"name\": \"John}")
         
-        let name:  String? = json.v("name")
-        let email: String? = json.v("email")
+        do {
+            _ = try JSON.from(data: invalidData)
+            XCTFail()
+        } catch JsonError.invalidFormat {
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testJsonParseFromInvalidSchema() {
+        let invalidSchema = self.dataFor("[\"Alex\", \"John\"]")
         
-        XCTAssertNotNil(name)
-        XCTAssertNotNil(email)
+        do {
+            _ = try JSON.from(data: invalidSchema)
+            XCTFail()
+        } catch JsonError.invalidSchema {
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testJsonParseFromValidData() {
+        let validData = self.dataFor("{\"name\": \"John\"}")
         
-        let object: TestJson? = json.v("fictionalObject")
+        do {
+            let json = try JSON.from(data: validData)
+            XCTAssertEqual(json["name"] as! String, "John")
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testJsonParseFromInaccessibleFile() {
+        do {
+            let url = URL(fileURLWithPath: "/nonexistent_file.json")
+            _ = try JSON.from(fileAt: url)
+            XCTFail()
+        } catch JsonError.readFailed {
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testJsonParseFromValidFile() {
+        let validData = self.dataFor("{\"name\": \"John\"}")
+        let tempURL   = URL(fileURLWithPath: "/tmp/com_gryphin_test.json")
         
-        XCTAssertNil(object)
+        try! validData.write(to: tempURL)
+        
+        do {
+            let json = try JSON.from(fileAt: tempURL)
+            XCTAssertEqual(json["name"] as! String, "John")
+        } catch {
+            XCTFail()
+        }
     }
     
     // ----------------------------------
@@ -87,6 +136,14 @@ class JsonCreatableTests: XCTestCase {
             self.singleJSON(),
             self.singleJSON(),
         ]
+    }
+    
+    private func dataFor(_ json: JSON) -> Data {
+        return try! JSONSerialization.data(withJSONObject: json, options: [])
+    }
+    
+    private func dataFor(_ jsonString: String) -> Data {
+        return jsonString.data(using: .utf8)!
     }
 }
 
