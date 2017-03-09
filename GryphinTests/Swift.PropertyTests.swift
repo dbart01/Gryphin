@@ -24,6 +24,10 @@ class SwiftPropertyTests: XCTestCase {
         XCTAssertEqual(property.name,       "date")
         XCTAssertEqual(property.returnType, "Date")
         
+        let annotations = property.annotations!
+        
+        XCTAssertEqual(annotations[0], .discardableResult)
+        
         let accessors = property.children as! [Swift.Property.Accessor]
         
         XCTAssertEqual(accessors[0].kind, .get)
@@ -75,6 +79,9 @@ class SwiftPropertyTests: XCTestCase {
             mutable:    true,
             name:       "date",
             returnType: "Date",
+            annotations: [
+                .discardableResult
+            ],
             accessors: [
                 Swift.Property.Accessor(kind: .get, body: [
                     "return Date()"
@@ -124,6 +131,7 @@ class SwiftPropertyTests: XCTestCase {
         
         XCTAssertEqual(property.stringRepresentation, "" ~
             "    /// This is a date accessor" ~
+            "    @discardableResult" ~
             "    public override var date: Date {" ~
             "        get {" ~
             "            return Date()" ~
