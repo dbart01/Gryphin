@@ -92,6 +92,20 @@ public class GraphModel: CustomDebugStringConvertible {
     // ----------------------------------
     //  MARK: - Deserialization Setters -
     //
+    func set(any: Any??, for key: String, convertUsing converter: (Any) throws -> Any?) throws {
+        if let anyContainer = any {
+            
+            if let anyValue = anyContainer, let convertedValue = try converter(anyValue) {
+                self.values[key] = convertedValue
+            } else {
+                self.values[key] = nil as Any?
+            }
+            
+        } else {
+            self.values[key] = nil
+        }
+    }
+    
     func set<T: ScalarType>(valueFrom json: JSON, for key: String, type: T.Type) throws {
 
         try self.set(any: json[key], for: key, convertUsing: { value in
@@ -130,20 +144,6 @@ public class GraphModel: CustomDebugStringConvertible {
             }
             return [T].from(json)
         })
-    }
-    
-    private func set(any: Any??, for key: String, convertUsing converter: (Any) throws -> Any?) throws {
-        if let anyContainer = any {
-            
-            if let anyValue = anyContainer, let convertedValue = try converter(anyValue) {
-                self.values[key] = convertedValue
-            } else {
-                self.values[key] = nil as Any?
-            }
-            
-        } else {
-            self.values[key] = nil
-        }
     }
     
     func set<T: GraphModel>(json: JSON, for key: String, type: T.Type) throws {

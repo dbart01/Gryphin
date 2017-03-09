@@ -94,80 +94,296 @@ class GraphModelTests: XCTestCase {
     }
     
     // ----------------------------------
-    //  MARK: - Accessors -
+    //  MARK: - Any Setter -
+    //
+    func testAnySetterWithNonnull() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "name": "John",
+        ]
+        
+        do {
+            try model.set(any: json["name"], for: "name", convertUsing: { $0 })
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("name"))
+        XCTAssertEqual(try! model.valueFor(nonnull: "name"), "John")
+    }
+    
+    func testAnySetterWithNull() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "name": nil,
+        ]
+        
+        do {
+            try model.set(any: json["name"], for: "name", convertUsing: { value in
+                XCTFail("Any setter should not call converter if value is nil.")
+                return value
+            })
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("name"))
+        XCTAssertNil(try! model.valueFor(nullable: "name"))
+    }
+    
+    func testAnySetterWithEmpty() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [:]
+        
+        do {
+            try model.set(any: json["name"], for: "name", convertUsing: { value in
+                XCTFail("Any setter should not call converter if value is empty.")
+                return value
+            })
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertFalse(model.hasValueFor("name"))
+        
+        do {
+            let _: String? = try model.valueFor(nullable: "name")
+            XCTFail()
+        } catch let error {
+            XCTAssertEqual(error as! ModelError, ModelError.KeyNotFound)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Scalar Setters -
+    //
+    func testValidScalarSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "id": "123456",
+        ]
+        
+        do {
+            try model.set(valueFrom: json, for: "id", type: TestID.self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("id"))
+        XCTAssertEqual(try! model.valueFor(nonnull: "id"), TestID("123456"))
+    }
+    
+    func testInvalidScalarSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "id": 123456,
+        ]
+        
+        do {
+            try model.set(valueFrom: json, for: "id", type: TestID.self)
+            XCTFail()
+        } catch let error {
+            XCTAssertEqual(error as! ModelError, ModelError.InconsistentSchema)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Plain Typed Setters -
+    //
+    func testValidTypedSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "count": 836,
+        ]
+        
+        do {
+            try model.set(valueFrom: json, for: "count", type: Int.self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("count"))
+        XCTAssertEqual(try! model.valueFor(nonnull: "count"), 836)
+    }
+    
+    func testInvalidTypedSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "count": "836",
+        ]
+        
+        do {
+            try model.set(valueFrom: json, for: "count", type: Int.self)
+            XCTFail()
+        } catch let error {
+            XCTAssertEqual(error as! ModelError, ModelError.InconsistentSchema)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Model Setters -
+    //
+    func testValidModelSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "submodel": [
+                "id": 123,
+            ],
+        ]
+        
+        do {
+            try model.set(modelFrom: json, for: "submodel", type: TestModel.self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("submodel"))
+        
+        let submodel: TestModel? = try? model.valueFor(nonnull: "submodel")
+        
+        XCTAssertNotNil(submodel)
+        XCTAssertTrue(type(of: submodel!) == TestModel.self)
+    }
+    
+    func testInvalidModelSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "wrongType": 123,
+        ]
+        
+        do {
+            try model.set(modelFrom: json, for: "wrongType", type: TestModel.self)
+            XCTFail()
+        } catch let error {
+            XCTAssertEqual(error as! ModelError, ModelError.InconsistentSchema)
+        }
+    }
+    
+    func testValidModelCollectionSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "submodels": [
+                [
+                    "id": 123,
+                ],
+                [
+                    "id": 234,
+                ],
+            ],
+        ]
+        
+        do {
+            try model.set(modelCollectionFrom: json, for: "submodels", type: [TestModel].self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("submodels"))
+        
+        let submodels: [TestModel]? = try? model.valueFor(nonnull: "submodels")
+        
+        XCTAssertNotNil(submodels)
+        XCTAssertTrue(type(of: submodels!) == [TestModel].self)
+    }
+    
+    func testInvalidModelCollectionSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "submodels": [
+                123,
+                234,
+            ],
+        ]
+        
+        do {
+            try model.set(modelCollectionFrom: json, for: "submodels", type: [TestModel].self)
+            XCTFail()
+        } catch let error {
+            XCTAssertEqual(error as! ModelError, ModelError.InconsistentSchema)
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Passthrough Setter -
+    //
+    func testNonnullPassthroughSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            "id": 123,
+        ]
+        
+        do {
+            try model.set(json: json, for: "submodel", type: TestModel.self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertTrue(model.hasValueFor("submodel"))
+        
+        let submodel: TestModel? = try? model.valueFor(nonnull: "submodel")
+        
+        XCTAssertNotNil(submodel)
+        XCTAssertTrue(type(of: submodel!) == TestModel.self)
+    }
+    
+    func testNullPassthroughSetter() {
+        let model      = TestModel(json: [:])!
+        let json: JSON = [
+            GraphQL.Key.typeName: "SomeType",
+            "id": 123,
+        ]
+        
+        do {
+            try model.set(json: json, for: "submodel", type: TestModel.self)
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertFalse(model.hasValueFor("submodel"))
+        
+        let submodel: TestModel? = try? model.valueFor(nonnull: "submodel")
+        
+        XCTAssertNil(submodel)
+    }
+
+    // ----------------------------------
+    //  MARK: - Property Setters -
     //
     func testSetters() {
-        let model = TestModel(json: [:])
+        let model = TestModel(json: [:])!
         
-        try! model!.set("John", for: "name",     type: String.self)
-        try! model!.set(3,      for: "children", type: Int.self)
+        model.set("John", for: "name")
+        model.set(3,      for: "children")
+        model.set(nil,    for: "parent")
         
-        XCTAssertTrue(model!.hasValueFor("name"))
-        XCTAssertTrue(model!.hasValueFor("children"))
+        XCTAssertTrue(model.hasValueFor("name"))
+        XCTAssertTrue(model.hasValueFor("children"))
+        XCTAssertTrue(model.hasValueFor("parent"))
+        XCTAssertFalse(model.hasValueFor("invalidKey"))
         
-        XCTAssertEqual(try! model!.valueFor(nonnull: "name"), "John")
-        XCTAssertEqual(try! model!.valueFor(nonnull: "children"), 3)
+        XCTAssertEqual(try! model.valueFor(nonnull: "name"), "John")
+        XCTAssertEqual(try! model.valueFor(nonnull: "children"), 3)
+        XCTAssertEqual(try! model.valueFor(nullable: "parent"), Optional<String>.none)
     }
     
-    func testScalarSetters() {
-        let model = TestModel(json: [:])
-        
-        try! model!.set("123",  for: "id1", type: TestID.self)
-        try! model!.set(nil,    for: "id2", type: TestID.self)
-        
-        XCTAssertTrue(model!.hasValueFor("id1"))
-        XCTAssertFalse(model!.hasValueFor("id2"))
-        
-        let id: TestID = try! model!.valueFor(nonnull: "id1")
-        XCTAssertEqual(id.string, "123")
-        
-        do {
-            try model!.set(Data(), for: "id3", type: TestID.self)
-            XCTFail()
-        } catch {
-            XCTAssertTrue(true)
-        }
-    }
-    
-    func testNullSetters() {
-        let model = TestModel(json: [:])
-        
-        try! model!.set(nil, for: "name", type: String.self)
-        
-        XCTAssertFalse(model!.hasValueFor("name"))
-        
-        try! model!.set(Optional("John"), for: "name", type: String.self)
-        
-        XCTAssertTrue(model!.hasValueFor("name"))
-        XCTAssertEqual(try! model!.valueFor(nonnull: "name"), "John")
-    }
-    
-    func testInvalidSchemaSetters() {
-        let model = TestModel(json: [:])
-        
-        do {
-            try model!.set(13, for: "name", type: String.self)
-            XCTFail()
-        } catch {
-            XCTAssertTrue(true)
-        }
-    }
-    
+    // ----------------------------------
+    //  MARK: - Getters -
+    //
     func testNonnullGetters() {
         
-        let model = TestModel(json: [:])
+        let model = TestModel(json: [:])!
         
-        try! model!.set("John", for: "name", type: String.self)
+        model.set("John", for: "name")
         
         do {
-            let name: String = try model!.valueFor(nonnull: "name")
+            let name: String = try model.valueFor(nonnull: "name")
             XCTAssertEqual(name, "John")
         } catch {
             XCTFail()
         }
         
         do {
-            let _: Int = try model!.valueFor(nonnull: "name")
+            let _: Int = try model.valueFor(nonnull: "name")
             XCTFail()
         } catch ModelError.TypeConversionFailed {
             XCTAssertTrue(true)
@@ -176,7 +392,7 @@ class GraphModelTests: XCTestCase {
         }
         
         do {
-            let _: String = try model!.valueFor(nonnull: "invalid")
+            let _: String = try model.valueFor(nonnull: "invalid")
             XCTFail()
         } catch ModelError.KeyNotFound {
             XCTAssertTrue(true)
@@ -186,12 +402,12 @@ class GraphModelTests: XCTestCase {
     }
     
     func testNullableGetters() {
-        let model = TestModel(json: [:])
+        let model = TestModel(json: [:])!
         
-        try! model!.set("John", for: "name", type: String.self)
+        model.set("John", for: "name")
         
         do {
-            let name: String? = try model!.valueFor(nullable: "name")
+            let name: String? = try model.valueFor(nullable: "name")
             XCTAssertNotNil(name)
             XCTAssertEqual(name, "John")
         } catch {
@@ -199,13 +415,30 @@ class GraphModelTests: XCTestCase {
         }
         
         do {
-            let _: String? = try model!.valueFor(nullable: "invalid")
+            let _: String? = try model.valueFor(nullable: "invalid")
             XCTFail()
         } catch ModelError.KeyNotFound {
             XCTAssertTrue(true)
         } catch {
             XCTFail()
         }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Has Value -
+    //
+    func testHasValue() {
+        let model = TestModel(json: [:])!
+        
+        XCTAssertFalse(model.hasValueFor("name"))
+        
+        model.set("John", for: "name")
+        
+        XCTAssertTrue(model.hasValueFor("name"))
+        
+        model.set(nil, for: "name")
+        
+        XCTAssertTrue(model.hasValueFor("name"))
     }
     
     // ----------------------------------
@@ -293,11 +526,19 @@ private class TestModel: GraphModel {
 // ----------------------------------
 //  MARK: - Test Scalar -
 //
-private struct TestID: ScalarType {
+private struct TestID: ScalarType, Equatable {
     
     let string: String
     
-    init(from string: String) {
+    init(_ string: String) {
         self.string = string
+    }
+    
+    init(from string: String) {
+        self.init(string)
+    }
+    
+    static func ==(lhs: TestID, rhs: TestID) -> Bool {
+        return lhs.string == rhs.string
     }
 }
