@@ -34,6 +34,7 @@
 		9A88790C1E2E4719007FB44F /* GraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88790B1E2E4718007FB44F /* GraphModel.swift */; };
 		9A8E88481E71818B0042879D /* URL+ScalarTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E88471E71818B0042879D /* URL+ScalarTypeTests.swift */; };
 		9A8E884A1E7182900042879D /* Date+ScalarTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E88491E7182900042879D /* Date+ScalarTypeTests.swift */; };
+		9A8E884C1E718F190042879D /* Decimal+ScalarTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884B1E718F190042879D /* Decimal+ScalarTypeTests.swift */; };
 		9A9070A51E4A716400248DBF /* URLRequest+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */; };
 		9A972A1E1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */; };
 		9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */; };
@@ -274,6 +275,7 @@
 		9A8DAACF1E1712960032CC6F /* Swift.EnumCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.EnumCase.swift; sourceTree = "<group>"; };
 		9A8E88471E71818B0042879D /* URL+ScalarTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+ScalarTypeTests.swift"; sourceTree = "<group>"; };
 		9A8E88491E7182900042879D /* Date+ScalarTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ScalarTypeTests.swift"; sourceTree = "<group>"; };
+		9A8E884B1E718F190042879D /* Decimal+ScalarTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+ScalarTypeTests.swift"; sourceTree = "<group>"; };
 		9A9070A41E4A716400248DBF /* URLRequest+GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+GraphQL.swift"; sourceTree = "<group>"; };
 		9A972A1D1E40BCF7007F7B0B /* Swift.EnumCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.EnumCaseTests.swift; sourceTree = "<group>"; };
 		9A972A311E40D3D1007F7B0B /* Swift.MethodTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.MethodTests.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 			children = (
 				9A8E88471E71818B0042879D /* URL+ScalarTypeTests.swift */,
 				9A8E88491E7182900042879D /* Date+ScalarTypeTests.swift */,
+				9A8E884B1E718F190042879D /* Decimal+ScalarTypeTests.swift */,
 			);
 			name = Scalars;
 			sourceTree = "<group>";
@@ -1004,6 +1007,7 @@
 				9A27555D1E3E4C9F00F3FD4A /* InlineFragmentTests.swift in Sources */,
 				9ADAD0A81E43713C008AC561 /* ContainingTests.swift in Sources */,
 				9A47206B1E28573A002A2B64 /* ReferenceTypeTests.swift in Sources */,
+				9A8E884C1E718F190042879D /* Decimal+ScalarTypeTests.swift in Sources */,
 				9A2755641E3E5CB500F3FD4A /* Swift.ContainerTests.swift in Sources */,
 				9AEF60DF1E5DC86B0067FA90 /* ConfigurationTests.swift in Sources */,
 				9A8E884A1E7182900042879D /* Date+ScalarTypeTests.swift in Sources */,
