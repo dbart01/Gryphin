@@ -11,8 +11,9 @@ import Foundation
 extension Date: ScalarType {
     
     private static let formatter: DateFormatter = {
-        let f = DateFormatter()
+        let f        = DateFormatter()
         f.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        f.timeZone   = TimeZone(abbreviation: "UTC")
         return f
     }()
     
