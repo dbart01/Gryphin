@@ -32,6 +32,7 @@ class SchemaObjectTypeTests: XCTestCase {
         XCTAssertFalse(type.isAbstract)
         XCTAssertFalse(type.isCollection)
         XCTAssertFalse(type.isTopLevelNullable)
+        XCTAssertFalse(type.isLeafNullable)
         
         XCTAssertTrue(type.leaf === ofType)
         
@@ -56,6 +57,7 @@ class SchemaObjectTypeTests: XCTestCase {
         XCTAssertFalse(type.isAbstract)
         XCTAssertFalse(type.isCollection)
         XCTAssertTrue(type.isTopLevelNullable)
+        XCTAssertTrue(type.isLeafNullable)
         
         XCTAssertTrue(type.leaf === type)
         
@@ -83,6 +85,7 @@ class SchemaObjectTypeTests: XCTestCase {
         XCTAssertFalse(type.isAbstract)
         XCTAssertTrue(type.isCollection)
         XCTAssertTrue(type.isTopLevelNullable)
+        XCTAssertTrue(type.isLeafNullable)
         
         XCTAssertTrue(type.leaf === ofType)
         
