@@ -28,8 +28,4 @@ extension URLRequest {
         
         return request
     }
-    
-    static func graph<M: Field>(mutation: M, to url: URL) -> URLRequest {
-        return self.graph(query: mutation, to: url)
-    }
 }
