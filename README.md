@@ -1,6 +1,7 @@
 # Gryphin
 
 [![Build Status](https://travis-ci.org/dbart01/Gryphin.svg?branch=master)](https://travis-ci.org/dbart01/Gryphin)
+[![GitHub release](https://img.shields.io/github/release/dbart01/gryphin.svg)](https://github.com/dbart01/Gryphin/releases/latest)
 
 Gryphin is a GraphQL client that easily integrates with existing applications on iOS and MacOS. Capable of automatically generating type-safe models and queries for any GraphQL schema, Gryphin is the easiest way to get started with a GraphQL API using Swift. Simply point Gryphin at a GraphQL service endpoint and compile. That's it.
 
