@@ -20,7 +20,7 @@ class GitHubTests: XCTestCase {
         
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = [
-            "Authorization": "Bearer f31c7db44ea38abf705b8ca3663540d4ff27772a"
+            "Authorization": "Bearer f31c7db44ea38abf705b8ca3663540d4ff27772a" // <- replace with valid GitHub personal access token
         ]
         
         return URLSession(configuration: configuration)
