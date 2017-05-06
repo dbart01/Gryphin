@@ -167,7 +167,6 @@
 		9ADAD5121E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */; };
 		9ADAD5131E6C62B5008AC561 /* Decimal+ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5101E6C62B5008AC561 /* Decimal+ScalarType.swift */; };
 		9ADAD5151E70FAF1008AC561 /* Collection+AppendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD5141E70FAF1008AC561 /* Collection+AppendTests.swift */; };
-		9ADAD5161E724797008AC561 /* GitHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D3E751E49F723004135BF /* GitHubTests.swift */; };
 		9AEF60CC1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60CD1E5C782C0067FA90 /* GraphError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60CB1E5C782C0067FA90 /* GraphError.swift */; };
 		9AEF60D21E5CE5180067FA90 /* GraphErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF60D11E5CE5180067FA90 /* GraphErrorTests.swift */; };
@@ -1009,7 +1008,6 @@
 				9A8E88481E71818B0042879D /* URL+ScalarTypeTests.swift in Sources */,
 				9A9A6A5C1E0ECA55008754A4 /* String+Newline.swift in Sources */,
 				9A27555B1E3E4A6F00F3FD4A /* TypedFieldTests.swift in Sources */,
-				9ADAD5161E724797008AC561 /* GitHubTests.swift in Sources */,
 				9A8878D21E2588CC007FB44F /* ContainerTypeTests.swift in Sources */,
 				9A972A321E40D3D1007F7B0B /* Swift.MethodTests.swift in Sources */,
 				9A972A341E40EE56007F7B0B /* Swift.PropertyTests.swift in Sources */,
