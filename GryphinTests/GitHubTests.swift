@@ -338,6 +338,6 @@ private func XCTAssertNonZeroLength(_ string: String) {
     XCTAssertTrue(string.characters.count > 0)
 }
 
-private func XCTAssertType<T>(of object: Any, equalTo type: T.Type) {
+private func XCTAssertType<T>(of object: T, equalTo type: T.Type) {
     XCTAssertTrue(type(of: object) == T.self)
 }
