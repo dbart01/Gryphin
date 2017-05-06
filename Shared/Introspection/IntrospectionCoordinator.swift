@@ -35,7 +35,7 @@ class IntrospectionCoordinator {
             
             data     = rData
             response = rResponse as? HTTPURLResponse
-            error    = rError    as? NSError
+            error    = rError    as  NSError?
             
             semaphore.signal()
         }
