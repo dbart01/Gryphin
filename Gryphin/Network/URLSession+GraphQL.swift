@@ -37,7 +37,7 @@ public extension URLSession {
                 response = res
             }
             
-            if let err = networkError as? NSError {
+            if let err = networkError as NSError? {
                 error = .network(code: err.code, domain: err.domain, description: err.localizedDescription)
             }
             
