@@ -57,9 +57,9 @@ or a service endpoint:
 {
   "schema": {
     "url": "https://api.github.com/graphql",
-    "headers": [
+    "headers": {
       "Authorization": "Bearer f31c7db44ea38abf705b8ca3663540d4ff27772a"
-    ]
+    }
   }
 }
 ```
