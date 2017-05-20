@@ -1340,10 +1340,10 @@ fileprivate struct TypeName: Nameable {
     }
     
     init?(name: String?) {
-        if let name = name {
-            self.init(name: name)
+        guard let name = name  else {
+            return nil
         }
-        return nil
+        self.init(name: name)
     }
 }
 
@@ -1367,12 +1367,12 @@ fileprivate extension Schema.ObjectType {
         return self.isTopLevelNullable ? type.implicitNullable : type
     }
     
-    func recursiveQueryType(unmodified: Bool) -> String {
-        return self.recursiveType(queryKind: .query, unmodified: unmodified)
+    func recursiveQueryType(unmodified: Bool, ignoreNull: Bool = false) -> String {
+        return self.recursiveType(queryKind: .query, unmodified: unmodified, ignoreNull: ignoreNull)
     }
     
-    func recursiveModelType(unmodified: Bool) -> String {
-        return self.recursiveType(queryKind: .model, unmodified: unmodified)
+    func recursiveModelType(unmodified: Bool, ignoreNull: Bool = false) -> String {
+        return self.recursiveType(queryKind: .model, unmodified: unmodified, ignoreNull: ignoreNull)
     }
     
     func recursiveQueryConcreteType() -> String {
@@ -1446,16 +1446,18 @@ fileprivate extension Schema.Argument {
     
     func methodParameter(useDefaultValues: Bool) -> Swift.Method.Parameter {
         
+        let nullable = self.type.isTopLevelNullable
+        
         var defaultValue: Swift.Method.Parameter.Default?
-        if self.type.isTopLevelNullable && useDefaultValues {
+        if nullable && useDefaultValues {
             defaultValue = .nil
         }
         
-        let typeString = self.type.recursiveQueryType(unmodified: self.type.hasScalar)
+        let typeString = self.type.recursiveQueryType(unmodified: self.type.hasScalar, ignoreNull: true)
         
         return Swift.Method.Parameter(
             name:    self.name,
-            type:    typeString,
+            type:    nullable ? typeString.nullable : typeString,
             default: defaultValue
         )
     }
