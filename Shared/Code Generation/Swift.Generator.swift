@@ -121,8 +121,8 @@ extension Swift {
             let jsonSchema     = schemaData[SchemaKey.schema]    as! JSON
             let jsonTypes      = jsonSchema[SchemaKey.types]     as! [JSON]
             
-            let queryType      = TypeName(name: (jsonSchema[SchemaKey.queryType]    as! JSON)["name"] as! String)
-            let mutationType   = TypeName(name: (jsonSchema[SchemaKey.mutationType] as! JSON)["name"] as! String)
+            let queryType      = TypeName(name: (jsonSchema[SchemaKey.queryType]    as? JSON)?["name"] as? String)
+            let mutationType   = TypeName(name: (jsonSchema[SchemaKey.mutationType] as? JSON)?["name"] as? String)
             
             let aliasesFile = File(kind: .aliases, container: Container())
             let enumsFile   = File(kind: .enums,   container: Container())
@@ -158,12 +158,11 @@ extension Swift {
                      ** Specific logic for root Query
                      ** and Mutation types.
                      */
-                    switch type.name {
-                    case queryType.name:
+                    if let queryType = queryType, queryType.name == type.name {
                         objectClass.prepend(child: self.generate(initNamed: "query", type: objectClass.name))
-                    case mutationType.name:
+                        
+                    } else if let mutationType = mutationType, mutationType.name == type.name {
                         objectClass.prepend(child: self.generate(initNamed: "mutation", type: objectClass.name))
-                    default: break
                     }
                     
                     queriesFile.container += objectClass
@@ -553,7 +552,7 @@ extension Swift {
             return swiftClass
         }
         
-        private func generate(networkExtensionsWith queryType: TypeName, mutationType: TypeName) -> Class {
+        private func generate(networkExtensionsWith queryType: TypeName?, mutationType: TypeName?) -> Class {
             let swiftExtension = Class(
                 visibility:   .public,
                 kind:         .extension,
@@ -563,55 +562,59 @@ extension Swift {
                 ]
             )
             
-            swiftExtension += Method(
-                visibility: .public,
-                name:       .func("graphQueryTask"),
-                returnType: "URLSessionDataTask",
-                parameters: [
-                    Method.Parameter(
-                        alias: "with",
-                        name:  "query",
-                        type:  queryType.queryTypeName
-                    ),
-                    Method.Parameter(
-                        alias: "to",
-                        name:  "url",
-                        type:  "URL"
-                    ),
-                    Method.Parameter(
-                        name:  "completionHandler",
-                        type:  "@escaping (\(queryType.name)?, HTTPURLResponse?, GraphError?) -> Void"
-                    )
-                ],
-                body: [
-                    "return self.graphTask(with: query, to: url, completionHandler: completionHandler)"
-                ]
-            )
+            if let queryType = queryType {
+                swiftExtension += Method(
+                    visibility: .public,
+                    name:       .func("graphQueryTask"),
+                    returnType: "URLSessionDataTask",
+                    parameters: [
+                        Method.Parameter(
+                            alias: "with",
+                            name:  "query",
+                            type:  queryType.queryTypeName
+                        ),
+                        Method.Parameter(
+                            alias: "to",
+                            name:  "url",
+                            type:  "URL"
+                        ),
+                        Method.Parameter(
+                            name:  "completionHandler",
+                            type:  "@escaping (\(queryType.name)?, HTTPURLResponse?, GraphError?) -> Void"
+                        )
+                    ],
+                    body: [
+                        "return self.graphTask(with: query, to: url, completionHandler: completionHandler)"
+                    ]
+                )
+            }
             
-            swiftExtension += Method(
-                visibility: .public,
-                name:       .func("graphMutationTask"),
-                returnType: "URLSessionDataTask",
-                parameters: [
-                    Method.Parameter(
-                        alias: "with",
-                        name:  "mutation",
-                        type:  mutationType.queryTypeName
-                    ),
-                    Method.Parameter(
-                        alias: "to",
-                        name:  "url",
-                        type:  "URL"
-                    ),
-                    Method.Parameter(
-                        name:  "completionHandler",
-                        type:  "@escaping (\(mutationType.name)?, HTTPURLResponse?, GraphError?) -> Void"
-                    )
-                ],
-                body: [
-                    "return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)"
-                ]
-            )
+            if let mutationType = mutationType {
+                swiftExtension += Method(
+                    visibility: .public,
+                    name:       .func("graphMutationTask"),
+                    returnType: "URLSessionDataTask",
+                    parameters: [
+                        Method.Parameter(
+                            alias: "with",
+                            name:  "mutation",
+                            type:  mutationType.queryTypeName
+                        ),
+                        Method.Parameter(
+                            alias: "to",
+                            name:  "url",
+                            type:  "URL"
+                        ),
+                        Method.Parameter(
+                            name:  "completionHandler",
+                            type:  "@escaping (\(mutationType.name)?, HTTPURLResponse?, GraphError?) -> Void"
+                        )
+                    ],
+                    body: [
+                        "return self.graphTask(with: mutation, to: url, completionHandler: completionHandler)"
+                    ]
+                )
+            }
             
             return swiftExtension
         }
@@ -1331,6 +1334,17 @@ fileprivate extension Nameable {
 
 fileprivate struct TypeName: Nameable {
     let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    init?(name: String?) {
+        if let name = name {
+            self.init(name: name)
+        }
+        return nil
+    }
 }
 
 // ----------------------------------

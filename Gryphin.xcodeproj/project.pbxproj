@@ -255,6 +255,7 @@
 		9A36AEDD1E4DF3B700DA0201 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A47206A1E28573A002A2B64 /* ReferenceTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceTypeTests.swift; sourceTree = "<group>"; };
 		9A47206C1E286588002A2B64 /* InputType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputType.swift; sourceTree = "<group>"; };
+		9A5C46F21ED065D300CE3627 /* .gryphin */ = {isa = PBXFileReference; explicitFileType = text.json; path = .gryphin; sourceTree = "<group>"; };
 		9A6D3E591E4285AC004135BF /* Schema.ArgumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.ArgumentTests.swift; sourceTree = "<group>"; };
 		9A6D3E5E1E42883D004135BF /* JsonCreatableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCreatableTests.swift; sourceTree = "<group>"; };
 		9A6D3E611E44ACA0004135BF /* GraphModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphModelTests.swift; sourceTree = "<group>"; };
@@ -408,6 +409,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		9A5C46F11ED065A700CE3627 /* Default Config */ = {
+			isa = PBXGroup;
+			children = (
+				9A5C46F21ED065D300CE3627 /* .gryphin */,
+			);
+			name = "Default Config";
+			sourceTree = "<group>";
+		};
 		9A6D3E5D1E428831004135BF /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +528,7 @@
 		9A9A6A031E0EC9C6008754A4 = {
 			isa = PBXGroup;
 			children = (
+				9A5C46F11ED065A700CE3627 /* Default Config */,
 				9ADAD3F41E50F7B1008AC561 /* Generated */,
 				9A27B03B1E24728300AFBDA6 /* Extensions */,
 				9A8879071E2D5DD9007FB44F /* Shared */,
